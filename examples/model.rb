@@ -1,17 +1,3 @@
-Object Model for MongoDB (callbacks, validations, mass-assignment, finders, ...).
-
-- The same API for pure driver and Models.
-- Minimum extra abstractions, trying to keep things as close to the MongoDB semantic as possible.
-- Schema-less, dynamic (with ability to specify types for mass-assignment).
-- Models can be saved to any collection.
-- Full support for embedded objects (validations, callbacks, ...).
-- Scope, default_scope
-- Doesn't try to mimic ActiveRecord, MongoDB is differrent and this tool designed to get most of it.
-- Very small, see [code stats][code_stats].
-
-Other ODM usually try to cover simple but non-standard API of MongoDB behind complex ORM-like abstractions. This tool **exposes simplicity and power of MongoDB and leverages it's differences**.
-
-``` ruby
 # Connecting to MongoDB.
 require 'mongodb/model'
 Mongo.defaults.merge! symbolize: true, multi: true, safe: true
@@ -67,6 +53,3 @@ Unit.alive.first                                   # => zeratul
 # Validations.
 
 # Save model to any collection.
-```
-
-Source: examples/model.rb
