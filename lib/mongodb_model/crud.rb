@@ -20,17 +20,17 @@ module Mongo::Model::Crud
   end
 
   module ClassMethods
-    def build attributes, opts = {}
+    def build attributes = {}, opts = {}
       self.new.set attributes, opts
     end
 
-    def create attributes, opts = {}
+    def create attributes = {}, opts = {}
       o = build attributes, opts
       o.save
       o
     end
 
-    def create! attributes, opts = {}
+    def create! attributes = {}, opts = {}
       o = create attributes
       raise(Mongo::Error, "can't create #{attributes.inspect}!") if o.new_record?
       o

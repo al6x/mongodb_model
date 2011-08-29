@@ -1,6 +1,7 @@
 require 'mongodb_model/gems'
 
 require 'validatable'
+require 'file_model'
 require 'i18n'
 require 'ruby_ext'
 require 'mongodb/object'
@@ -19,13 +20,24 @@ module Mongo::Model; end
   query
   scope
   attribute_convertors
+  file_model
   misc
   model
 ).each{|f| require "mongodb_model/#{f}"}
 
 module Mongo
   module Model
-    inherit Db, Assignment, Callbacks, Validation, Crud, Query, Scope, AttributeConvertors, Misc
+    inherit \
+      Db,
+      Assignment,
+      Callbacks,
+      Validation,
+      Crud,
+      Query,
+      Scope,
+      AttributeConvertors,
+      Mongo::Model::FileModel,
+      Misc
   end
 end
 
