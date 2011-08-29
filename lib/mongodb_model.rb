@@ -14,6 +14,7 @@ module Mongo::Model; end
   assignment
   callbacks
   validation
+  validation/uniqueness_validator
   crud
   query
   scope
