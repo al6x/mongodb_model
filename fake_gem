@@ -1,0 +1,3 @@
+# http://github.com/alexeypetrushin/fake_gem
+name: mongodb_model
+libs: lib
