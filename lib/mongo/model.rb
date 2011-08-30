@@ -1,4 +1,4 @@
-require 'mongo_model/gems'
+require 'mongodb_model/gems'
 
 require 'validatable'
 require 'file_model'
