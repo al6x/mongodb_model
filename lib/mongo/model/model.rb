@@ -1,4 +1,6 @@
 module Mongo::Model
+  include Mongo::Object
+
   attr_accessor :_id, :_class
 
   def _id?; !!_id end

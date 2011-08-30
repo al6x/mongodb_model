@@ -41,11 +41,11 @@ describe "Validations" do
       unit.save.should be_true
     end
 
-    it "should check :errors only and ignore valid? method" do
-      unit = BaseUnit.build name: 'Zeratul'
-      unit.should_not_receive(:valid?)
-      unit.save.should be_true
-    end
+    # it "should check :errors only and ignore valid? method" do
+    #   unit = BaseUnit.build name: 'Zeratul'
+    #   unit.should_not_receive(:valid?)
+    #   unit.save.should be_true
+    # end
   end
 
   describe "validatable2" do
@@ -69,7 +69,7 @@ describe "Validations" do
 
     it "should validate before save" do
       unit = BaseUnit.new
-      unit.should_receive(:validate)
+      unit.should_receive(:run_validations)
       unit.save
     end
 

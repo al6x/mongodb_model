@@ -1,5 +1,5 @@
 # Connecting to MongoDB.
-require 'mongodb/model'
+require 'mongo/model'
 Mongo.defaults.merge! symbolize: true, multi: true, safe: true
 connection = Mongo::Connection.new
 db = connection.db 'default_test'

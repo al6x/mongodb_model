@@ -1,7 +1,7 @@
-require 'mongodb_model'
+require 'mongo/model'
 
 require 'rspec_ext'
-require 'mongodb_model/spec'
+require 'mongo/model/spec'
 
 #
 # Handy spec helpers

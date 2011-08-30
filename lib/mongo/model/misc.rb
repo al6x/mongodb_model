@@ -23,8 +23,12 @@ module Mongo::Model::Misc
     (_id || '').to_s
   end
 
+  delegate :t, to: I18n
+
 
   module ClassMethods
+    delegate :t, to: I18n
+
     def timestamps!
       attr_accessor :created_at, :updated_at
       before_save :update_timestamps

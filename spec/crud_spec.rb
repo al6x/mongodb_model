@@ -1,5 +1,5 @@
 require 'spec_helper'
-require 'mongodb/object/spec/crud_shared'
+require 'mongo/object/spec/crud_shared'
 
 describe "Model CRUD" do
   with_mongo_model

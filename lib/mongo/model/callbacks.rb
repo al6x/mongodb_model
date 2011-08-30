@@ -1,16 +1,6 @@
 module Mongo::Model::Callbacks
   inherit RubyExt::Callbacks
 
-  def _run_callbacks type, method_name
-    if type == :before
-      run_before_callbacks method_name, method: method_name
-    elsif type == :after
-      run_after_callbacks method_name, method: method_name
-    else
-      raise "invalid callback type (#{type})!"
-    end
-  end
-
   module ClassMethods
     [:validate, :update, :save, :destroy].each do |method_name|
       define_method "before_#{method_name}" do |*args, &block|

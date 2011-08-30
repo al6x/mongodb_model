@@ -1,4 +1,4 @@
-require 'mongodb/object/spec'
+require 'mongo/object/spec'
 
 rspec do
   class << self

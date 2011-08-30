@@ -5,17 +5,6 @@ describe 'Model callbacks' do
 
   after(:all){remove_constants :TheModel, :Player}
 
-  it "callback integration" do
-    class TheModel
-      inherit Mongo::Model
-    end
-
-    model = TheModel.new
-
-    model.should_receive(:run_before_callbacks).with(:save, {method: :save})
-    model._run_callbacks :before, :save
-  end
-
   it "integration smoke test" do
     class Player
       inherit Mongo::Model

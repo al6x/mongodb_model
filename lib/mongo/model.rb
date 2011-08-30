@@ -1,10 +1,10 @@
-require 'mongodb_model/gems'
+require 'mongo_model/gems'
 
 require 'validatable'
 require 'file_model'
 require 'i18n'
 require 'ruby_ext'
-require 'mongodb/object'
+require 'mongo/object'
 
 module Mongo::Model; end
 
@@ -23,7 +23,7 @@ module Mongo::Model; end
   file_model
   misc
   model
-).each{|f| require "mongodb_model/#{f}"}
+).each{|f| require "mongo/model/#{f}"}
 
 module Mongo
   module Model
