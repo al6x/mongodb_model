@@ -11,7 +11,7 @@ describe "Model Query" do
       attr_accessor :name
     end
   end
-  after(:all){remove_constants :Unit}
+  after(:all){remove_constants :Unit, :SpecialUnit}
 
   before{@zeratul = Unit.build name: 'Zeratul'}
 
@@ -42,5 +42,24 @@ describe "Model Query" do
     Unit.first_by_name('Zeratul').should be_nil
     Unit.build(name: 'Zeratul').save!
     Unit.first_by_name('Zeratul').name.should == 'Zeratul'
+  end
+
+  it 'build, create, create!' do
+    class SpecialUnit < Unit
+      attr_accessor :age
+    end
+
+    u = SpecialUnit.query(name: 'Zeratul').build age: 500
+    [u.name, u.age].should == ['Zeratul', 500]
+
+    SpecialUnit.destroy_all
+    SpecialUnit.query(name: 'Zeratul').create age: 500
+    u = SpecialUnit.first
+    [u.name, u.age].should == ['Zeratul', 500]
+
+    SpecialUnit.destroy_all
+    SpecialUnit.query(name: 'Zeratul').create! age: 500
+    u = SpecialUnit.first
+    [u.name, u.age].should == ['Zeratul', 500]
   end
 end

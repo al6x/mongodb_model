@@ -23,6 +23,18 @@ class Mongo::Model::Query < Object
     self.class == o.class and ([model, selector, options] == [o.model, o.selector, o.options])
   end
 
+  def build attributes = {}, options = {}
+    model.build selector.merge(attributes), options
+  end
+
+  def create attributes = {}, options = {}
+    model.create selector.merge(attributes), options
+  end
+
+  def create! attributes = {}, options = {}
+    model.create! selector.merge(attributes), options
+  end
+
   protected
     def method_missing method, *args, &block
       model.with_scope selector, options do
