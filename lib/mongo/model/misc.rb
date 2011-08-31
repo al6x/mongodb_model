@@ -24,6 +24,14 @@ module Mongo::Model::Misc
 
   delegate :t, to: I18n
 
+  def reload
+    obj = self.class.by_id!(_id || raise("can't reload new document (#{self})!"))
+    instance_variables.each{|n| remove_instance_variable n}
+    obj.instance_variables.each do |n|
+      instance_variable_set n, obj.instance_variable_get(n)
+    end
+    nil
+  end
 
   module ClassMethods
     delegate :t, to: I18n

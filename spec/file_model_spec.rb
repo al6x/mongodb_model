@@ -12,6 +12,8 @@ describe 'File Model' do
       inherit Mongo::Model
       collection :units
 
+      attr_accessor :name
+
       mount_file :image, ImageFile
     end
   end

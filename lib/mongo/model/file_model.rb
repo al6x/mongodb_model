@@ -15,7 +15,7 @@ module Mongo::Model::FileModel
 
       before_validate do |model|
         file_model = model.send(attr_name)
-        file_model.validate
+        file_model.run_validations
         model.errors[attr_name] = file_model.errors unless file_model.errors.empty?
       end
 

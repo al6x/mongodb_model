@@ -7,6 +7,8 @@ describe 'Model Miscellaneous' do
     class User
       inherit Mongo::Model
       collection :users
+
+      attr_accessor :name
     end
   end
   after{remove_constants :Unit3, :User}
@@ -54,5 +56,12 @@ describe 'Model Miscellaneous' do
     u.dom_id.should == ''
     u.save!
     u.dom_id.should_not be_empty
+  end
+
+  it 'reload' do
+    u = User.create! name: 'Zeratul'
+    u.name = 'Jim'
+    u.reload
+    u.name.should == 'Zeratul'
   end
 end

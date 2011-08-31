@@ -40,8 +40,10 @@ describe "Model Query" do
 
   it 'dynamic finders integration' do
     Unit.first_by_name('Zeratul').should be_nil
-    Unit.build(name: 'Zeratul').save!
+    u = Unit.build(name: 'Zeratul')
+    u.save!
     Unit.first_by_name('Zeratul').name.should == 'Zeratul'
+    Unit.by_id!(u._id).name.should == 'Zeratul'
   end
 
   it 'build, create, create!' do
