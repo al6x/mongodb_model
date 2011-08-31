@@ -25,7 +25,7 @@ describe "Scope" do
       Unit.first(name: 'Tassadar').should_not be_nil
       Unit.first!(name: 'Tassadar').should_not be_nil
 
-      Unit.stub!(:current_scope).and_return(status: 'alive')
+      Unit.stub!(:current_scope).and_return(Unit.query(status: 'alive'))
 
       Unit.count.should == 2
       Unit.all.size.should == 2
@@ -42,61 +42,62 @@ describe "Scope" do
 
   describe 'default scope' do
     it "should not affect objects without default_scope" do
-      Unit.current_scope.should == {}
+      Unit.current_scope.should be_nil
     end
 
     it "definition" do
       Unit.default_scope status: 'alive'
-      Unit.current_scope.should == {status: 'alive'}
+
+      Unit.current_scope.should == Unit.query(status: 'alive')
 
       Unit.default_scope do
         {status: 'alive'}
       end
-      Unit.current_scope.should == {status: 'alive'}
+      Unit.current_scope.should == Unit.query(status: 'alive')
     end
 
     it "should be inherited" do
       Unit.default_scope status: 'alive'
 
       class Protoss < Unit; end
-      Protoss.current_scope.should == {status: 'alive'}
+      Protoss.current_scope.should == Unit.query(status: 'alive')
 
       Protoss.default_scope status: 'dead'
-      Unit.current_scope.should == {status: 'alive'}
-      Protoss.current_scope.should == {status: 'dead'}
+      Unit.current_scope.should == Unit.query(status: 'alive')
+      Protoss.current_scope.should == Protoss.query(status: 'dead')
     end
   end
 
   describe 'scope' do
     it "definition" do
       Unit.scope :alive, status: 'alive'
-      Unit.alive.current_scope.should == {status: 'alive'}
+      Unit.alive.current_scope.should == Unit.query(status: 'alive')
 
       Unit.scope :alive do
         {status: 'alive'}
       end
-      Unit.alive.current_scope.should == {status: 'alive'}
+      Unit.alive.current_scope.should == Unit.query(status: 'alive')
     end
 
     it 'scope should affect current scope' do
       Unit.scope :alive, status: 'alive'
 
-      Unit.current_scope.should == {}
+      Unit.current_scope.should be_nil
 
-      Unit.alive.current_scope.should == {status: 'alive'}
-      Unit.alive.should == Unit
+      Unit.alive.current_scope.should == Unit.query(status: 'alive')
+      Unit.alive.class.should == Mongo::Model::Query
     end
 
     it 'should be merged with default scope' do
       Unit.default_scope race: 'Protoss'
       Unit.scope :alive, status: 'alive'
-      Unit.alive.current_scope.should == {race: 'Protoss', status: 'alive'}
+      Unit.alive.current_scope.should == Unit.query(race: 'Protoss', status: 'alive')
     end
 
     it 'should allow to chain scopes' do
       Unit.scope :alive, status: 'alive'
       Unit.scope :protosses, race: 'Protoss'
-      Unit.alive.protosses.current_scope.should == {race: 'Protoss', status: 'alive'}
+      Unit.alive.protosses.current_scope.should == Unit.query(race: 'Protoss', status: 'alive')
     end
   end
 
@@ -119,21 +120,21 @@ describe "Scope" do
       Unit.default_scope status: 'alive'
 
       Unit.with_scope race: 'Protoss' do
-        Unit.current_scope.should == {status: 'alive', race: 'Protoss'}
+        Unit.current_scope.should == Unit.query(status: 'alive', race: 'Protoss')
 
         Unit.with_exclusive_scope do
-          Unit.current_scope.should == {}
+          Unit.current_scope.should == Unit.query({})
         end
 
         Unit.with_exclusive_scope race: 'Terran' do
-          Unit.current_scope.should == {race: 'Terran'}
+          Unit.current_scope.should == Unit.query(race: 'Terran')
         end
       end
     end
 
     it "usage" do
       Unit.with_scope status: 'alive' do
-        Unit.current_scope.should == {status: 'alive'}
+        Unit.current_scope.should == Unit.query(status: 'alive')
       end
     end
 
@@ -141,7 +142,7 @@ describe "Scope" do
       Unit.default_scope status: 'alive'
       Unit.with_scope race: 'Protoss' do
         Unit.with_scope name: 'Zeratul' do
-          Unit.current_scope.should == {name: 'Zeratul', race: 'Protoss', status: 'alive'}
+          Unit.current_scope.should == Unit.query(name: 'Zeratul', race: 'Protoss', status: 'alive')
         end
       end
     end

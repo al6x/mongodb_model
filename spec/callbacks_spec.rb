@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Model callbacks' do
-  with_mongo
+  with_mongo_model
 
   after(:all){remove_constants :TheModel, :Player}
 

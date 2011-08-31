@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'Collection & Database' do
-  with_mongo
+  with_mongo_model
 
   before :all do
     class TheModel

@@ -51,7 +51,7 @@ describe "Attribute Convertors" do
     # get
     o.tags_as_string.should == ''
     o.tags = %w(Java Ruby)
-    o._clear_cache
+    o._cache.clear
     o.tags_as_string.should == 'Java, Ruby'
 
     # set

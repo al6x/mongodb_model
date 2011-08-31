@@ -9,10 +9,9 @@ module Mongo::Model::Misc
   def _cache
     @_cache ||= {}
   end
-  def _clear_cache
-    @_cache = {}
-  end
-
+  # def _clear_cache
+  #   @_cache = {}
+  # end
 
   def dom_id
     # new_record? ? "new_#{self.class.name.underscore}" : to_param

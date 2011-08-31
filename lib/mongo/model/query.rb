@@ -1,36 +1,34 @@
-module Mongo::Model::Query
-  module ClassMethods
-    include Mongo::DynamicFinders
+class Mongo::Model::Query < Object
+  attr_reader :model, :selector, :options
 
-    def count selector = {}, opts = {}
-      collection.count selector, opts
-    end
+  def initialize model, selector = {}, options = {} *args
+    @model, @selector, @options = model, selector, options
+  end
 
-    def first selector = {}, opts = {}
-      collection.first selector, opts
-    end
+  def class
+    ::Mongo::Model::Query
+  end
 
-    def each selector = {}, opts = {}, &block
-      collection.each selector, opts, &block
-    end
+  def merge query
+    raise "can't merge queries with different models!" unless model == query.model
+    self.class.new model, selector.merge(query.selector), options.merge(query.options)
+  end
 
-    def all selector = {}, opts = {}, &block
-      if block
-        each selector, opts, &block
-      else
-        list = []
-        each(selector, opts){|doc| list << doc}
-        list
+  def inspect
+    "#<Mongo::Model::Query: #{model} #{@selector.inspect} #{@options.inspect}>"
+  end
+  alias_method :to_s, :inspect
+
+  def == o
+    self.class == o.class and ([model, selector, options] == [o.model, o.selector, o.options])
+  end
+
+  protected
+    def method_missing method, *args, &block
+      model.with_scope selector, options do
+        result = model.send method, *args, &block
+        result = self.merge result if result.is_a? self.class
+        result
       end
     end
-
-    def first! selector = {}, opts = {}
-      first(selector, opts) || raise(Mongo::NotFound, "document with selector #{selector} not found!")
-    end
-
-    def exists? selector = {}, opts = {}
-      count(selector, opts) > 0
-    end
-    alias :exist? :exists?
-  end
 end

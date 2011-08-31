@@ -19,7 +19,7 @@ describe "Validations" do
       class Unit < BaseUnit
         before_validate :check_name
         def check_name
-          errors[:name] = 'invalid name'
+          errors.add :name, 'invalid name'
         end
       end
 
@@ -39,6 +39,19 @@ describe "Validations" do
 
       unit.errors.clear
       unit.save.should be_true
+    end
+
+    it "should add custom validations" do
+      class Unit < BaseUnit
+        validate :check_name
+        def check_name
+          errors.add :name, 'invalid name'
+        end
+      end
+
+      unit = Unit.new
+      unit.save.should be_false
+      unit.errors[:name].should == ['invalid name']
     end
 
     # it "should check :errors only and ignore valid? method" do

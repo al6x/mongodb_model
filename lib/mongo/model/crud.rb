@@ -1,7 +1,7 @@
 module Mongo::Model::Crud
-  def save opts = {}
-    with_collection opts do |collection, opts|
-      collection.save self, opts
+  def save options = {}
+    with_collection options do |collection, options|
+      collection.save self, options
     end
   end
 
@@ -9,9 +9,9 @@ module Mongo::Model::Crud
     save(*args) || raise(Mongo::Error, "can't save #{self.inspect}!")
   end
 
-  def destroy opts = {}
-    with_collection opts do |collection, opts|
-      collection.destroy self, opts
+  def destroy options = {}
+    with_collection options do |collection, options|
+      collection.destroy self, options
     end
   end
 
@@ -20,38 +20,38 @@ module Mongo::Model::Crud
   end
 
   module ClassMethods
-    def build attributes = {}, opts = {}
-      self.new.set attributes, opts
+    def build attributes = {}, options = {}
+      self.new.set attributes, options
     end
 
-    def create attributes = {}, opts = {}
-      o = build attributes, opts
+    def create attributes = {}, options = {}
+      o = build attributes, options
       o.save
       o
     end
 
-    def create! attributes = {}, opts = {}
+    def create! attributes = {}, options = {}
       o = create attributes
       raise(Mongo::Error, "can't create #{attributes.inspect}!") if o.new_record?
       o
     end
 
-    def destroy_all selector = {}, opts = {}
+    def destroy_all selector = {}, options = {}
       success = true
-      collection = opts[:collection] || self.collection
+      collection = options[:collection] || self.collection
       each(selector){|o| success = false unless o.destroy}
       success
     end
 
-    def destroy_all! selector = {}, opts = {}
-      destroy_all(selector, opts) || raise(Mongo::Error, "can't destroy #{selector.inspect}!")
+    def destroy_all! selector = {}, options = {}
+      destroy_all(selector, options) || raise(Mongo::Error, "can't destroy #{selector.inspect}!")
     end
   end
 
   protected
-    def with_collection opts, &block
-      opts = opts.clone
-      collection = opts.delete(:collection) || self.class.collection
-      block.call collection, opts
+    def with_collection options, &block
+      options = options.clone
+      collection = options.delete(:collection) || self.class.collection
+      block.call collection, options
     end
 end

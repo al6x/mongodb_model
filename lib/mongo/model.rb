@@ -18,6 +18,7 @@ module Mongo::Model; end
   validation/uniqueness_validator
   crud
   query
+  query_mixin
   scope
   attribute_convertors
   file_model
@@ -33,7 +34,7 @@ module Mongo
       Callbacks,
       Validation,
       Crud,
-      Query,
+      QueryMixin,
       Scope,
       AttributeConvertors,
       Mongo::Model::FileModel,
