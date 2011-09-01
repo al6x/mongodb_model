@@ -33,6 +33,10 @@ module Mongo::Model::Misc
     nil
   end
 
+  def original
+    @_original ||= _id? ? self.class.by_id(self._id) : nil
+  end
+
   module ClassMethods
     delegate :t, to: I18n
 

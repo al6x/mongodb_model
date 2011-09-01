@@ -26,6 +26,9 @@ describe 'Model callbacks' do
       assign do
         name     String,  true
         has_mail Boolean, true
+      end
+
+      assign do
         age      Integer, true
         position true
         banned   Boolean
