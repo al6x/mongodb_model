@@ -53,6 +53,11 @@ module Mongo::Model::Assignment
     set attributes, options.merge(force: true)
   end
 
+  def initialize attributes = nil
+    super
+    set attributes if attributes
+  end
+
   module ClassMethods
     inheritable_accessor :_assign, nil
 

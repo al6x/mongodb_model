@@ -6,7 +6,7 @@ module Mongo::Model::Crud
   end
 
   def save! *args
-    save(*args) || raise(Mongo::Error, "can't save #{self.inspect}!")
+    save(*args) || raise(Mongo::Error, "can't save invalid model (#{self.errors})!")
   end
 
   def destroy options = {}
@@ -16,7 +16,7 @@ module Mongo::Model::Crud
   end
 
   def destroy! *args
-    destroy(*args) || raise(Mongo::Error, "can't destroy #{self.inspect}!")
+    destroy(*args) || raise(Mongo::Error, "can't destroy invalid model #{self.errors}!")
   end
 
   module ClassMethods
