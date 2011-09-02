@@ -40,7 +40,11 @@ module Mongo::Model::Assignment
           if mass_assignment or force
             v = type.cast(v) if type
             send "#{n}=", v
+          else
+            raise "mass assignment for :#{n} attribute not allowed!"
           end
+        else
+          raise "mass assignment for :#{n} attribute not allowed!"
         end
       end
     else

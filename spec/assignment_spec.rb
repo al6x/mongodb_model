@@ -36,7 +36,8 @@ describe 'Model callbacks' do
     end
 
     u = User.new
-    u.set name: 'Alex', has_mail: '1', age: '31', position: [11, 34] ,banned: '0'
+    u.set name: 'Alex', has_mail: '1', age: '31', position: [11, 34]
+    -> {u.set name: 'Alex', banned: false}.should raise_error(/not allowed/)
     [u.name, u.has_mail, u.age, u.position, u.banned].should == ['Alex', true, 31, [11, 34], nil]
 
     # should allow to forcefully cast and update any attribute

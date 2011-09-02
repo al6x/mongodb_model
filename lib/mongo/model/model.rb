@@ -21,6 +21,7 @@ module Mongo::Model
 
     variables = {}; ::Mongo::Object.each_object_instance_variable(self){|n, v| variables[n] = v}
     o_variables = {}; ::Mongo::Object.each_object_instance_variable(o){|n, v| o_variables[n] = v}
+
     variables == o_variables
   end
 
