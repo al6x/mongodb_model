@@ -25,8 +25,8 @@ module Mongo::Model::Validation
       add_validations(args, Mongo::Model::UniquenessValidator)
     end
 
-    def validate validation
-      validations << validation
+    def validate validation = nil, &block
+      validations.push block || validation
     end
 
     protected
