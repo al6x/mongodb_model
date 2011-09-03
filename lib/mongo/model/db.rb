@@ -5,7 +5,10 @@ module Mongo::Model::Db
       self._db = if v.is_a? ::Proc
         v
       elsif v.is_a? ::Symbol
-        -> {::Mongo::Model.connection.db v.to_s}
+        -> do
+          db_name = ::Mongo::Model.resolve_db_alias v
+          ::Mongo::Model.connection.db db_name
+        end
       else
         -> {v}
       end

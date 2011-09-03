@@ -37,18 +37,6 @@ module Mongo::Model::AttributeConvertors
         self.send "#{name}=", from_string.call(value)
       end
     end
-
-    def available_as_yaml name
-      raise "delimiter not specified for :#{name} field!" unless delimiter
-      method = "#{name}_as_string"
-      define_method method do
-        self.send(name).join(delimiter)
-      end
-      define_method "#{method}=" do |value|
-        value = (value || "").split(delimiter.strip).collect{|s| s.strip}
-        self.send "#{name}=", value
-      end
-    end
   end
 
 end

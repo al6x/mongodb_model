@@ -28,5 +28,11 @@ module Mongo::Model
   class << self
     attr_accessor :db, :connection
     attr_required :db, :connection
+
+    # Override this method to provide custom alias to db name translation,
+    # for example db_name = my_config[alias_name]
+    def resolve_db_alias alias_name
+      alias_name.to_s
+    end
   end
 end

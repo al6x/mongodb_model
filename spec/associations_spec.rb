@@ -24,7 +24,7 @@ describe 'Associations' do
       attr_accessor :text, :post_id
 
       def == o
-        [self.class, text, post_id] == [o.class, o.text, o.post_id]
+        self.class == o.class and [text, post_id] == [o.text, o.post_id]
       end
 
       timestamps!

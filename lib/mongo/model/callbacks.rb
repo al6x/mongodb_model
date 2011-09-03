@@ -22,5 +22,8 @@ module Mongo::Model::Callbacks
         end
       end
     end
+
+    alias_method :before_validation, :before_validate
+    alias_method :after_validation, :after_validate
   end
 end

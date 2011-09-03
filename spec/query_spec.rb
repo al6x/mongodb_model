@@ -64,4 +64,18 @@ describe "Model Query" do
     u = SpecialUnit.first
     [u.name, u.age].should == ['Zeratul', 500]
   end
+
+  it "build should assign protected attributes" do
+    class SpecialUnit < Unit
+      attr_accessor :age, :status
+      assign do
+        name String, true
+        age  Integer, true
+      end
+    end
+
+    -> {SpecialUnit.query(name: 'Zeratul').build age: 500, status: 'active'}.should raise_error(/not allowed/)
+    u = SpecialUnit.query(name: 'Zeratul', status: 'active').build age: 500
+    u.status.should == 'active'
+  end
 end

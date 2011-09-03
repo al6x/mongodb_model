@@ -35,14 +35,10 @@ module Mongo::Model::Assignment
       force = options[:force]
       attributes.each do |n, v|
         n = n.to_sym
-        if rule = rules[n]
-          type, mass_assignment = rule
-          if mass_assignment or force
-            v = type.cast(v) if type
-            send "#{n}=", v
-          else
-            raise "mass assignment for :#{n} attribute not allowed!"
-          end
+        type, mass_assignment = rules[n]
+        if mass_assignment or force
+          v = type.cast(v) if type
+          send "#{n}=", v
         else
           raise "mass assignment for :#{n} attribute not allowed!"
         end

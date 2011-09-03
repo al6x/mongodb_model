@@ -20,20 +20,23 @@ module Mongo::Model::Crud
   end
 
   module ClassMethods
-    def build attributes = {}, options = {}
-      self.new.set attributes, options
+    def build attributes = {}, options = {}, &block
+      model = self.new
+      model.set attributes, options
+      block.call model if block
+      model
     end
 
-    def create attributes = {}, options = {}
-      o = build attributes, options
-      o.save
-      o
+    def create attributes = {}, options = {}, &block
+      model = build attributes, options, &block
+      model.save
+      model
     end
 
-    def create! attributes = {}, options = {}
-      o = create attributes
-      raise(Mongo::Error, "can't create #{attributes.inspect}!") if o.new_record?
-      o
+    def create! attributes = {}, options = {}, &block
+      model = build attributes, options, &block
+      model.save || raise(Mongo::Error, "can't create #{attributes.inspect}!")
+      model
     end
 
     def destroy_all selector = {}, options = {}
