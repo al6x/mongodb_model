@@ -43,7 +43,6 @@ module Mongo
 end
 
 Mongo.defaults.merge! \
-  symbolize:                    true,
   convert_underscore_to_dollar: true,
   batch_size:                   50,
   multi:                        true,

@@ -118,8 +118,8 @@ describe "Model CRUD" do
       @mission_class = Player::Mission
       @player = Player.new
       @player.missions = [
-        Player::Mission.build(name: 'Wasteland',         stats: {buildings: 5, units: 10}),
-        Player::Mission.build(name: 'Backwater Station', stats: {buildings: 8, units: 25}),
+        Player::Mission.build(name: 'Wasteland',         stats: {'buildings' => 5, 'units' => 10}),
+        Player::Mission.build(name: 'Backwater Station', stats: {'buildings' => 8, 'units' => 25}),
       ]
     end
 
@@ -136,8 +136,8 @@ describe "Model CRUD" do
       Player.first.object_id.should_not == @players.object_id
 
       # update
-      @player.missions.first.stats[:units] = 9
-      @player.missions << Player::Mission.build(name: 'Desperate Alliance', stats: {buildings: 11, units: 40})
+      @player.missions.first.stats['units'] = 9
+      @player.missions << Player::Mission.build(name: 'Desperate Alliance', stats: {'buildings' => 11, 'units' => 40})
       @player.save.should be_true
       Player.count.should == 1
       Player.first.should == @player

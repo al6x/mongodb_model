@@ -1,4 +1,7 @@
 module Mongo::Model::Misc
+  def update_created_at; self.created_at = Time.now.utc end
+  def update_updated_at; self.updated_at = Time.now.utc end
+
   def update_timestamps
     now = Time.now.utc
     self.created_at ||= now
@@ -42,7 +45,8 @@ module Mongo::Model::Misc
 
     def timestamps!
       attr_accessor :created_at, :updated_at
-      before_save :update_timestamps
+      before_create :update_created_at
+      before_save :update_updated_at
     end
   end
 end

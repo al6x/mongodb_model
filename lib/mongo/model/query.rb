@@ -10,7 +10,11 @@ class Mongo::Model::Query < Object
   end
 
   def merge query
-    raise "can't merge queries with different models!" unless model_class == query.model_class
+    model_class == query.model_class or
+      model_class.is?(query.model_class) or
+      query.model_class.is?(model_class) or
+      raise("can't merge queries with different models!")
+
     self.class.new model_class, selector.merge(query.selector), options.merge(query.options)
   end
 

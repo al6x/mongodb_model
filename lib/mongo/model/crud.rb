@@ -35,7 +35,7 @@ module Mongo::Model::Crud
 
     def create! attributes = {}, options = {}, &block
       model = build attributes, options, &block
-      model.save || raise(Mongo::Error, "can't create #{attributes.inspect}!")
+      model.save || raise(Mongo::Error, "can't create #{self} #{model.errors.inspect}!")
       model
     end
 

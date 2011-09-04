@@ -65,6 +65,15 @@ describe "Model Query" do
     [u.name, u.age].should == ['Zeratul', 500]
   end
 
+  it 'exist?' do
+    u = Unit.new
+    u.exist?.should be_false
+    u.save!
+    u.exist?.should be_true
+    u.destroy!
+    u.exist?.should be_false
+  end
+
   it "build should assign protected attributes" do
     class SpecialUnit < Unit
       attr_accessor :age, :status

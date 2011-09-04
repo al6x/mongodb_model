@@ -1,7 +1,7 @@
 module Mongo::Model::Scope
   module ClassMethods
     def current_scope
-      scope, exclusive = Thread.current[:mongo_model_scope]
+      scope, exclusive = Thread.current[scope_identifier]
       current = if exclusive
         scope
       elsif scope
@@ -23,15 +23,15 @@ module Mongo::Model::Scope
       end
 
       scope = query *args
-      previous_scope, previous_exclusive = Thread.current[:mongo_model_scope]
+      previous_scope, previous_exclusive = Thread.current[scope_identifier]
       raise "exclusive scope already applied!" if previous_exclusive
 
       begin
         scope = previous_scope.merge scope if !exclusive and previous_scope
-        Thread.current[:mongo_model_scope] = [scope, exclusive]
+        Thread.current[scope_identifier] = [scope, exclusive]
         return block.call
       ensure
-        Thread.current[:mongo_model_scope] = [previous_scope, false]
+        Thread.current[scope_identifier] = [previous_scope, false]
       end
     end
 
@@ -80,5 +80,10 @@ module Mongo::Model::Scope
         super selector, options, &block
       end
     end
+
+    protected
+      def scope_identifier
+        @scope_identifier ||= :"mms_#{self.name}"
+      end
   end
 end
