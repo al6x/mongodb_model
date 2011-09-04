@@ -147,4 +147,18 @@ describe "Scope" do
       end
     end
   end
+
+  describe 'handy scopes' do
+    it "limit, skip, sort" do
+      query = Unit.skip(30).limit(10).sort([name: 1]).snapshot
+      query.selector.should == {}
+      query.options.should == {skip: 30, limit: 10, sort: [[name: 1]], snapshot: true}
+    end
+
+    it 'paginate' do
+      query = Unit.paginate(4, 10)
+      query.selector.should == {}
+      query.options.should == {skip: 30, limit: 10}
+    end
+  end
 end

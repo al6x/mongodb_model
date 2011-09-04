@@ -81,6 +81,19 @@ module Mongo::Model::Scope
       end
     end
 
+
+    #
+    # Handy scopes
+    #
+    def limit n; query({}, limit: n) end
+    def skip n; query({}, skip: n) end
+    def sort *list; query({}, sort: list) end
+    def snapshot; query({}, snapshot: true) end
+
+    def paginate page, per_page
+      skip((page - 1) * per_page).limit(per_page)
+    end
+
     protected
       def scope_identifier
         @scope_identifier ||= :"mms_#{self.name}"

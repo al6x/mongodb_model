@@ -19,6 +19,10 @@ module Mongo::Model::Crud
     destroy(*args) || raise(Mongo::Error, "can't destroy invalid model #{self.errors}!")
   end
 
+  def update doc, options = {}
+    self.class.collection.update({_id: _id}, doc, options)
+  end
+
   module ClassMethods
     def build attributes = {}, options = {}, &block
       model = self.new
@@ -48,6 +52,10 @@ module Mongo::Model::Crud
 
     def destroy_all! selector = {}, options = {}
       destroy_all(selector, options) || raise(Mongo::Error, "can't destroy #{selector.inspect}!")
+    end
+
+    def update selector, doc, options = {}
+      collection.update selector, doc, options
     end
   end
 

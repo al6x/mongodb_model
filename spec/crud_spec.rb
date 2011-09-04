@@ -93,6 +93,18 @@ describe "Model CRUD" do
 
       Unit.destroy_all!
     end
+
+    it 'modifiers' do
+      unit = Unit.create! name: 'Zeratul'
+
+      Unit.update({_id: unit._id}, _set: {name: 'Tassadar'})
+      unit.reload
+      unit.name.should == 'Tassadar'
+
+      unit.update _set: {name: 'Fenix'}
+      unit.reload
+      unit.name.should == 'Fenix'
+    end
   end
 
   describe 'embedded' do
