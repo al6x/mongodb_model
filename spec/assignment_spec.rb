@@ -23,8 +23,9 @@ describe 'Model callbacks' do
 
       attr_accessor :name, :has_mail, :age, :position, :banned
 
+      assign :name, String, true
+
       assign do
-        name     String,  true
         has_mail Boolean, true
       end
 

@@ -1,32 +1,13 @@
 module Mongo::Model::Assignment
   class Dsl < BasicObject
-    def initialize
-      @attributes = {}
+    def initialize model
+      @model = model
     end
-
-    def self.const_missing name
-      # BasicObject doesn't have access to any constants like String, Symbol, ...
-      ::Object.const_get name
-    end
-
-    def to_h; attributes end
 
     protected
-      attr_reader :attributes
-
-      def method_missing attribute_name, *args
-        attribute_name.must_be.a Symbol
-
-        args.size.must_be.in 1..2
-        if args.first.is_a? Class
-          type, mass_assignment = args
-          mass_assignment ||= false
-          type.must.respond_to :cast
-        else
-          type, mass_assignment = nil, args.first
-        end
-
-        attributes[attribute_name] = [type, mass_assignment]
+      def method_missing m, *args
+        args.unshift m
+        @model.assign *args
       end
   end
 
@@ -61,10 +42,26 @@ module Mongo::Model::Assignment
   module ClassMethods
     inheritable_accessor :_assign, nil
 
-    def assign &block
-      dsl = ::Mongo::Model::Assignment::Dsl.new
-      dsl.instance_eval &block
-      self._assign = (_assign || {}).merge dsl.to_h
+    def assign *args, &block
+      if block
+        dsl = ::Mongo::Model::Assignment::Dsl.new self
+        dsl.instance_eval &block
+      else
+        args.size.must_be.in 2..3
+        attr_name = args.shift
+        attr_name.must_be.a Symbol
+
+        if args.first.is_a? Class
+          type, mass_assignment = args
+          mass_assignment ||= false
+          type.must.respond_to :cast
+        else
+          type, mass_assignment = nil, args.first
+        end
+
+        self._assign ||= {}
+        _assign[attr_name] = [type, mass_assignment]
+      end
     end
   end
 end
