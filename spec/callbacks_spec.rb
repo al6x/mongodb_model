@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Model callbacks' do
   with_mongo_model
 
-  after(:all){remove_constants :TheModel, :Player}
+  after{remove_constants :TheModel, :Player}
 
   it "integration smoke test" do
     class Player

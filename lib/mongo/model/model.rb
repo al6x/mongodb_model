@@ -19,8 +19,8 @@ module Mongo::Model
   def model_eq? o
     return true if equal? o
 
-    variables = {}; ::Mongo::Object.each_object_instance_variable(self){|n, v| variables[n] = v}
-    o_variables = {}; ::Mongo::Object.each_object_instance_variable(o){|n, v| o_variables[n] = v}
+    variables = {}; ::Mongo::Object.each_instance_variable(self){|n, v| variables[n] = v}
+    o_variables = {}; ::Mongo::Object.each_instance_variable(o){|n, v| o_variables[n] = v}
 
     variables == o_variables
   end

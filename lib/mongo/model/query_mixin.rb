@@ -2,7 +2,7 @@ module Mongo::Model::QueryMixin
   def exists? options = {}
     self.class.count({_id: _id}, options) > 0
   end
-  alias :exist? :exists?
+  alias_method :exist?, :exists?
 
   module ClassMethods
     include Mongo::DynamicFinders
@@ -36,7 +36,7 @@ module Mongo::Model::QueryMixin
     def exists? selector = {}, options = {}
       count(selector, options) > 0
     end
-    alias :exist? :exists?
+    alias_method :exist?, :exists?
 
     def query *args
       if args.first.is_a? Mongo::Model::Query
@@ -46,5 +46,6 @@ module Mongo::Model::QueryMixin
         Mongo::Model::Query.new self, (selector || {}), (options || {})
       end
     end
+    alias_method :where, :query
   end
 end

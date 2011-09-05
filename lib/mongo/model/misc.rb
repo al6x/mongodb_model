@@ -22,8 +22,6 @@ module Mongo::Model::Misc
     (_id || '').to_s
   end
 
-  delegate :t, to: I18n
-
   def reload
     obj = self.class.by_id!(_id || raise("can't reload new document (#{self})!"))
     instance_variables.each{|n| remove_instance_variable n}
@@ -38,8 +36,6 @@ module Mongo::Model::Misc
   end
 
   module ClassMethods
-    delegate :t, to: I18n
-
     def timestamps!
       attr_accessor :created_at, :updated_at
       before_create :update_created_at

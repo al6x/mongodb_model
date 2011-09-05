@@ -2,7 +2,6 @@ require 'mongodb_model/gems'
 
 require 'validatable'
 require 'file_model'
-require 'i18n'
 require 'ruby_ext'
 require 'mongo/object'
 
@@ -12,6 +11,7 @@ module Mongo::Model; end
   support/types
 
   db
+  conversion
   assignment
   callbacks
   validation
@@ -30,6 +30,7 @@ module Mongo
   module Model
     inherit \
       Db,
+      Conversion,
       Assignment,
       Callbacks,
       Validation,

@@ -35,5 +35,13 @@
 
 
 
+  @models = self.class.model_class.
+    where(viewers: {_in: rad.user.major_roles}, dependent: false).
+    sort([:created_at, -1]).
+    paginate(@page, @per_page).
+    all
+
+  Security profiles
+
 - Handy scopes (limit, skip, paginate, ...)
 - Modifiers ($set, $get, $push, ...)
