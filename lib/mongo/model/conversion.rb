@@ -1,13 +1,28 @@
 module Mongo::Model::Conversion
-  def to_json *args, &block
+  def model_to_json *args, &block
     to_rson(*args, &block).to_json
   end
 
-  def to_xml *args, &block
+  def model_to_xml *args, &block
     to_rson(*args, &block).to_xml
   end
 
+  alias_method :to_json, :model_to_json
+  alias_method :to_xml, :model_to_xml
+
+  inherited do
+    alias_method :to_json, :model_to_json
+    alias_method :to_xml, :model_to_xml
+
+    # hack to supress ActiveSupport as_json
+    alias_method :as_json, :model_to_json
+    alias_method :as_xml, :model_to_xml
+  end
+
   def to_rson options = {}
+    # hack to suppress ActiveSupport as_json
+    options ||= {}
+
     if profile = options[:profile]
       raise "no other optins are allowed when using :profile option!" if options.size > 1
       profile_options = self.class.profiles[profile] || raise("profile :#{profile} not defined for #{self.class}!")
