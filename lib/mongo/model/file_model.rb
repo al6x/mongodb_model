@@ -19,9 +19,9 @@ module Mongo::Model::FileModel
         model.errors[attr_name] = file_model.errors unless file_model.errors.empty?
       end
 
-      after_save{|model| model.send(attr_name).save}
+      after_save{|model| model.send(attr_name).save!}
 
-      after_destroy{|model| model.send(attr_name).destroy}
+      after_destroy{|model| model.send(attr_name).destroy!}
     end
   end
 end
