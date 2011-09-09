@@ -1,7 +1,7 @@
 class Mongo::Model::Query < Object
   attr_reader :model_class, :selector, :options
 
-  def initialize model_class, selector = {}, options = {} *args
+  def initialize model_class, selector = {}, options = {}
     @model_class, @selector, @options = model_class, selector, options
   end
 

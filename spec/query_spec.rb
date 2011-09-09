@@ -87,4 +87,12 @@ describe "Model Query" do
     u = SpecialUnit.query(name: 'Zeratul', status: 'active').build age: 500
     u.status.should == 'active'
   end
+
+  it "where" do
+    # Unit.where(name: 'Zeratul').should == Mongo::Model::Query.new(Unit, {name: 'Zeratul'}, {})
+
+    query = Unit.where(name: 'Zeratul')
+    query = query.where(race: 'Protoss')
+    query.should == Mongo::Model::Query.new(Unit, {name: 'Zeratul', race: 'Protoss'}, {})
+  end
 end
