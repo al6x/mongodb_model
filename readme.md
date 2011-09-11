@@ -6,7 +6,7 @@ Object Model for MongoDB (callbacks, validations, mass-assignment, finders, ...)
 - Models can be saved to any collection, dynamically.
 - Full support for embedded objects (validations, callbacks, ...).
 - Scope, default_scope
-- Doesn't try to mimic ActiveRecord, MongoDB is differrent and this tool designed to get most of it.
+- Doesn't try to mimic ActiveRecord, MongoDB is differrent and the Object Model designed to get most of it.
 - Works with multiple connections and databases.
 - Associations.
 - Very small, see [code stats][code_stats].
