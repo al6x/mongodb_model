@@ -1,11 +1,11 @@
 module Mongo::Model::Db
   module ClassMethods
-    inheritable_accessor :db_name, :default
+    inheritable_accessor :db_name, nil
     def db name = nil
       if name
         self.db_name = name
       else
-        Mongo.db db_name
+        Mongo.db db_name || Mongo::Model.default_database_name
       end
     end
 
@@ -25,4 +25,15 @@ module Mongo::Model::Db
         first_ancestor_class.alias.pluralize.underscore.to_sym
       end
   end
+end
+
+Mongo::Model.class_eval do
+  class << self
+    attr_accessor :default_database_name
+
+    def default_database
+      Mongo.db default_database
+    end
+  end
+  self.default_database_name = :default
 end

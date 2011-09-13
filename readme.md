@@ -4,7 +4,7 @@ Object Model for MongoDB (callbacks, validations, mass-assignment, finders, ...)
 - Minimum extra abstractions, trying to keep things as close to the MongoDB semantic as possible.
 - Schema-less, dynamic (with ability to specify types for mass-assignment).
 - Models can be saved to any collection, dynamically.
-- Full support for embedded objects (validations, callbacks, ...).
+- Full support for composite / embedded objects (validations, callbacks, ...).
 - Scope, default_scope
 - Doesn't try to mimic ActiveRecord, MongoDB is differrent and the Object Model designed to get most of it.
 - Works with multiple connections and databases.
