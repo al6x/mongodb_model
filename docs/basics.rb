@@ -21,7 +21,7 @@ class Unit
   attr_accessor :name, :status, :stats
 end
 
-# Defining Stats to conaint statistics of Unit (Stats will be embedded into the
+# Stats conaining statistics about Unit (it will be embedded into the
 # Unit).
 class Unit::Stats
   inherit Mongo::Model
