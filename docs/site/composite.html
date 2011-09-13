@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>composite.rb</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="basics.html">basics.rb</a>
+          <a class="source" href="composite.html">composite.rb</a>
+          <a class="source" href="index.html">index.rb</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>composite.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        <p>Example of Composite Objects using <a href="index.html">Mongo Object Model</a>.</p>
+
+<p>Models are just ordinary Ruby Objects, so You can combine and mix it as You wish.
+The only differences are</p>
+
+<ul>
+<li>main object has the <code>_id</code> defined.</li>
+<li>child objects doesn&rsquo;t have <code>_id</code>, but have <code>_parent</code> reference to the main object.
+and it&rsquo;s children the <code>_parent</code>.</li>
+</ul>
+
+<p><a href="callbacks.html">Callbacks</a>, <a href="validations.html">validations</a> and <a href="conversions.html">conversions</a>
+works on embedded objects the same way as on the main.</p>
+
+<p>In this example we&rsquo;ll create simple Blog and see how to embed
+Comment into Post.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;mongo/model&#39;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>Connecting to test database and cleaning it before starting the sample.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database_name</span> <span class="o">=</span> <span class="ss">:default_test</span>
+<span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database</span><span class="o">.</span><span class="n">drop</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
+  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
+
+  <span class="kp">attr_accessor</span> <span class="ss">:text</span>
+  </pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>Using plain Ruby Array as container for Comments.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">comments</span><span class="p">;</span> <span class="vi">@comments</span> <span class="o">||=</span> <span class="o">[]</span> <span class="k">end</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>

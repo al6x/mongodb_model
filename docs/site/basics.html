@@ -13,6 +13,7 @@
     <div id="jump_wrapper">
       <div id="jump_page">
           <a class="source" href="basics.html">basics.rb</a>
+          <a class="source" href="composite.html">composite.rb</a>
           <a class="source" href="index.html">index.rb</a>
       </div>
     </div>
@@ -31,6 +32,9 @@
           <a class="pilcrow" href="#section-1">&#182;</a>
         </div>
         <p>Basic example of working with <a href="index.html">Mongo Object Model</a>.</p>
+
+<p>In this example we&rsquo;ll create simple model and examine basic CRUD and
+querying operations.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;mongo/model&#39;</span></pre></div>
@@ -54,8 +58,8 @@
           <a class="pilcrow" href="#section-3">&#182;</a>
         </div>
         <p>Let&rsquo;s define the first model &ndash; Game Unit.
-Models are just standard Ruby Objects, there&rsquo;s no any Attribute Scheme,
-Types, Proxies, or any other complex stuff, just use standard Ruby practices.</p>
+Models are just plain Ruby Objects, there&rsquo;s no any Attribute Scheme,
+Types, Proxies, or other complex stuff, just use standard Ruby practices.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><span class="k">class</span> <span class="nc">Unit</span></pre></div>
@@ -66,12 +70,11 @@ Types, Proxies, or any other complex stuff, just use standard Ruby practices.</p
         <div class="pilwrap">
           <a class="pilcrow" href="#section-4">&#182;</a>
         </div>
-        <p>Inheriting our Unit Class from Mongo::Model (please don&rsquo;t be afraid 
-of <code>inherit</code> keyword, it&rsquo;s just a shortcut to do <code>self.included</code> pattern).</p>
+        <p>Inheriting our Unit Class from Mongo::Model (the <code>inherit</code> keyword is
+just a simple shortcut including Module and it&rsquo;s ClassMethods).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
-  </pre></div>
+        <div class='highlight'><pre>  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span></pre></div>
       </td>
     </tr>
     <tr id='section-5'>
@@ -103,12 +106,16 @@ guessed from the Class name.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-7">&#182;</a>
         </div>
-        <p>Defining Stats to conaint statistics of Unit (Stats will be embedded into the 
+        <p>Stats conaining statistics about Unit (it will be embedded into the
 Unit).</p>
+
+<p>There are no difference between main and embedded objects, all of them
+are just standard Ruby objects.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><span class="k">class</span> <span class="nc">Unit</span><span class="o">::</span><span class="no">Stats</span>
-  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>  
+  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
+
   <span class="kp">attr_accessor</span> <span class="ss">:attack</span><span class="p">,</span> <span class="ss">:life</span><span class="p">,</span> <span class="ss">:shield</span>
 <span class="k">end</span></pre></div>
       </td>
@@ -185,12 +192,12 @@ Unit).</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-13">&#182;</a>
         </div>
-        <p>In this example we covered basics of Mongo Object Model, if You are interesting
-here are more detailed examples: </p>
+        <p>In this example we covered basics of <a href="index.html">Mongo Object Model</a>, if You are interesting
+here are more detailed examples:</p>
 
-<p><a href="composite.html">composite</a>, <a href="querying.html">querying</a>, <a href="scope.html">scope</a>, 
-<a href="validations.html">validations</a>, <a href="callbacks.html">callbacks</a>, <a href="conversion.html">conversion</a>, 
-<a href="associations.html">associations</a>, <a href="assignment.html">assignment</a>, <a href="database.html">database</a>, 
+<p><a href="composite.html">composite</a>, <a href="querying.html">querying</a>, <a href="scope.html">scope</a>,
+<a href="validations.html">validations</a>, <a href="callbacks.html">callbacks</a>, <a href="conversions.html">conversions</a>,
+<a href="associations.html">associations</a>, <a href="assignment.html">assignment</a>, <a href="database.html">database</a>,
 <a href="http://alexeypetrushin.github.com/mongodb/migration.html">migrations</a>.</p>
 
       </td>

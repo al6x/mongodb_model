@@ -1,30 +1,38 @@
 # Basic example of working with [Mongo Object Model][mongodb_model].
+#
+# In this example we'll create simple model and examine basic CRUD and
+# querying operations.
 require 'mongo/model'
 
-# Connecting to test database and cleaning it before starting the sample.
+# Connecting to test database and cleaning it before starting.
 Mongo::Model.default_database_name = :default_test
-Mongo::Model.default_database.drop
+Mongo::Model.default_database.clear
 
-# Let's define the first model - Game Unit.
-# Models are just standard Ruby Objects, there's no any Attribute Scheme,
-# Types, Proxies, or any other complex stuff, just use standard Ruby practices.
+# Let's define first model - Game Unit.
+# Models are just plain Ruby Objects, there's no any Attribute Scheme,
+# Types, Proxies, or other complex stuff, just use standard Ruby practices.
 class Unit
-  # Inheriting our Unit Class from Mongo::Model (please don't be afraid
-  # of `inherit` keyword, it's just a shortcut to do `self.included` pattern).
+  # Inheriting our Unit Class from Mongo::Model (the `inherit` keyword is
+  # just a simple shortcut including Module and its ClassMethods).
   inherit Mongo::Model
 
   # You can specify collection name explicitly or omit it and it will be
-  # guessed from the Class name.
+  # guessed from the class name.
   collection :units
 
-  # Use plain old Ruby `attr_accessor` to define attributes.
+  # There's no need to define attributes, just use plain old Ruby technics to
+  # of working with objects.
   attr_accessor :name, :status, :stats
 end
 
 # Stats conaining statistics about Unit (it will be embedded into the
 # Unit).
+#
+# There are no difference between main and embedded objects, all of them
+# are just standard Ruby objects.
 class Unit::Stats
   inherit Mongo::Model
+
   attr_accessor :attack, :life, :shield
 end
 
@@ -55,22 +63,7 @@ p Unit.by_name('Zeratul')                         # => zeratul
 p Unit.first_by_name('Zeratul')                   # => zeratul
 p Unit.all_by_name('Zeratul')                     # => [zeratul]
 
-# In this example we covered basics of [Mongo Object Model][mongodb_model], if You are interesting
-# here are more detailed examples:
-#
-# [composite][composite], [querying][querying], [scope][scope],
-# [validations][validations], [callbacks][callbacks], [conversion][conversion],
-# [associations][associations], [assignment][assignment], [database][database],
-# [migrations][migrations].
+# In this example we covered basics of [Mongo Object Model][mongodb_model],
+# please go to [contents][mongodb_model] for more samples.
 #
 # [mongodb_model]:     index.html
-# [migrations]:   http://alexeypetrushin.github.com/mongodb/migration.html
-# [callbacks]:    callbacks.html
-# [associations]: associations.html
-# [assignment]:   assignment.html
-# [validations]:  validations.html
-# [querying]:     querying.html
-# [scope]:        scope.html
-# [conversion]:   conversion.html
-# [database]:     database.html
-# [composite]:    composite.html

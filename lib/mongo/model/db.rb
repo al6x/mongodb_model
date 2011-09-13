@@ -32,7 +32,7 @@ Mongo::Model.class_eval do
     attr_accessor :default_database_name
 
     def default_database
-      Mongo.db default_database
+      Mongo.db default_database_name
     end
   end
   self.default_database_name = :default

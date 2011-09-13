@@ -11,7 +11,7 @@ Object Model for MongoDB (callbacks, validations, mass-assignment, finders, ...)
 - Associations.
 - Very small, see [code stats][code_stats].
 
-Other ODM usually try to cover simple but non-standard API of MongoDB behind complex ORM-like abstractions. This tool **exposes simplicity and power of MongoDB and leverages it's differences**.
+Other ODM usually try to cover simple but non-standard API of MongoDB behind complex ORM-like abstractions. This tool **exposes simplicity and power of MongoDB and leverages its differences**.
 
 ``` ruby
 # Connecting to MongoDB.
