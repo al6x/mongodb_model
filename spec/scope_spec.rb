@@ -150,9 +150,17 @@ describe "Scope" do
 
   describe 'handy scopes' do
     it "limit, skip, sort" do
-      query = Unit.skip(30).limit(10).sort([name: 1]).snapshot
+      query = Unit.skip(30).limit(10).sort([:name, 1]).snapshot
       query.selector.should == {}
-      query.options.should == {skip: 30, limit: 10, sort: [[name: 1]], snapshot: true}
+      query.options.should == {skip: 30, limit: 10, sort: [[:name, 1]], snapshot: true}
+    end
+
+    it "sort should understand simplified form" do
+      query = Unit.sort(:name)
+      query.options.should == {sort: [[:name, 1]]}
+
+      query = Unit.sort(:race, :name)
+      query.options.should == {sort: [[:race, 1], [:name, 1]]}
     end
 
     it 'paginate' do

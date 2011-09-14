@@ -87,7 +87,10 @@ module Mongo::Model::Scope
     #
     def limit n; query({}, limit: n) end
     def skip n; query({}, skip: n) end
-    def sort *list; query({}, sort: list) end
+    def sort *list
+      list = list.collect{|item| item.is_a?(Array) ? item : [item, 1]}
+      query({}, sort: list)
+    end
     def snapshot; query({}, snapshot: true) end
 
     def paginate page, per_page

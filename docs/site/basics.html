@@ -15,6 +15,7 @@
           <a class="source" href="basics.html">basics.rb</a>
           <a class="source" href="composite.html">composite.rb</a>
           <a class="source" href="index.html">index.rb</a>
+          <a class="source" href="querying.html">querying.rb</a>
       </div>
     </div>
   </div>
@@ -45,11 +46,11 @@ querying operations.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-2">&#182;</a>
         </div>
-        <p>Connecting to test database and cleaning it before starting the sample.</p>
+        <p>Connecting to test database and cleaning it before starting.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database_name</span> <span class="o">=</span> <span class="ss">:default_test</span>
-<span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database</span><span class="o">.</span><span class="n">drop</span></pre></div>
+<span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database</span><span class="o">.</span><span class="n">clear</span></pre></div>
       </td>
     </tr>
     <tr id='section-3'>
@@ -57,7 +58,7 @@ querying operations.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-3">&#182;</a>
         </div>
-        <p>Let&rsquo;s define the first model &ndash; Game Unit.
+        <p>Let&rsquo;s define first model &ndash; Game Unit.
 Models are just plain Ruby Objects, there&rsquo;s no any Attribute Scheme,
 Types, Proxies, or other complex stuff, just use standard Ruby practices.</p>
       </td>
@@ -71,7 +72,7 @@ Types, Proxies, or other complex stuff, just use standard Ruby practices.</p>
           <a class="pilcrow" href="#section-4">&#182;</a>
         </div>
         <p>Inheriting our Unit Class from Mongo::Model (the <code>inherit</code> keyword is
-just a simple shortcut including Module and it&rsquo;s ClassMethods).</p>
+just a simple shortcut including Module and its ClassMethods).</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span></pre></div>
@@ -83,7 +84,7 @@ just a simple shortcut including Module and it&rsquo;s ClassMethods).</p>
           <a class="pilcrow" href="#section-5">&#182;</a>
         </div>
         <p>You can specify collection name explicitly or omit it and it will be
-guessed from the Class name.</p>
+guessed from the class name.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>  <span class="n">collection</span> <span class="ss">:units</span></pre></div>
@@ -94,10 +95,13 @@ guessed from the Class name.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-6">&#182;</a>
         </div>
-        <p>Use plain old Ruby <code>attr_accessor</code> to define attributes.</p>
+        <p>There&rsquo;s no need to define attributes, just use plain old Ruby technics to
+of working with objects.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre>  <span class="kp">attr_accessor</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:status</span><span class="p">,</span> <span class="ss">:stats</span>
+  
+  <span class="k">def</span> <span class="nf">inspect</span><span class="p">;</span> <span class="nb">name</span> <span class="k">end</span>
 <span class="k">end</span></pre></div>
       </td>
     </tr>
@@ -167,10 +171,10 @@ are just standard Ruby objects.</p>
         <p>Querying, use standard MongoDB query.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                     <span class="c1"># =&gt; zeratul</span>
-<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                       <span class="c1"># =&gt; [zeratul]</span>
+        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                     <span class="c1"># =&gt; Zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                       <span class="c1"># =&gt; [Zeratul]</span>
 <span class="no">Unit</span><span class="o">.</span><span class="n">all</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span> <span class="k">do</span> <span class="o">|</span><span class="n">unit</span><span class="o">|</span>
-  <span class="nb">p</span> <span class="n">unit</span>                                          <span class="c1"># =&gt; zeratul</span>
+  <span class="nb">p</span> <span class="n">unit</span>                                          <span class="c1"># =&gt; Zeratul</span>
 <span class="k">end</span></pre></div>
       </td>
     </tr>
@@ -179,12 +183,12 @@ are just standard Ruby objects.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-12">&#182;</a>
         </div>
-        <p>Simple finders (bang versions also availiable).</p>
+        <p>Simple dynamic finders (bang versions also availiable).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                         <span class="c1"># =&gt; zeratul</span>
-<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">first_by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                   <span class="c1"># =&gt; zeratul</span>
-<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">all_by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                     <span class="c1"># =&gt; [zeratul]</span></pre></div>
+        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                         <span class="c1"># =&gt; Zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">first_by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                   <span class="c1"># =&gt; Zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">all_by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                     <span class="c1"># =&gt; [Zeratul]</span></pre></div>
       </td>
     </tr>
     <tr id='section-13'>
@@ -192,13 +196,8 @@ are just standard Ruby objects.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-13">&#182;</a>
         </div>
-        <p>In this example we covered basics of <a href="index.html">Mongo Object Model</a>, if You are interesting
-here are more detailed examples:</p>
-
-<p><a href="composite.html">composite</a>, <a href="querying.html">querying</a>, <a href="scope.html">scope</a>,
-<a href="validations.html">validations</a>, <a href="callbacks.html">callbacks</a>, <a href="conversions.html">conversions</a>,
-<a href="associations.html">associations</a>, <a href="assignment.html">assignment</a>, <a href="database.html">database</a>,
-<a href="http://alexeypetrushin.github.com/mongodb/migration.html">migrations</a>.</p>
+        <p>In this example we covered basics of <a href="index.html">Mongo Object Model</a>,
+please go to <a href="index.html">contents</a> for more samples.</p>
 
       </td>
       <td class=code>

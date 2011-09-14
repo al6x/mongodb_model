@@ -23,6 +23,8 @@ class Unit
   # There's no need to define attributes, just use plain old Ruby technics to
   # of working with objects.
   attr_accessor :name, :status, :stats
+
+  def inspect; name end
 end
 
 # Stats conaining statistics about Unit (it will be embedded into the
@@ -52,16 +54,16 @@ tassadar.stats.attack = 20
 p tassadar.save                                   # => true
 
 # Querying, use standard MongoDB query.
-p Unit.first(name: 'Zeratul')                     # => zeratul
-p Unit.all(name: 'Zeratul')                       # => [zeratul]
+p Unit.first(name: 'Zeratul')                     # => Zeratul
+p Unit.all(name: 'Zeratul')                       # => [Zeratul]
 Unit.all name: 'Zeratul' do |unit|
-  p unit                                          # => zeratul
+  p unit                                          # => Zeratul
 end
 
-# Simple finders (bang versions also availiable).
-p Unit.by_name('Zeratul')                         # => zeratul
-p Unit.first_by_name('Zeratul')                   # => zeratul
-p Unit.all_by_name('Zeratul')                     # => [zeratul]
+# Simple dynamic finders (bang versions also availiable).
+p Unit.by_name('Zeratul')                         # => Zeratul
+p Unit.first_by_name('Zeratul')                   # => Zeratul
+p Unit.all_by_name('Zeratul')                     # => [Zeratul]
 
 # In this example we covered basics of [Mongo Object Model][mongodb_model],
 # please go to [contents][mongodb_model] for more samples.

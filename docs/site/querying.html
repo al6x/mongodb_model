@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>querying.rb</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="basics.html">basics.rb</a>
+          <a class="source" href="composite.html">composite.rb</a>
+          <a class="source" href="index.html">index.rb</a>
+          <a class="source" href="querying.html">querying.rb</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>querying.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        <p>Example of Querying using <a href="index.html">Mongo Object Model</a>.</p>
+
+<p>In this example we&rsquo;ll see standard MongoDB queries, dynamic finders and scopes.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;mongo/model&#39;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>Connecting to test database and cleaning it before starting.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database_name</span> <span class="o">=</span> <span class="ss">:default_test</span>
+<span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database</span><span class="o">.</span><span class="n">clear</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+        <p>Defining Game Unit.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Unit</span>
+  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
+  <span class="n">collection</span> <span class="ss">:units</span>
+
+  <span class="kp">attr_accessor</span> <span class="ss">:name</span>
+
+  <span class="k">def</span> <span class="nf">inspect</span><span class="p">;</span> <span class="nb">name</span> <span class="k">end</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>Populating database.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">zeratul</span> <span class="o">=</span>  <span class="no">Unit</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span>
+<span class="n">tassadar</span> <span class="o">=</span> <span class="no">Unit</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Tassadar&#39;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>Standard MongoDB queries (there&rsquo;s also <code>each</code> method, the same as <code>all</code>).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                     <span class="c1"># =&gt; zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                       <span class="c1"># =&gt; [zeratul]</span>
+<span class="no">Unit</span><span class="o">.</span><span class="n">all</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span> <span class="k">do</span> <span class="o">|</span><span class="n">unit</span><span class="o">|</span>
+  <span class="nb">p</span> <span class="n">unit</span>                                          <span class="c1"># =&gt; zeratul</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
+        </div>
+        <p>Simple dynamic finders.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                         <span class="c1"># =&gt; zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">first_by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                   <span class="c1"># =&gt; zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">all_by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                     <span class="c1"># =&gt; [zeratul]</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-7'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-7">&#182;</a>
+        </div>
+        <p>Bang version, will raise error if nothing found.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">first!</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                    <span class="c1"># =&gt; zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                         <span class="c1"># =&gt; zeratul</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-8'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
+        </div>
+        <p>Counting and existence checking.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">count</span>                                      <span class="c1"># =&gt; 2</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                     <span class="c1"># =&gt; 1</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">exist?</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                    <span class="c1"># =&gt; true</span>
+<span class="nb">p</span> <span class="n">zeratul</span><span class="o">.</span><span class="n">exist?</span>                                  <span class="c1"># =&gt; true</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
+        </div>
+        <p>Sometimes it&rsquo;s handy to define frequently used queries
+on the model, such query called scope. </p>
+
+<p>Updating our Unit and repopulate database.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Unit</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
+        </div>
+        <p>Adding status attribute.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="kp">attr_accessor</span> <span class="ss">:status</span><span class="p">,</span> <span class="ss">:race</span>
+  </pre></div>
+      </td>
+    </tr>
+    <tr id='section-11'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-11">&#182;</a>
+        </div>
+        <p>Specifying <code>alive</code> scope to easilly select all alive units.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">scope</span> <span class="ss">:alive</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="s1">&#39;alive&#39;</span>
+  </pre></div>
+      </td>
+    </tr>
+    <tr id='section-12'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-12">&#182;</a>
+        </div>
+        <p>You can provide block, it will be dynamically
+calculated for each query.</p>
+
+<p>You can also specify <code>default_scope</code> it&rsquo;s defined like
+normal scope but unlike it it&rsquo;s always implicitly applied
+to all queries.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">scope</span><span class="p">(</span><span class="ss">:protosses</span><span class="p">){{</span><span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Protoss&#39;</span><span class="p">}}</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-13'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-13">&#182;</a>
+        </div>
+        <p>Repopulating database.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="no">Unit</span><span class="o">.</span><span class="n">destroy_all</span>
+<span class="n">zeratul</span> <span class="o">=</span>  <span class="no">Unit</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">,</span>  <span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Protoss&#39;</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="s1">&#39;alive&#39;</span>
+<span class="n">tassadar</span> <span class="o">=</span> <span class="no">Unit</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Tassadar&#39;</span><span class="p">,</span> <span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Protoss&#39;</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="s1">&#39;dead&#39;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-14'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-14">&#182;</a>
+        </div>
+        <p>Querying units using scope. Scopes are chainable, so You can use any
+standard <code>first</code>, <code>all</code>, <code>find_by</code>, <code>count</code> method as well as another
+scopes.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">count</span>                                <span class="c1"># =&gt; 1</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">first</span>                                <span class="c1"># =&gt; zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                   <span class="c1"># =&gt; zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">protosses</span><span class="o">.</span><span class="n">first</span>                     <span class="c1"># =&gt; zeratul</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-15'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-15">&#182;</a>
+        </div>
+        <p>In this example we covered how to use standard MongoDB queries,
+simple dynamic finders, scopes and query builder.</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
