@@ -16,6 +16,7 @@
           <a class="source" href="composite.html">composite.rb</a>
           <a class="source" href="index.html">index.rb</a>
           <a class="source" href="querying.html">querying.rb</a>
+          <a class="source" href="validations.html">validations.rb</a>
       </div>
     </div>
   </div>
@@ -64,7 +65,7 @@
   <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
   <span class="n">collection</span> <span class="ss">:units</span>
 
-  <span class="kp">attr_accessor</span> <span class="ss">:name</span>
+  <span class="kp">attr_accessor</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:status</span><span class="p">,</span> <span class="ss">:race</span>
 
   <span class="k">def</span> <span class="nf">inspect</span><span class="p">;</span> <span class="nb">name</span> <span class="k">end</span>
 <span class="k">end</span></pre></div>
@@ -78,8 +79,9 @@
         <p>Populating database.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="n">zeratul</span> <span class="o">=</span>  <span class="no">Unit</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span>
-<span class="n">tassadar</span> <span class="o">=</span> <span class="no">Unit</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Tassadar&#39;</span></pre></div>
+        <div class='highlight'><pre><span class="n">zeratul</span>  <span class="o">=</span> <span class="no">Unit</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">,</span>  <span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Protoss&#39;</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="s1">&#39;alive&#39;</span>
+<span class="n">tassadar</span> <span class="o">=</span> <span class="no">Unit</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Tassadar&#39;</span><span class="p">,</span> <span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Protoss&#39;</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="s1">&#39;dead&#39;</span>
+<span class="n">jim</span>      <span class="o">=</span> <span class="no">Unit</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Jim&#39;</span><span class="p">,</span>      <span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Terran&#39;</span><span class="p">,</span>  <span class="n">status</span><span class="p">:</span> <span class="s1">&#39;alive&#39;</span></pre></div>
       </td>
     </tr>
     <tr id='section-5'>
@@ -90,10 +92,10 @@
         <p>Standard MongoDB queries (there&rsquo;s also <code>each</code> method, the same as <code>all</code>).</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                     <span class="c1"># =&gt; zeratul</span>
-<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                       <span class="c1"># =&gt; [zeratul]</span>
+        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                        <span class="c1"># =&gt; Zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">all</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                          <span class="c1"># =&gt; [Zeratul]</span>
 <span class="no">Unit</span><span class="o">.</span><span class="n">all</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span> <span class="k">do</span> <span class="o">|</span><span class="n">unit</span><span class="o">|</span>
-  <span class="nb">p</span> <span class="n">unit</span>                                          <span class="c1"># =&gt; zeratul</span>
+  <span class="nb">p</span> <span class="n">unit</span>                                             <span class="c1"># =&gt; Zeratul</span>
 <span class="k">end</span></pre></div>
       </td>
     </tr>
@@ -105,9 +107,9 @@
         <p>Simple dynamic finders.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                         <span class="c1"># =&gt; zeratul</span>
-<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">first_by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                   <span class="c1"># =&gt; zeratul</span>
-<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">all_by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                     <span class="c1"># =&gt; [zeratul]</span></pre></div>
+        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                            <span class="c1"># =&gt; Zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">first_by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                      <span class="c1"># =&gt; Zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">all_by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                        <span class="c1"># =&gt; [Zeratul]</span></pre></div>
       </td>
     </tr>
     <tr id='section-7'>
@@ -118,8 +120,8 @@
         <p>Bang version, will raise error if nothing found.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">first!</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                    <span class="c1"># =&gt; zeratul</span>
-<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                         <span class="c1"># =&gt; zeratul</span></pre></div>
+        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">first!</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                       <span class="c1"># =&gt; Zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">by_name!</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                           <span class="c1"># =&gt; Zeratul</span></pre></div>
       </td>
     </tr>
     <tr id='section-8'>
@@ -130,10 +132,10 @@
         <p>Counting and existence checking.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">count</span>                                      <span class="c1"># =&gt; 2</span>
-<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                     <span class="c1"># =&gt; 1</span>
-<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">exist?</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                    <span class="c1"># =&gt; true</span>
-<span class="nb">p</span> <span class="n">zeratul</span><span class="o">.</span><span class="n">exist?</span>                                  <span class="c1"># =&gt; true</span></pre></div>
+        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">count</span>                                         <span class="c1"># =&gt; 3</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">count</span><span class="p">(</span><span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Protoss&#39;</span><span class="p">)</span>                        <span class="c1"># =&gt; 2</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">exist?</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                       <span class="c1"># =&gt; true</span>
+<span class="nb">p</span> <span class="n">zeratul</span><span class="o">.</span><span class="n">exist?</span>                                     <span class="c1"># =&gt; true</span></pre></div>
       </td>
     </tr>
     <tr id='section-9'>
@@ -141,13 +143,13 @@
         <div class="pilwrap">
           <a class="pilcrow" href="#section-9">&#182;</a>
         </div>
-        <p>Sometimes it&rsquo;s handy to define frequently used queries
-on the model, such query called scope. </p>
-
-<p>Updating our Unit and repopulate database.</p>
+        <p>You can use Query Builder for complex queries, let&rsquo;s write
+sample query with and without it.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Unit</span></pre></div>
+        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">all</span><span class="p">({</span><span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Protoss&#39;</span><span class="p">},</span> <span class="p">{</span><span class="n">sort</span><span class="p">:</span> <span class="o">[[</span><span class="ss">:name</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">]]</span><span class="p">})</span> <span class="c1"># =&gt; [Zeratul, Tassadar]</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Protoss&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="o">[</span><span class="ss">:name</span><span class="p">,</span> <span class="o">-</span><span class="mi">1</span><span class="o">]</span><span class="p">)</span><span class="o">.</span><span class="n">all</span>  <span class="c1"># =&gt; [Zeratul, Tassadar]</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Protoss&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="ss">:name</span><span class="p">)</span><span class="o">.</span><span class="n">all</span>        <span class="c1"># =&gt; [Tassadar, Zeratul]</span></pre></div>
       </td>
     </tr>
     <tr id='section-10'>
@@ -155,11 +157,11 @@ on the model, such query called scope. </p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-10">&#182;</a>
         </div>
-        <p>Adding status attribute.</p>
+        <p>Sometimes it&rsquo;s handy to define frequently used queries
+on the model, such queries called scopes.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>  <span class="kp">attr_accessor</span> <span class="ss">:status</span><span class="p">,</span> <span class="ss">:race</span>
-  </pre></div>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Unit</span></pre></div>
       </td>
     </tr>
     <tr id='section-11'>
@@ -170,8 +172,7 @@ on the model, such query called scope. </p>
         <p>Specifying <code>alive</code> scope to easilly select all alive units.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>  <span class="n">scope</span> <span class="ss">:alive</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="s1">&#39;alive&#39;</span>
-  </pre></div>
+        <div class='highlight'><pre>  <span class="n">scope</span> <span class="ss">:alive</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="s1">&#39;alive&#39;</span></pre></div>
       </td>
     </tr>
     <tr id='section-12'>
@@ -179,7 +180,7 @@ on the model, such query called scope. </p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-12">&#182;</a>
         </div>
-        <p>You can provide block, it will be dynamically
+        <p>If You provide block, it will be dynamically
 calculated for each query.</p>
 
 <p>You can also specify <code>default_scope</code> it&rsquo;s defined like
@@ -187,7 +188,7 @@ normal scope but unlike it it&rsquo;s always implicitly applied
 to all queries.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre>  <span class="n">scope</span><span class="p">(</span><span class="ss">:protosses</span><span class="p">){{</span><span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Protoss&#39;</span><span class="p">}}</span>
+        <div class='highlight'><pre>  <span class="n">scope</span><span class="p">(</span><span class="ss">:terrans</span><span class="p">){{</span><span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Terran&#39;</span><span class="p">}}</span>
 <span class="k">end</span></pre></div>
       </td>
     </tr>
@@ -196,12 +197,16 @@ to all queries.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-13">&#182;</a>
         </div>
-        <p>Repopulating database.</p>
+        <p>Now we can use those scopes in queries. Scopes are chainable, so You can use any
+standard <code>first</code>, <code>all</code>, <code>find_by</code>, <code>count</code> method as well as another
+scopes.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="no">Unit</span><span class="o">.</span><span class="n">destroy_all</span>
-<span class="n">zeratul</span> <span class="o">=</span>  <span class="no">Unit</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Zeratul&#39;</span><span class="p">,</span>  <span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Protoss&#39;</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="s1">&#39;alive&#39;</span>
-<span class="n">tassadar</span> <span class="o">=</span> <span class="no">Unit</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Tassadar&#39;</span><span class="p">,</span> <span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Protoss&#39;</span><span class="p">,</span> <span class="n">status</span><span class="p">:</span> <span class="s1">&#39;dead&#39;</span></pre></div>
+        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">count</span>                                   <span class="c1"># =&gt; 2</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">first</span>                                   <span class="c1"># =&gt; Zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                      <span class="c1"># =&gt; Zeratul</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">terrans</span><span class="o">.</span><span class="n">first</span>                           <span class="c1"># =&gt; Jim</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">where</span><span class="p">(</span><span class="n">race</span><span class="p">:</span> <span class="s1">&#39;Protoss&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">first</span>            <span class="c1"># =&gt; Zeratul</span></pre></div>
       </td>
     </tr>
     <tr id='section-14'>
@@ -209,15 +214,12 @@ to all queries.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-14">&#182;</a>
         </div>
-        <p>Querying units using scope. Scopes are chainable, so You can use any
-standard <code>first</code>, <code>all</code>, <code>find_by</code>, <code>count</code> method as well as another
-scopes.</p>
+        <p>Using pagination.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">count</span>                                <span class="c1"># =&gt; 1</span>
-<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">first</span>                                <span class="c1"># =&gt; zeratul</span>
-<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">by_name</span><span class="p">(</span><span class="s1">&#39;Zeratul&#39;</span><span class="p">)</span>                   <span class="c1"># =&gt; zeratul</span>
-<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">alive</span><span class="o">.</span><span class="n">protosses</span><span class="o">.</span><span class="n">first</span>                     <span class="c1"># =&gt; zeratul</span></pre></div>
+        <div class='highlight'><pre><span class="n">per_page</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">paginate</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">per_page</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="ss">:name</span><span class="p">)</span><span class="o">.</span><span class="n">all</span>         <span class="c1"># =&gt; [Jim, Tassadar]</span>
+<span class="nb">p</span> <span class="no">Unit</span><span class="o">.</span><span class="n">paginate</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="n">per_page</span><span class="p">)</span><span class="o">.</span><span class="n">sort</span><span class="p">(</span><span class="ss">:name</span><span class="p">)</span><span class="o">.</span><span class="n">all</span>         <span class="c1"># =&gt; [Zeratul]</span></pre></div>
       </td>
     </tr>
     <tr id='section-15'>
@@ -225,8 +227,22 @@ scopes.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-15">&#182;</a>
         </div>
+        <p>Mongo Object Model is tightly integrated with <a href="http://alexeypetrushin.github.com/mongodb">Driver</a>,
+so You can also use its API for querying.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">db</span> <span class="o">=</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database</span>
+<span class="nb">p</span> <span class="n">db</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Jim&#39;</span><span class="p">)</span>                        <span class="c1"># =&gt; Jim</span>
+<span class="nb">p</span> <span class="n">db</span><span class="o">.</span><span class="n">units</span><span class="o">.</span><span class="n">first</span><span class="p">(</span><span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Jim&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">class</span>                  <span class="c1"># =&gt; Unit</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-16'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-16">&#182;</a>
+        </div>
         <p>In this example we covered how to use standard MongoDB queries,
-simple dynamic finders, scopes and query builder.</p>
+dynamic finders, scopes and query builder.</p>
 
       </td>
       <td class=code>

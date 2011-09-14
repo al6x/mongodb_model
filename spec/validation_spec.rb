@@ -34,10 +34,10 @@ describe "Validations" do
       unit.errors.clear
       unit.save.should be_true
 
-      unit.errors[:name] = 'hairy error'
+      unit.errors.stub(:empty?).and_return(false)
       unit.save.should be_false
 
-      unit.errors.clear
+      unit.errors.stub(:empty?).and_return(true)
       unit.save.should be_true
     end
 
@@ -91,6 +91,17 @@ describe "Validations" do
       unit.valid?
       unit.instance_variables.select{|iv_name| iv_name !~ /^@_/}.should be_empty
     end
+  end
+
+  it "should clear errors before validation" do
+    class Unit < BaseUnit
+      validates_presence_of :name
+    end
+
+    unit = Unit.new
+    unit.should_not be_valid
+    unit.name = 'Zeratul'
+    unit.should be_valid
   end
 
   describe "special" do
