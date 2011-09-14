@@ -1,8 +1,8 @@
 # Object Model for MongoDB.
 #
 # [basics][basics], [composite][composite], [querying][querying],
-# [validations][validations], [callbacks][callbacks], [conversions][conversions],
-# [associations][associations], [assignment][assignment], [modifiers][modifiers],
+# [validations][validations], [callbacks][callbacks], [associations][associations],
+# [assignment][assignment], [conversions][conversions], [modifiers][modifiers],
 # [database][database], [migrations][migrations].
 #
 # Features:

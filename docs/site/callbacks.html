@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>callbacks.rb</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="basics.html">basics.rb</a>
+          <a class="source" href="callbacks.html">callbacks.rb</a>
+          <a class="source" href="composite.html">composite.rb</a>
+          <a class="source" href="index.html">index.rb</a>
+          <a class="source" href="querying.html">querying.rb</a>
+          <a class="source" href="validations.html">validations.rb</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>callbacks.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        <p>Callbacks in <a href="index.html">Mongo Object Model</a>.</p>
+
+<p>Callbacks are handy way to execute custom logic at special
+moments of the lifecycle of the model. There are following
+callbacks available:</p>
+
+<pre><code>before_validate
+after_validate
+
+before_save
+after_save
+
+before_create
+after_create
+
+before_update
+after_update
+
+before_destroy
+after_destroy
+</code></pre>
+
+<p>All these callbacks also available on embedded models.</p>
+
+<p>In this example we create post with embedded comments and
+generate teasers on it using callbacks.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;mongo/model&#39;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>Connecting to test database and cleaning it before starting.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database_name</span> <span class="o">=</span> <span class="ss">:default_test</span>
+<span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database</span><span class="o">.</span><span class="n">clear</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Basics'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Basics">&#182;</a>
+        </div>
+        <h3>Basics</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>Defining post, its teaser will be generated before saving.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
+  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
+  <span class="n">collection</span> <span class="ss">:posts</span>
+
+  <span class="kp">attr_accessor</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">:teaser</span>
+
+  <span class="kp">protected</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>Using <code>before_save</code> callback to generate teaser before saving the post
+(You can also use block version instead of method).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">generate_teaser</span>
+      <span class="vi">@teaser</span> <span class="o">=</span> <span class="n">text</span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">4</span><span class="o">]</span> <span class="k">if</span> <span class="n">text</span>
+    <span class="k">end</span>
+    <span class="n">before_save</span> <span class="ss">:generate_teaser</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
+        </div>
+        <p>Creating post, teaser will be generated when we save the post.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Norad II crashed!&#39;</span>
+<span class="n">post</span><span class="o">.</span><span class="n">save!</span>
+<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">teaser</span>                                     <span class="c1"># =&gt; Norad</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Embedded_Models'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Embedded_Models">&#182;</a>
+        </div>
+        <h3>Embedded Models</h3>
+
+<p>Callbacks on childrens works exactly the same way &ndash; it can differentiate when child
+created/update/destroyed:</p>
+
+<ul>
+<li>when main object created/updated/destroyed &ndash; the same callbacks propagated to
+its children.</li>
+<li>when child added to existing main object &ndash; the main object and all its existing
+children get <code>:update</code> callback, but all newly created children get <code>:create</code> callback.</li>
+<li>when child removed from existing main object &ndash; the main object and all its existing
+children get <code>:update</code> callback, but all removed children get <code>:destroy</code> callback.</li>
+</ul>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-8'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
+        </div>
+        <p>Adding comments to Post.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
+  <span class="k">def</span> <span class="nf">comments</span><span class="p">;</span> <span class="vi">@comments</span> <span class="o">||=</span> <span class="o">[]</span> <span class="k">end</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
+        </div>
+        <p>Defining Comment, it also has teaser generated in <code>before_save</code> callback.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Comment</span>
+  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
+
+  <span class="kp">attr_accessor</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">:teaser</span>
+
+  <span class="kp">protected</span>
+    <span class="k">def</span> <span class="nf">generate_teaser</span>
+      <span class="vi">@teaser</span> <span class="o">=</span> <span class="n">text</span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">4</span><span class="o">]</span> <span class="k">if</span> <span class="n">text</span>
+    <span class="k">end</span>
+    <span class="n">before_save</span> <span class="ss">:generate_teaser</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
+        </div>
+        <p>Creating post, there&rsquo;s text and it&rsquo;s valid.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Norad II crashed!&#39;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-11'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-11">&#182;</a>
+        </div>
+        <p>Adding comment to post.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">comment</span> <span class="o">=</span> <span class="no">Comment</span><span class="o">.</span><span class="n">new</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Where?&#39;</span>
+<span class="n">post</span><span class="o">.</span><span class="n">comments</span> <span class="o">&lt;&lt;</span> <span class="n">comment</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-12'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-12">&#182;</a>
+        </div>
+        <p>Saving post, embedded comment also generates its teaser.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">post</span><span class="o">.</span><span class="n">save!</span>
+<span class="nb">p</span> <span class="n">comment</span><span class="o">.</span><span class="n">teaser</span>                                  <span class="c1"># =&gt; &#39;Where&#39;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-13'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-13">&#182;</a>
+        </div>
+        <p>In this example we examined callbacks, it&rsquo;s types and how they works on
+main and embedded models.</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
