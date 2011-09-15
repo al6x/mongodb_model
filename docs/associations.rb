@@ -1,4 +1,4 @@
-# Example of Associations in Mongo Model.
+# Example of Associations in [Mongo Model][mongodb_model].
 #
 # MongoDB is Document Database, and unlike the Relational Database its key
 # feature is Composite Documents. It support Associations also but
