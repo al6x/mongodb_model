@@ -1,6 +1,6 @@
 # Object Model for MongoDB.
 #
-# [basics][basics], [composite/embedded][composite], [queries][queries],
+# [basics][basics], [composite/embedded][composite], [queries/scopes][queries],
 # [validations][validations], [callbacks][callbacks], [associations][associations],
 # [assignment][assignment], [conversions][conversions], [modifiers][modifiers],
 # [database][database], [migrations][migrations].

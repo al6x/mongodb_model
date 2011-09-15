@@ -1,3 +1,5 @@
+**Documentation:** http://alexeypetrushin.github.com/mongodb_model
+
 Object Model for MongoDB (callbacks, validations, mass-assignment, finders, ...).
 
 - The same API for pure driver and Models.
@@ -14,61 +16,85 @@ Object Model for MongoDB (callbacks, validations, mass-assignment, finders, ...)
 Other ODM usually try to cover simple but non-standard API of MongoDB behind complex ORM-like abstractions. This tool **exposes simplicity and power of MongoDB and leverages its differences**.
 
 ``` ruby
-# Connecting to MongoDB.
+# Basic example of working with [Mongo Model][mongodb_model].
+#
+# In this example we'll create simple model and examine basic CRUD and
+# querying operations.
 require 'mongo/model'
-Mongo.defaults.merge! symbolize: true, multi: true, safe: true
-connection = Mongo::Connection.new
-db = connection.db 'default_test'
-db.units.drop
-Mongo::Model.db = db
 
-# Let's define the game unit.
+# Connecting to test database and cleaning it before starting.
+Mongo::Model.default_database_name = :default_test
+Mongo::Model.default_database.clear
+
+# Let's define Game Unit.
+# Models are just plain Ruby Objects, there's no any Attribute Scheme,
+# Types, Proxies, or other complex stuff, just use standard Ruby practices.
 class Unit
+  # Inheriting our Unit Class from Mongo::Model (the `inherit` keyword is
+  # just a simple shortcut including Module and its ClassMethods).
   inherit Mongo::Model
+
+  # You can specify collection name explicitly or omit it and it will be
+  # guessed from the class name.
   collection :units
 
+  # There's no need to define attributes, just use plain old Ruby technics to
+  # of working with objects.
   attr_accessor :name, :status, :stats
 
-  scope :alive, status: 'alive'
-
-  class Stats
-    inherit Mongo::Model
-    attr_accessor :attack, :life, :shield
-  end
+  def inspect; name end
 end
 
-# Create.
-zeratul  = Unit.build(name: 'Zeratul',  status: 'alive', stats: Unit::Stats.build(attack: 85, life: 300, shield: 100))
-tassadar = Unit.build(name: 'Tassadar', status: 'dead',  stats: Unit::Stats.build(attack: 0,  life: 80,  shield: 300))
+# Stats conaining statistics about Unit (it will be embedded into the
+# Unit).
+#
+# There are no difference between main and embedded objects, all of them
+# are just standard Ruby objects.
+class Unit::Stats
+  inherit Mongo::Model
 
-zeratul.save
-tassadar.save
+  attr_accessor :attack, :life, :shield
+end
 
-# Udate (we made error - mistakenly set Tassadar's attack as zero, let's fix it).
+# Let's create two great Heroes.
+zeratul  = Unit.new name: 'Zeratul',  status: 'alive'
+zeratul.stats =  Unit::Stats.new attack: 85, life: 300, shield: 100
+
+tassadar = Unit.new name: 'Tassadar', status: 'dead'
+tassadar.stats = Unit::Stats.new attack: 0,  life: 80,  shield: 300
+
+# Saving units to database
+p zeratul.save                                    # => true
+p tassadar.save                                   # => true
+
+# We made error - mistakenly set Tassadar's attack as zero, let's fix it.
 tassadar.stats.attack = 20
-tassadar.save
+p tassadar.save                                   # => true
 
-# Querying first & all, there's also :each, the same as :all.
-Unit.first name: 'Zeratul'                         # => zeratul
-Unit.all name: 'Zeratul'                           # => [zeratul]
+# Querying, use standard MongoDB query.
+p Unit.first(name: 'Zeratul')                     # => Zeratul
+p Unit.all(name: 'Zeratul')                       # => [Zeratul]
 Unit.all name: 'Zeratul' do |unit|
-  unit                                             # => zeratul
+  p unit                                          # => Zeratul
 end
 
-# Simple finders (bang versions also availiable).
-Unit.by_name 'Zeratul'                             # => zeratul
-Unit.first_by_name 'Zeratul'                       # => zeratul
-Unit.all_by_name 'Zeratul'                         # => [zeratul]
+# Simple dynamic finders (bang versions also availiable).
+p Unit.by_name('Zeratul')                         # => Zeratul
+p Unit.first_by_name('Zeratul')                   # => Zeratul
+p Unit.all_by_name('Zeratul')                     # => [Zeratul]
 
-# Scopes.
-Unit.alive.count                                   # => 1
-Unit.alive.first                                   # => zeratul
-
-# Callbacks & callbacks on embedded models.
-
-# Validations.
-
-# Save model to any collection.
+# In this example we covered basics of [Mongo Model][mongodb_model],
+# please go to [contents][mongodb_model] for more samples.
+#
+# [mongodb_model]:     index.html
 ```
 
-Source: examples/model.rb
+# Installation
+
+``` bash
+gem install mongodb_model
+```
+
+# License
+
+Copyright (c) Alexey Petrushin, http://petrush.in, released under the MIT license.
