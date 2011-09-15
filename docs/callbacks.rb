@@ -1,4 +1,4 @@
-# Callbacks in [Mongo Object Model][mongodb_model].
+# Callbacks in [Mongo Model][mongodb_model].
 #
 # Callbacks are handy way to execute custom logic at special
 # moments of the lifecycle of the model. There are following

@@ -12,11 +12,12 @@
     Jump To &hellip;
     <div id="jump_wrapper">
       <div id="jump_page">
+          <a class="source" href="associations.html">associations.rb</a>
           <a class="source" href="basics.html">basics.rb</a>
           <a class="source" href="callbacks.html">callbacks.rb</a>
           <a class="source" href="composite.html">composite.rb</a>
           <a class="source" href="index.html">index.rb</a>
-          <a class="source" href="querying.html">querying.rb</a>
+          <a class="source" href="queries.html">queries.rb</a>
           <a class="source" href="validations.html">validations.rb</a>
       </div>
     </div>
@@ -34,7 +35,7 @@
         <div class="pilwrap">
           <a class="pilcrow" href="#section-1">&#182;</a>
         </div>
-        <p>Callbacks in <a href="index.html">Mongo Object Model</a>.</p>
+        <p>Callbacks in <a href="index.html">Mongo Model</a>.</p>
 
 <p>Callbacks are handy way to execute custom logic at special
 moments of the lifecycle of the model. There are following
@@ -141,8 +142,9 @@ generate teasers on it using callbacks.</p>
         </div>
         <h3>Embedded Models</h3>
 
-<p>Callbacks on childrens works exactly the same way &ndash; it can differentiate when child
-created/update/destroyed:</p>
+<p>Callbacks on children works the same way whith the only difference &ndash;
+when child removed from main object &ndash; child get <code>:destroy</code> and main object
+<code>:update</code> callbacks, details:</p>
 
 <ul>
 <li>when main object created/updated/destroyed &ndash; the same callbacks propagated to
@@ -152,6 +154,8 @@ children get <code>:update</code> callback, but all newly created children get <
 <li>when child removed from existing main object &ndash; the main object and all its existing
 children get <code>:update</code> callback, but all removed children get <code>:destroy</code> callback.</li>
 </ul>
+
+<p>Let&rsquo;s add embedded comments to post and see how this works.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre></pre></div>
@@ -162,7 +166,7 @@ children get <code>:update</code> callback, but all removed children get <code>:
         <div class="pilwrap">
           <a class="pilcrow" href="#section-8">&#182;</a>
         </div>
-        <p>Adding comments to Post.</p>
+        <p>Adding comments to post.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
@@ -175,7 +179,7 @@ children get <code>:update</code> callback, but all removed children get <code>:
         <div class="pilwrap">
           <a class="pilcrow" href="#section-9">&#182;</a>
         </div>
-        <p>Defining Comment, it also has teaser generated in <code>before_save</code> callback.</p>
+        <p>Defining comment, his teaser also generated with <code>before_save</code> callback.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><span class="k">class</span> <span class="nc">Comment</span>
@@ -196,7 +200,7 @@ children get <code>:update</code> callback, but all removed children get <code>:
         <div class="pilwrap">
           <a class="pilcrow" href="#section-10">&#182;</a>
         </div>
-        <p>Creating post, there&rsquo;s text and it&rsquo;s valid.</p>
+        <p>Creating post.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Norad II crashed!&#39;</span></pre></div>

@@ -12,11 +12,12 @@
     Jump To &hellip;
     <div id="jump_wrapper">
       <div id="jump_page">
+          <a class="source" href="associations.html">associations.rb</a>
           <a class="source" href="basics.html">basics.rb</a>
           <a class="source" href="callbacks.html">callbacks.rb</a>
           <a class="source" href="composite.html">composite.rb</a>
           <a class="source" href="index.html">index.rb</a>
-          <a class="source" href="querying.html">querying.rb</a>
+          <a class="source" href="queries.html">queries.rb</a>
           <a class="source" href="validations.html">validations.rb</a>
       </div>
     </div>
@@ -34,7 +35,7 @@
         <div class="pilwrap">
           <a class="pilcrow" href="#section-1">&#182;</a>
         </div>
-        <p>Example of Composite Objects using <a href="index.html">Mongo Object Model</a>.</p>
+        <p>Example of Composite Objects using <a href="index.html">Mongo Model</a>.</p>
 
 <p>Models are just ordinary Ruby Objects, so You can combine and mix it as You wish.
 The only differences are</p>
@@ -47,7 +48,7 @@ The only differences are</p>
 <p><a href="callbacks.html">Callbacks</a>, <a href="validations.html">validations</a> and <a href="conversions.html">conversions</a>
 works on embedded objects the same way as on the main.</p>
 
-<p>In this example we&rsquo;ll create simple models for Blog application and see how to embed
+<p>In this example we&rsquo;ll create simple Blog Application and see how to embed
 Comments into the Post.</p>
       </td>
       <td class=code>
@@ -71,7 +72,7 @@ Comments into the Post.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-3">&#182;</a>
         </div>
-        <p>Defining Post Model.</p>
+        <p>Defining Post.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
@@ -98,7 +99,7 @@ Comments into the Post.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-5">&#182;</a>
         </div>
-        <p>Defining Comment Model.</p>
+        <p>Defining Comment.</p>
       </td>
       <td class=code>
         <div class='highlight'><pre><span class="k">class</span> <span class="nc">Comment</span>

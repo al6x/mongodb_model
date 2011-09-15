@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>associations.rb</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="associations.html">associations.rb</a>
+          <a class="source" href="basics.html">basics.rb</a>
+          <a class="source" href="callbacks.html">callbacks.rb</a>
+          <a class="source" href="composite.html">composite.rb</a>
+          <a class="source" href="index.html">index.rb</a>
+          <a class="source" href="queries.html">queries.rb</a>
+          <a class="source" href="validations.html">validations.rb</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>associations.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        <p>Example of Associations in Mongo Model.</p>
+
+<p>MongoDB is the Document Database, and unlike the Relational Database its key
+feature is Composite Documents, not Associations. It support Associations also but
+there are some limitations. </p>
+
+<p>So, with MongoDB You usually use Composite Documents
+a lot and Associations not so much.</p>
+
+<p>According to this Mongo Model provides You with advanced tools for [Composite Models][composite],
+and basic only for modelling Associations.</p>
+
+<p>In this example we&rsquo;ll create simple Blog Application and see how to associate
+Comments with the Post using one-to-many association (take a look at the [composite][composite] example
+to see how to embed Comments into Post).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;mongo/model&#39;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>Connecting to test database and cleaning it before starting.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database_name</span> <span class="o">=</span> <span class="ss">:default_test</span>
+<span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database</span><span class="o">.</span><span class="n">clear</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+        <p>Defining Post.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
+  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>Storing post in posts collection.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">collection</span> <span class="ss">:posts</span>
+
+  <span class="kp">attr_accessor</span> <span class="ss">:text</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>Creating and returning [Query Object][queries] that can be used
+later to select comments belongign to this post (there&rsquo;s no
+database call at this point).</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">comments</span>
+    <span class="no">Comment</span><span class="o">.</span><span class="n">where</span> <span class="n">post_id</span><span class="p">:</span> <span class="n">_id</span>
+  <span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
+        </div>
+        <p>If the post will be destroyed, all comments also should be destroyed.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">after_destroy</span><span class="p">{</span><span class="o">|</span><span class="n">post</span><span class="o">|</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">each</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:destroy!</span><span class="p">)}</span>
+
+  <span class="k">def</span> <span class="nf">inspect</span><span class="p">;</span> <span class="n">text</span><span class="o">.</span><span class="n">to_s</span> <span class="k">end</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Basics'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Basics">&#182;</a>
+        </div>
+        <h3>Basics</h3>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-8'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
+        </div>
+        <p>Defining Comment.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Comment</span>
+  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
+        </div>
+        <p>Storing comment in comments collection.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">collection</span> <span class="ss">:comments</span>
+
+  <span class="kp">attr_accessor</span> <span class="ss">:text</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
+        </div>
+        <p>Every comment has <code>post_id</code> attribute with <code>_id</code> of corresponding post.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="kp">attr_accessor</span> <span class="ss">:post_id</span>  </pre></div>
+      </td>
+    </tr>
+    <tr id='section-11'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-11">&#182;</a>
+        </div>
+        <p>We need to ensure that comment always belongs to some post.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">validates_presence_of</span> <span class="ss">:post_id</span>
+  </pre></div>
+      </td>
+    </tr>
+    <tr id='section-12'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-12">&#182;</a>
+        </div>
+        <p>Adding method allowing to assign post to comment.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">post</span><span class="o">=</span> <span class="n">post</span>
+    <span class="nb">self</span><span class="o">.</span><span class="n">post_id</span> <span class="o">=</span> <span class="n">post</span><span class="o">.</span><span class="n">_id</span>
+    <span class="n">_cache</span><span class="o">[</span><span class="ss">:post</span><span class="o">]</span> <span class="o">=</span> <span class="n">post</span>
+  <span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-13'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-13">&#182;</a>
+        </div>
+        <p>Retrieving the post this comment belongs to.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">post</span>
+    <span class="n">_cache</span><span class="o">[</span><span class="ss">:item</span><span class="o">]</span> <span class="o">||=</span> <span class="no">Post</span><span class="o">.</span><span class="n">by_id</span> <span class="n">post_id</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">inspect</span><span class="p">;</span> <span class="n">text</span><span class="o">.</span><span class="n">to_s</span> <span class="k">end</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-14'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-14">&#182;</a>
+        </div>
+        <p>Creating Post with Comments and saving it to database.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">create</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Zerg infestation found on Tarsonis!&#39;</span>
+<span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">create</span> <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;I can&#39;t believe it.&quot;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-15'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-15">&#182;</a>
+        </div>
+        <p>Retrieving post and comments.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">first</span>
+<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">text</span>                                      <span class="c1"># =&gt; &quot;Zerg infestation found on Tarsonis!&quot;</span>
+<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">count</span>                            <span class="c1"># =&gt; 1</span>
+<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">text</span>                       <span class="c1"># =&gt; &quot;I can&#39;t believe it.&quot;</span>
+<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">post</span> <span class="o">==</span> <span class="n">post</span>               <span class="c1"># =&gt; true</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-16'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-16">&#182;</a>
+        </div>
+        <p>You can also add comments directly, without any syntaxis sugar.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">comment</span> <span class="o">=</span> <span class="no">Comment</span><span class="o">.</span><span class="n">new</span> <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Me too, but it&#39;s true.&quot;</span>
+<span class="n">comment</span><span class="o">.</span><span class="n">post</span> <span class="o">=</span> <span class="n">post</span>
+<span class="n">comment</span><span class="o">.</span><span class="n">save</span>
+<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">count</span>                             <span class="c1"># =&gt; 2</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-17'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-17">&#182;</a>
+        </div>
+        <p>Comments returned as [Query Object][queries] thus giving You access to all
+kind of operations.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">per_page</span> <span class="o">=</span> <span class="mi">2</span>
+<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">paginate</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">per_page</span><span class="p">)</span><span class="o">.</span><span class="n">all</span>         <span class="c1"># =&gt; list of comments</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-18'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-18">&#182;</a>
+        </div>
+        <p>After destroying the post all dependent comments also should be destroyed.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">post</span><span class="o">.</span><span class="n">destroy</span>
+<span class="nb">p</span> <span class="no">Comment</span><span class="o">.</span><span class="n">count</span>                                   <span class="c1"># =&gt; 0</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Caching_comments_count.'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Caching_comments_count.">&#182;</a>
+        </div>
+        <h3>Caching comments count.</h3>
+
+<p>It would be nice to know how many comments post has withoug running additional
+query to count it, let&rsquo;s do this by caching comments count in the
+<code>comments_count</code> attribute of the post.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Retrieving_from_database.'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Retrieving_from_database.">&#182;</a>
+        </div>
+        <h1>Retrieving from database.</h1>
+
+<p>post = Post.first
+p post.comments.class                         # =&gt; Array
+p post.comments.size                          # =&gt; 1
+p post.comments.first.text                    # =&gt; &ldquo;I can&rsquo;t believe it&rdquo;
+p post.comments.first.post == post            # =&gt; true</p>
+
+<h1>Adding another comment.</h1>
+
+<p>post.comments &lt;&lt; Comment.new(text: &ldquo;Me too, but it&rsquo;s true.&rdquo;)
+post.save</p>
+
+<h1>Reading updated post.</h1>
+
+<p>post = Post.first
+p post.comments.size                           # =&gt; 2</p>
+
+<h1>In this example we covered how to create and use composite objects (embedded objects) &ndash;</h1>
+
+<h1>use plain Ruby Objects and the Driver will figure out how to save and restore it.</h1>
+
+<h1>[mongodb_model]:     index.html</h1>
+
+<h1>[composite]:    composite.html</h1>
+
+<h1>[queries]:      aueries.html</h1>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>

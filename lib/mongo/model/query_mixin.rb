@@ -11,6 +11,10 @@ module Mongo::Model::QueryMixin
       collection.count selector, options
     end
 
+    def size *args
+      count *args
+    end
+
     def first selector = {}, options = {}
       collection.first selector, options
     end

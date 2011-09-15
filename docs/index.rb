@@ -1,6 +1,6 @@
 # Object Model for MongoDB.
 #
-# [basics][basics], [composite][composite], [querying][querying],
+# [basics][basics], [composite][composite], [queries][queries],
 # [validations][validations], [callbacks][callbacks], [associations][associations],
 # [assignment][assignment], [conversions][conversions], [modifiers][modifiers],
 # [database][database], [migrations][migrations].
@@ -13,7 +13,7 @@
 # - Models can be saved to [any collection][database], dynamically.
 # - Full support for [composite / embedded objects][composite] (with [validations][validations],
 # [callbacks][callbacks], ...).
-# - [Scope][querying], default scope.
+# - [Scope][queries], default scope.
 # - Doesn't try to mimic ActiveRecord, MongoDB is differrent and the Object Model designed to get most of it.
 # - Works with [multiple][database] connections and databases.
 # - Support for [associations][associations].
@@ -41,7 +41,7 @@
 # [assignment]:   assignment.html
 # [modifiers]:    modifiers.html
 # [validations]:  validations.html
-# [querying]:     querying.html
+# [queries]:      queries.html
 # [conversions]:  conversions.html
 # [database]:     database.html
 # [composite]:    composite.html

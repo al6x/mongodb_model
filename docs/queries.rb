@@ -1,4 +1,4 @@
-# Example of Querying using [Mongo Object Model][mongodb_model].
+# Example of Queries with [Mongo Model][mongodb_model].
 #
 # In this example we'll see standard MongoDB queries, dynamic finders and scopes.
 require 'mongo/model'
@@ -79,11 +79,13 @@ per_page = 2
 p Unit.paginate(1, per_page).sort(:name).all         # => [Jim, Tassadar]
 p Unit.paginate(2, per_page).sort(:name).all         # => [Zeratul]
 
-# Mongo Object Model is tightly integrated with [Driver][mongodb],
+# Mongo Model is tightly integrated with [Driver][mongodb],
 # so You can also use its API for querying.
 db = Mongo::Model.default_database
 p db.units.first(name: 'Jim')                        # => Jim
 p db.units.first(name: 'Jim').class                  # => Unit
+
+# Why there's no support for
 
 # In this example we covered how to use standard MongoDB queries,
 # dynamic finders, scopes and query builder.

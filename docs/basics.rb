@@ -1,4 +1,4 @@
-# Basic example of working with [Mongo Object Model][mongodb_model].
+# Basic example of working with [Mongo Model][mongodb_model].
 #
 # In this example we'll create simple model and examine basic CRUD and
 # querying operations.
@@ -65,7 +65,7 @@ p Unit.by_name('Zeratul')                         # => Zeratul
 p Unit.first_by_name('Zeratul')                   # => Zeratul
 p Unit.all_by_name('Zeratul')                     # => [Zeratul]
 
-# In this example we covered basics of [Mongo Object Model][mongodb_model],
+# In this example we covered basics of [Mongo Model][mongodb_model],
 # please go to [contents][mongodb_model] for more samples.
 #
 # [mongodb_model]:     index.html

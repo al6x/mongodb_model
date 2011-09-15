@@ -1,4 +1,4 @@
-# Validations in [Mongo Object Model][mongodb_model].
+# Validations in [Mongo Model][mongodb_model].
 #
 # There are following validation helpers available:
 #

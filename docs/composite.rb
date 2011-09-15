@@ -1,4 +1,4 @@
-# Example of Composite Objects using [Mongo Object Model][mongodb_model].
+# Example of Composite Objects using [Mongo Model][mongodb_model].
 #
 # Models are just ordinary Ruby Objects, so You can combine and mix it as You wish.
 # The only differences are
@@ -9,7 +9,7 @@
 # [Callbacks][callbacks], [validations][validations] and [conversions][conversions]
 # works on embedded objects the same way as on the main.
 #
-# In this example we'll create simple models for Blog application and see how to embed
+# In this example we'll create simple Blog Application and see how to embed
 # Comments into the Post.
 require 'mongo/model'
 
@@ -17,7 +17,7 @@ require 'mongo/model'
 Mongo::Model.default_database_name = :default_test
 Mongo::Model.default_database.clear
 
-# Defining Post Model.
+# Defining Post.
 class Post
   inherit Mongo::Model
   collection :posts
@@ -28,7 +28,7 @@ class Post
   def comments; @comments ||= [] end
 end
 
-# Defining Comment Model.
+# Defining Comment.
 class Comment
   inherit Mongo::Model
 
