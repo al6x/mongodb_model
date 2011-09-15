@@ -1,6 +1,6 @@
 # Object Model for MongoDB.
 #
-# [basics][basics], [composite][composite], [queries][queries],
+# [basics][basics], [composite/embedded][composite], [queries][queries],
 # [validations][validations], [callbacks][callbacks], [associations][associations],
 # [assignment][assignment], [conversions][conversions], [modifiers][modifiers],
 # [database][database], [migrations][migrations].
@@ -21,9 +21,9 @@
 #
 # This tool **exposes simplicity and power of MongoDB and leverages its differences**.
 #
-# Install mongodb with Rubygems:
+# Install MongoDB Model with Rubygems:
 #
-#     gem install mongodb
+#     gem install mongodb_model
 #
 # The project is [hosted on GitHub][project]. You can report bugs and discuss features
 # on the [issues page][issues].

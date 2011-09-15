@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>assignment.rb</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="assignment.html">assignment.rb</a>
+          <a class="source" href="associations.html">associations.rb</a>
+          <a class="source" href="basics.html">basics.rb</a>
+          <a class="source" href="callbacks.html">callbacks.rb</a>
+          <a class="source" href="composite.html">composite.rb</a>
+          <a class="source" href="index.html">index.rb</a>
+          <a class="source" href="queries.html">queries.rb</a>
+          <a class="source" href="validations.html">validations.rb</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>assignment.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        <p>Mass assignment for <a href="index.html">Mongo Model</a>.</p>
+
+<p>In this example we&rsquo;ll discover how to define attribute types,
+and protect some of them from mass assignment.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;mongo/model&#39;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>Connecting to test database and cleaning it before starting.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database_name</span> <span class="o">=</span> <span class="ss">:default_test</span>
+<span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database</span><span class="o">.</span><span class="n">clear</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+        <p>Let&rsquo;s define User.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">User</span>
+  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
+
+  <span class="kp">attr_accessor</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:age</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>By defautl there&rsquo;s no any types and You can assign anything to
+any attribute using the <code>set</code> method.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span>
+<span class="n">user</span><span class="o">.</span><span class="n">set</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Gordon Freeman&#39;</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="s1">&#39;28&#39;</span>
+<span class="nb">p</span> <span class="o">[</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">age</span><span class="o">]</span>                          <span class="c1"># =&gt; [&#39;Gordon Freeman&#39;, &#39;28&#39;]</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>In previous example the <code>age</code> attribute is supposed to be Integer but
+it has been assigned as String.
+This is wrong, we need to fix it.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">User</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-6'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-6">&#182;</a>
+        </div>
+        <p>Declaring attribute tupes, and allowing to update it in mass assignment.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">assign</span> <span class="k">do</span>
+    <span class="nb">name</span> <span class="nb">String</span><span class="p">,</span>  <span class="kp">true</span>
+    <span class="n">age</span>  <span class="nb">Integer</span><span class="p">,</span> <span class="kp">true</span>
+  <span class="k">end</span>
+  </pre></div>
+      </td>
+    </tr>
+    <tr id='section-7'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-7">&#182;</a>
+        </div>
+        <p>There&rsquo;s also another version of declaring attribute type.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="n">assign</span> <span class="ss">:name</span><span class="p">,</span> <span class="nb">String</span><span class="p">,</span> <span class="kp">true</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-8'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
+        </div>
+        <p>Assigning values to attributes, this time String has been casted to Integer before
+assigning and the <code>age</code> attribute has correct type.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">user</span><span class="o">.</span><span class="n">set</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Gordon Freeman&#39;</span><span class="p">,</span> <span class="n">age</span><span class="p">:</span> <span class="s1">&#39;28&#39;</span>
+<span class="nb">p</span> <span class="o">[</span><span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">user</span><span class="o">.</span><span class="n">age</span><span class="o">]</span>                          <span class="c1"># =&gt; [&#39;Gordon Freeman&#39;, 28]</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
+        </div>
+        <p>There are some sensitive attributes that shouldn&rsquo;t be allowed to
+assigned in mass assignment, let&rsquo;s add the <code>password</code> attribute and make it
+protected.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">User</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-10'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-10">&#182;</a>
+        </div>
+        <p>Actually there&rsquo;s no need to explicitly specify that attribute is protected,
+if You don&rsquo;t explicitly allow it to mass assignment it will be protected by default.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre>  <span class="kp">attr_accessor</span> <span class="ss">:password</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-11'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-11">&#182;</a>
+        </div>
+        <p>If we try to to change <code>password</code> using mass assignment we got an exception,
+You can forcefully assign protected attribute if You want.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">user</span><span class="o">.</span><span class="n">set</span><span class="p">(</span><span class="n">password</span><span class="p">:</span> <span class="s1">&#39;Black Mesa&#39;</span><span class="p">)</span> <span class="k">rescue</span> <span class="nb">p</span><span class="p">(</span><span class="s1">&#39;No!&#39;</span><span class="p">)</span> <span class="c1"># =&gt; &quot;No!&quot;</span>
+<span class="nb">p</span> <span class="n">user</span><span class="o">.</span><span class="n">password</span>                                  <span class="c1"># =&gt; nil</span>
+<span class="n">user</span><span class="o">.</span><span class="n">set!</span> <span class="n">password</span><span class="p">:</span> <span class="s1">&#39;Black Mesa&#39;</span>
+<span class="nb">p</span> <span class="n">user</span><span class="o">.</span><span class="n">password</span>                                  <span class="c1"># =&gt; &quot;Black Mesa&quot;</span></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>

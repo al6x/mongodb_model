@@ -8,7 +8,7 @@ require 'mongo/model'
 Mongo::Model.default_database_name = :default_test
 Mongo::Model.default_database.clear
 
-# Let's define first model - Game Unit.
+# Let's define Game Unit.
 # Models are just plain Ruby Objects, there's no any Attribute Scheme,
 # Types, Proxies, or other complex stuff, just use standard Ruby practices.
 class Unit
