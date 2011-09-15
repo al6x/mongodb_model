@@ -35,8 +35,8 @@ class User
   assign :name, String, true
 end
 
-# Assigning values to attributes, this time String has been casted to Integer before
-# assigning and the `age` attribute has correct type.
+# This time String has been casted to Integer before
+# assigning it to the `age` attribute.
 user.set name: 'Gordon Freeman', age: '28'
 p [user.name, user.age]                          # => ['Gordon Freeman', 28]
 
