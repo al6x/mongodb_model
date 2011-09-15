@@ -41,19 +41,24 @@ user.set name: 'Gordon Freeman', age: '28'
 p [user.name, user.age]                          # => ['Gordon Freeman', 28]
 
 # There are some sensitive attributes that shouldn't be allowed to
-# assigned in mass assignment, let's add the `password` attribute and make it
+# update in mass assignment, let's add the `password` attribute and make it
 # protected.
 class User
   # Actually there's no need to explicitly specify that attribute is protected,
-  # if You don't explicitly allow it to mass assignment it will be protected by default.
+  # if You don't explicitly allow it to be updated by mass assignment it will
+  # be protected.
   attr_accessor :password
 end
 
-# If we try to to change `password` using mass assignment we got an exception,
-# You can forcefully assign protected attribute if You want.
+# If we try to to change `password` using mass assignment we got an error.
 user.set(password: 'Black Mesa') rescue p('No!') # => "No!"
 p user.password                                  # => nil
+
+# You can forcefully assign protected attribute if You want.
 user.set! password: 'Black Mesa'
 p user.password                                  # => "Black Mesa"
 
+# In this example we covered mass assignment, attribute types and attribute
+# protection.
+#
 # [mongodb_model]:     index.html

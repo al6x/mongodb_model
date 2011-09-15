@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html;charset=utf-8">
+  <title>conversions.rb</title>
+  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+</head>
+<body>
+<div id='container'>
+  <div id="background"></div>
+  <div id="jump_to">
+    Jump To &hellip;
+    <div id="jump_wrapper">
+      <div id="jump_page">
+          <a class="source" href="assignment.html">assignment.rb</a>
+          <a class="source" href="associations.html">associations.rb</a>
+          <a class="source" href="basics.html">basics.rb</a>
+          <a class="source" href="callbacks.html">callbacks.rb</a>
+          <a class="source" href="composite.html">composite.rb</a>
+          <a class="source" href="conversions.html">conversions.rb</a>
+          <a class="source" href="index.html">index.rb</a>
+          <a class="source" href="queries.html">queries.rb</a>
+          <a class="source" href="validations.html">validations.rb</a>
+      </div>
+    </div>
+  </div>
+  <table cellspacing=0 cellpadding=0>
+  <thead>
+    <tr>
+      <th class=docs><h1>conversions.rb</h1></th>
+      <th class=code></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr id='section-1'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-1">&#182;</a>
+        </div>
+        <p>Conversions for <a href="index.html">Mongo Model</a>.</p>
+
+<p>In this example we&rsquo;ll create simpel Blog and discover how to
+convert models to JSON, filter attributes, and define conversion
+profiles for <a href="composite.html">Composite Model</a>.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;mongo/model&#39;</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-2'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-2">&#182;</a>
+        </div>
+        <p>Connecting to test database and cleaning it before starting.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database_name</span> <span class="o">=</span> <span class="ss">:default_test</span>
+<span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database</span><span class="o">.</span><span class="n">clear</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-3'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-3">&#182;</a>
+        </div>
+        <p>Defining Post with Comments.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
+  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
+  <span class="n">collection</span> <span class="ss">:posts</span>
+
+  <span class="kp">attr_accessor</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">:token</span>
+
+  <span class="k">def</span> <span class="nf">comments</span><span class="p">;</span> <span class="vi">@comments</span> <span class="o">||=</span> <span class="o">[]</span> <span class="k">end</span>
+<span class="k">end</span>
+
+<span class="k">class</span> <span class="nc">Comment</span>
+  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
+
+  <span class="kp">attr_accessor</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">:token</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-4'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-4">&#182;</a>
+        </div>
+        <p>Creating post and converting it to JSON:</p>
+
+<pre><code>{
+  text:     &lsquo;Zergs found!&rsquo;,
+  token:    10
+  comments: [
+    {
+      text:  &lsquo;Where?&rsquo;,
+      token: 11
+    },
+    {
+      text:  &lsquo;On Tarsonis.&rsquo;,
+      token: 12
+    }
+  ]
+}
+</code></pre>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Zergs found!&#39;</span><span class="p">,</span> <span class="n">token</span><span class="p">:</span> <span class="mi">10</span>
+<span class="n">post</span><span class="o">.</span><span class="n">comments</span> <span class="o">&lt;&lt;</span> <span class="no">Comment</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Where?&#39;</span><span class="p">,</span> <span class="n">token</span><span class="p">:</span> <span class="mi">11</span><span class="p">)</span>
+<span class="n">post</span><span class="o">.</span><span class="n">comments</span> <span class="o">&lt;&lt;</span> <span class="no">Comment</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="s1">&#39;On Tarsonis.&#39;</span><span class="p">,</span> <span class="n">token</span><span class="p">:</span> <span class="mi">12</span><span class="p">)</span>
+<span class="nb">puts</span> <span class="n">post</span><span class="o">.</span><span class="n">to_json</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-5'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-5">&#182;</a>
+        </div>
+        <p>We can filter attributes using <code>:only</code>, <code>:except</code>, <code>:methods</code> options.</p>
+
+<pre><code>{
+  text: &lsquo;Zergs found!&rsquo;
+}
+</code></pre>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">puts</span> <span class="n">post</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">only</span><span class="p">:</span> <span class="ss">:text</span><span class="p">)</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-Profiles'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-Profiles">&#182;</a>
+        </div>
+        <h3>Profiles</h3>
+
+<p>You can use filter options to control what attributes will be converted
+to JSON, but this filters won&rsquo;t allow You to specify attributes on embedded
+models. To do so You need to use conversion profiles.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+    <tr id='section-7'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-7">&#182;</a>
+        </div>
+        <p>Those tokens on post and comments are secret and we don&rsquo;t want to expose it
+to public. We need to define profile that will filter these secret tokens.</p>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
+  <span class="n">profile</span> <span class="ss">:public</span><span class="p">,</span> <span class="n">except</span><span class="p">:</span> <span class="ss">:token</span>
+<span class="k">end</span>
+<span class="k">class</span> <span class="nc">Comment</span>
+  <span class="n">profile</span> <span class="ss">:public</span><span class="p">,</span> <span class="n">except</span><span class="p">:</span> <span class="ss">:token</span>
+<span class="k">end</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-8'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-8">&#182;</a>
+        </div>
+        <p>Now we can use <code>public</code> profile in conversion and filter <code>token</code> attributes:</p>
+
+<pre><code>{
+  text:     &lsquo;Zergs found!&rsquo;,
+  comments: [
+    {
+      text:  &lsquo;Where?&rsquo;
+    },
+    {
+      text:  &lsquo;On Tarsonis.&rsquo;
+    }
+  ]
+}
+</code></pre>
+      </td>
+      <td class=code>
+        <div class='highlight'><pre><span class="nb">puts</span> <span class="n">post</span><span class="o">.</span><span class="n">to_json</span><span class="p">(</span><span class="n">profile</span><span class="p">:</span> <span class="ss">:public</span><span class="p">)</span></pre></div>
+      </td>
+    </tr>
+    <tr id='section-9'>
+      <td class=docs>
+        <div class="pilwrap">
+          <a class="pilcrow" href="#section-9">&#182;</a>
+        </div>
+        <p>In this example we covered conversions, attribute filtering and
+conversion profiles.</p>
+
+      </td>
+      <td class=code>
+        <div class='highlight'><pre></pre></div>
+      </td>
+    </tr>
+  </table>
+</div>
+</body>
