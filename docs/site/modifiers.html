@@ -84,10 +84,10 @@ there&rsquo;s more efficient way &ndash; modifiers.</p>
         <div class="pilwrap">
           <a class="pilcrow" href="#section-4">&#182;</a>
         </div>
-        <p>Creating mighty Tassadar.</p>
+        <p>Creating brave Tassadar.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="n">zeratul</span> <span class="o">=</span> <span class="no">Unit</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Tassadar&#39;</span><span class="p">,</span> <span class="n">life</span><span class="p">:</span> <span class="mi">80</span></pre></div>
+        <div class='highlight'><pre><span class="n">tassadar</span> <span class="o">=</span> <span class="no">Unit</span><span class="o">.</span><span class="n">create</span> <span class="nb">name</span><span class="p">:</span> <span class="s1">&#39;Tassadar&#39;</span><span class="p">,</span> <span class="n">life</span><span class="p">:</span> <span class="mi">80</span></pre></div>
       </td>
     </tr>
     <tr id='section-5'>
@@ -98,9 +98,9 @@ there&rsquo;s more efficient way &ndash; modifiers.</p>
         <p>Updating model with modifiers.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="n">zeratul</span><span class="o">.</span><span class="n">update</span> <span class="n">_inc</span><span class="p">:</span> <span class="p">{</span><span class="n">life</span><span class="p">:</span> <span class="o">-</span><span class="mi">40</span><span class="p">}</span>
-<span class="n">zeratul</span><span class="o">.</span><span class="n">reload</span>
-<span class="nb">p</span> <span class="n">zeratul</span><span class="o">.</span><span class="n">life</span>                                   <span class="c1"># =&gt; 40</span></pre></div>
+        <div class='highlight'><pre><span class="n">tassadar</span><span class="o">.</span><span class="n">update</span> <span class="n">_inc</span><span class="p">:</span> <span class="p">{</span><span class="n">life</span><span class="p">:</span> <span class="o">-</span><span class="mi">40</span><span class="p">}</span>
+<span class="n">tassadar</span><span class="o">.</span><span class="n">reload</span>
+<span class="nb">p</span> <span class="n">tassadar</span><span class="o">.</span><span class="n">life</span>                                  <span class="c1"># =&gt; 40</span></pre></div>
       </td>
     </tr>
     <tr id='section-6'>
@@ -111,9 +111,9 @@ there&rsquo;s more efficient way &ndash; modifiers.</p>
         <p>There&rsquo;s also helper on the model class.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="no">Unit</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">_id</span><span class="p">:</span> <span class="n">zeratul</span><span class="o">.</span><span class="n">_id</span><span class="p">},</span> <span class="p">{</span><span class="n">_inc</span><span class="p">:</span> <span class="p">{</span><span class="n">life</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span><span class="p">}})</span>
-<span class="n">zeratul</span><span class="o">.</span><span class="n">reload</span>
-<span class="nb">p</span> <span class="n">zeratul</span><span class="o">.</span><span class="n">life</span>                                   <span class="c1"># =&gt; 20</span></pre></div>
+        <div class='highlight'><pre><span class="no">Unit</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">_id</span><span class="p">:</span> <span class="n">tassadar</span><span class="o">.</span><span class="n">_id</span><span class="p">},</span> <span class="p">{</span><span class="n">_inc</span><span class="p">:</span> <span class="p">{</span><span class="n">life</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span><span class="p">}})</span>
+<span class="n">tassadar</span><span class="o">.</span><span class="n">reload</span>
+<span class="nb">p</span> <span class="n">tassadar</span><span class="o">.</span><span class="n">life</span>                                  <span class="c1"># =&gt; 20</span></pre></div>
       </td>
     </tr>
     <tr id='section-7'>

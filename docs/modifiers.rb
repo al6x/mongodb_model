@@ -19,18 +19,18 @@ class Unit
   attr_accessor :name, :life
 end
 
-# Creating mighty Tassadar.
-zeratul = Unit.create name: 'Tassadar', life: 80
+# Creating brave Tassadar.
+tassadar = Unit.create name: 'Tassadar', life: 80
 
 # Updating model with modifiers.
-zeratul.update _inc: {life: -40}
-zeratul.reload
-p zeratul.life                                   # => 40
+tassadar.update _inc: {life: -40}
+tassadar.reload
+p tassadar.life                                  # => 40
 
 # There's also helper on the model class.
-Unit.update({_id: zeratul._id}, {_inc: {life: -20}})
-zeratul.reload
-p zeratul.life                                   # => 20
+Unit.update({_id: tassadar._id}, {_inc: {life: -20}})
+tassadar.reload
+p tassadar.life                                  # => 20
 
 # In this example we covered using modifiers.
 #
