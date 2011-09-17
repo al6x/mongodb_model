@@ -46,14 +46,14 @@ describe 'Model Miscellaneous' do
 
   it "to_param" do
     u = User.new
-    u.to_param.should == ''
+    u.to_param.should be_nil
     u.save!
     u.to_param.should_not be_empty
   end
 
   it "dom_id" do
     u = User.new
-    u.dom_id.should == ''
+    u.dom_id.should be_nil
     u.save!
     u.dom_id.should_not be_empty
   end

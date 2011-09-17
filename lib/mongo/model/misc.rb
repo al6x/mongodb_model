@@ -19,7 +19,7 @@ module Mongo::Model::Misc
   end
 
   def to_param
-    (_id || '').to_s
+    _id.try :to_s
   end
 
   def reload

@@ -28,6 +28,8 @@
 # The project is [hosted on GitHub][project]. You can report bugs and discuss features
 # on the [issues page][issues].
 #
+# Note: use `require 'mongo/model/integration/rails` for Rails integration.
+#
 # [project]:      https://github.com/alexeypetrushin/mongodb_model
 # [issues]:       https://github.com/alexeypetrushin/mongodb_model/issues
 #

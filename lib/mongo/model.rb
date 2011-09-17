@@ -48,3 +48,5 @@ Mongo.defaults.merge! \
   batch_size:                   50,
   multi:                        true,
   safe:                         true
+
+require 'mongo/model/integration/rails' if defined? Rails
