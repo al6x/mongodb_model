@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Model equality' do
   with_mongo_model
 
-  after{remove_constants :Player}
+  after{remove_constants :Player, :Tags}
 
   it "integration smoke test" do
     class Player
@@ -28,5 +28,14 @@ describe 'Model equality' do
 
     player1.mission.name = 'Into the Flames'
     player1.should_not == player2
+  end
+
+  it "should correct compare Array/Hash models (from error)" do
+    class Tags < Array
+      inherit Mongo::Model
+    end
+
+    tags = Tags.new.replace ['a', 'b']
+    tags.should_not == Tags.new
   end
 end

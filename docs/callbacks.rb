@@ -19,6 +19,8 @@
 #     before_destroy
 #     after_destroy
 #
+#     after_build
+#
 # All these callbacks also available on embedded models.
 #
 # In this example we create post with embedded comments and

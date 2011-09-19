@@ -1,4 +1,6 @@
 # Article
+  # Add article and sample about Fat Models vs. Composite
+
 
   def comments
     Comment.query({item_id: _id}, {sort: [[created_at:, -1]]})

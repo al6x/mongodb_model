@@ -35,7 +35,7 @@ module Mongo::Model::Assignment
   end
 
   def initialize attributes = nil
-    super
+    super()
     set attributes if attributes
   end
 

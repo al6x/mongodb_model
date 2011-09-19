@@ -12,7 +12,9 @@ module Mongo::Model::Callbacks
           args.each{|executor| set_callback method_name, :before, executor, opt}
         end
       end
+    end
 
+    [:validate, :create, :update, :save, :destroy, :build].each do |method_name|
       define_method "after_#{method_name}" do |*args, &block|
         opt = args.extract_options!
         if block

@@ -3,7 +3,7 @@ require 'spec_helper'
 describe 'Model callbacks' do
   with_mongo_model
 
-  after{remove_constants :TheModel, :Player}
+  after{remove_constants :Post, :Player}
 
   it "integration smoke test" do
     class Player
@@ -32,5 +32,29 @@ describe 'Model callbacks' do
     mission.should_receive(:after_save_check).once.ordered.and_return(nil)
 
     db.units.save(player).should be_true
+  end
+
+  it "should have :build callback" do
+    class Post
+      inherit Mongo::Model
+      collection :posts
+
+      class Tags < Array
+      end
+
+      def tags
+        @tags ||= Tags.new
+      end
+      attr_writer :tags
+
+      after_build do |post|
+        post.tags = Tags.new.replace post.tags
+      end
+    end
+
+    post = Post.new
+    post.save!
+
+    Post.first.tags.class.should == Post::Tags
   end
 end

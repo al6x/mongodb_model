@@ -3,7 +3,7 @@ module Mongo::Model::Validation
     @_errors ||= Validatable::Errors.new
   end
 
-  def run_validations
+  def run_model_validations
     self.class.validations.each do |v|
       if v.respond_to?(:validate)
         v.validate self

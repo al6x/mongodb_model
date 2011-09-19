@@ -7,8 +7,10 @@ module Mongo::Model
   def new_record?; !_id end
 
   inherited do
-    alias_method :eql?, :model_eql?
-    alias_method :==, :model_eq?
+    unless is?(Array) or is?(Hash)
+      alias_method :eql?, :model_eql?
+      alias_method :==, :model_eq?
+    end
   end
 
   def model_eql? o
