@@ -4,11 +4,11 @@ require 'yaml'
 module Mongo::Model::AttributeConvertors
   CONVERTORS = {
     line: {
-      from_string: -> s {(s || "").split(',').collect{|s| s.strip}},
+      from_string: -> s {(s || "").split(',').collect{|s| s.strip}.sort},
       to_string:   -> v {v.join(', ')}
     },
     column: {
-      from_string: -> s {(s || "").split("\n").collect{|s| s.strip}},
+      from_string: -> s {(s || "").split("\n").collect{|s| s.strip}.sort},
       to_string:   -> v {v.join("\n")}
     },
     yaml: {
