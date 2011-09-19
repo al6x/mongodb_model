@@ -10,6 +10,7 @@ describe 'File Model' do
 
     class Unit
       inherit Mongo::Model
+      inherit Mongo::Model::FileModel
       collection :units
 
       attr_accessor :name

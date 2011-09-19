@@ -1,7 +1,6 @@
 require 'mongodb_model/gems'
 
 require 'validatable'
-require 'file_model'
 require 'ruby_ext'
 require 'mongo/object'
 
@@ -20,14 +19,15 @@ module Mongo::Model; end
   query
   query_mixin
   scope
-  attribute_convertors
-  file_model
+  attribute_convertorshttp://alexeypetrushin.github.com/mongodb_model
   misc
   model
 ).each{|f| require "mongo/model/#{f}"}
 
 module Mongo
   module Model
+    autoload :FileModel, 'mongo/model/file_model'
+http://alexeypetrushin.github.com/mongodb_model
     inherit \
       Db,
       Conversion,
@@ -38,7 +38,6 @@ module Mongo
       QueryMixin,
       Scope,
       AttributeConvertors,
-      Mongo::Model::FileModel,
       Misc
   end
 end

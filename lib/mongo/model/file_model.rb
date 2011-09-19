@@ -1,3 +1,4 @@
+require 'file_model'
 module Mongo::Model::FileModel
   inherit ::FileModel::Helper
 
