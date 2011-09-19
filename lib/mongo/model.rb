@@ -19,7 +19,7 @@ module Mongo::Model; end
   query
   query_mixin
   scope
-  attribute_convertorshttp://alexeypetrushin.github.com/mongodb_model
+  attribute_convertors
   misc
   model
 ).each{|f| require "mongo/model/#{f}"}
@@ -27,7 +27,7 @@ module Mongo::Model; end
 module Mongo
   module Model
     autoload :FileModel, 'mongo/model/file_model'
-http://alexeypetrushin.github.com/mongodb_model
+
     inherit \
       Db,
       Conversion,
