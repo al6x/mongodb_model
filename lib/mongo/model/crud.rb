@@ -45,8 +45,7 @@ module Mongo::Model::Crud
 
     def destroy_all selector = {}, options = {}
       success = true
-      collection = options[:collection] || self.collection
-      each(selector){|o| success = false unless o.destroy}
+      each(selector){|o| success = false unless o.destroy options}
       success
     end
 
