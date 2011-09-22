@@ -9,8 +9,7 @@ describe 'File Model' do
     class ImageFile; end
 
     class Unit
-      inherit Mongo::Model
-      inherit Mongo::Model::FileModel
+      inherit Mongo::Model, Mongo::Model::FileModel
       collection :units
 
       attr_accessor :name
