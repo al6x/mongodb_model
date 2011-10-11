@@ -28,7 +28,7 @@ module Mongo::Model::Conversion
       profile_options = self.class.profiles[profile] || raise("profile :#{profile} not defined for #{self.class}!")
       to_rson profile_options.merge(_profile: profile)
     else
-      options.validate_options! :only, :except, :methods, :_profile
+      options.validate_options! :only, :except, :methods, :errors, :_profile
       child_options = options[:_profile] ? {profile: options[:_profile]} : {}
 
       instance_variables = Mongo::Object.instance_variables(self)
@@ -47,13 +47,19 @@ module Mongo::Model::Conversion
       end
 
       methods = options[:methods] ? Array(options[:methods]) : []
-
       methods.each do |method|
         value = send method
         value = Mongo::Object.convert value, :to_rson, child_options
         result[method.to_s] = value
       end
 
+      with_errors = options.include?(:errors) ? options[:errors] : true
+      if with_errors and !(errors = self.errors).empty?
+        stringified_errors = {}
+        errors.each{|k, v| stringified_errors[k.to_s] = v}
+        result['errors'] = stringified_errors
+      end
+      
       result
     end
   end

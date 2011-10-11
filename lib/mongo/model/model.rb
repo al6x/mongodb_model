@@ -4,7 +4,8 @@ module Mongo::Model
   attr_accessor :_id, :_class
 
   def _id?; !!_id end
-  def new_record?; !_id end
+  def new?; !_id end
+  alias_method :new_record?, :new?
 
   inherited do
     unless is?(Array) or is?(Hash)

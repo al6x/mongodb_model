@@ -82,6 +82,24 @@ describe 'Model callbacks' do
       ]
     }
   end
+  
+  it "should include errors" do
+    Post.class_eval do
+      validates_presence_of :token
+    end
+
+    post = Post.new text: 'StarCraft releasing soon!'
+    post.valid?.should be_false
+    
+    post.to_rson.should == {
+      'text' => 'StarCraft releasing soon!',
+      'errors' => {"token" => ["can't be empty"]}
+    }
+    
+    post.to_rson(errors: false).should == {
+      'text' => 'StarCraft releasing soon!'
+    }
+  end
 
   it "to_json" do
     post = build_post_with_comment
