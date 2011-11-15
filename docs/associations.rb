@@ -35,8 +35,8 @@ class Post
   def comments
     Comment.where post_id: _id
   end
-  # If the post will be destroyed, all comments also should be destroyed.
-  after_destroy{|post| post.comments.each(&:destroy!)}
+  # If the post will be deleted, all comments also should be deleted.
+  after_delete{|post| post.comments.each(&:delete!)}
 
   def inspect; text.to_s end
 end
@@ -89,8 +89,8 @@ p post.comments.count                             # => 2
 per_page = 2
 p post.comments.paginate(1, per_page).all         # => first page of comments
 
-# After destroying the post all dependent comments also should be destroyed.
-post.destroy
+# After deleting the post all dependent comments also should be deleted.
+post.delete
 p Comment.count                                   # => 0
 
 # ### Caching comments count.
@@ -105,25 +105,25 @@ class Post
   def comments_count; @comments_count ||= 0 end
 end
 
-# Updating `comments_count` every time comment created and destroyed. Actually
+# Updating `comments_count` every time comment created and deleted. Actually
 # we can do this by retrieving, updating and then saving the post, but let's
 # do it in more efficient way using [modifiers][modifiers].
 class Comment
   after_create do |comment|
     Post.update({_id: comment.post_id}, {_inc: {comments_count: 1}})
   end
-  after_destroy do |comment|
+  after_delete do |comment|
     Post.update({_id: comment.post_id}, {_inc: {comments_count: -1}})
   end
 end
 
-# Now, every time comment will be created and destroyed, post `comments_count`
+# Now, every time comment will be created and deleted, post `comments_count`
 # attribute will be updated.
 post = Post.create text: 'Zerg infestation found on Tarsonis!'
 post.comments.create text: "I can't believe it."
 post.reload
 p post.comments_count                            # => 1
-post.comments.destroy_all
+post.comments.delete_all
 post.reload
 p post.comments_count                            # => 0
 

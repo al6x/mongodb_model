@@ -16,8 +16,8 @@
 #     before_update
 #     after_update
 #
-#     before_destroy
-#     after_destroy
+#     before_delete
+#     after_delete
 #
 #     after_build
 #
@@ -57,15 +57,15 @@ p post.teaser                                     # => Norad
 # ### Embedded Models
 #
 # Callbacks on children works the same way whith the only difference -
-# when child removed from main object - child get `:destroy` and main object
+# when child removed from main object - child get `:delete` and main object
 # `:update` callbacks, details:
 #
-# - when main object created/updated/destroyed - the same callbacks propagated to
+# - when main object created/updated/deleted - the same callbacks propagated to
 # its children.
 # - when child added to existing main object - the main object and all its existing
 # children get `:update` callback, but all newly created children get `:create` callback.
 # - when child removed from existing main object - the main object and all its existing
-# children get `:update` callback, but all removed children get `:destroy` callback.
+# children get `:update` callback, but all removed children get `:delete` callback.
 #
 # Let's add embedded comments to post and see how this works.
 

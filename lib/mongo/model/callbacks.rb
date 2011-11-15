@@ -2,7 +2,7 @@ module Mongo::Model::Callbacks
   inherit RubyExt::Callbacks
 
   module ClassMethods
-    [:validate, :create, :update, :save, :destroy].each do |method_name|
+    [:validate, :create, :update, :save, :delete].each do |method_name|
       define_method "before_#{method_name}" do |*args, &block|
         opt = args.extract_options!
         if block
@@ -14,7 +14,7 @@ module Mongo::Model::Callbacks
       end
     end
 
-    [:validate, :create, :update, :save, :destroy, :build].each do |method_name|
+    [:validate, :create, :update, :save, :delete, :build].each do |method_name|
       define_method "after_#{method_name}" do |*args, &block|
         opt = args.extract_options!
         if block

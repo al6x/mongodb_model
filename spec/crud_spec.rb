@@ -44,8 +44,8 @@ describe "Model CRUD" do
       Unit.count.should == 1
       Unit.first(name: 'Zeratul').info.should == 'Killer of Cerebrates'
 
-      # destroy
-      @zeratul.destroy.should be_true
+      # delete
+      @zeratul.delete.should be_true
       Unit.count.should == 0
     end
 
@@ -67,8 +67,8 @@ describe "Model CRUD" do
       db.heroes.count.should == 1
       db.heroes.first(name: 'Zeratul').info.should == 'Killer of Cerebrates'
 
-      # destroy
-      @zeratul.destroy(collection: db.heroes).should be_true
+      # delete
+      @zeratul.delete(collection: db.heroes).should be_true
       db.heroes.count.should == 0
     end
 
@@ -85,13 +85,13 @@ describe "Model CRUD" do
       u.new_record?.should be_false
     end
 
-    it 'destroy_all' do
+    it 'delete_all' do
       Unit.create(name: 'Zeratul')
       Unit.count.should == 1
-      Unit.destroy_all
+      Unit.delete_all
       Unit.count.should == 0
 
-      Unit.destroy_all!
+      Unit.delete_all!
     end
 
     it 'modifiers' do
@@ -155,8 +155,8 @@ describe "Model CRUD" do
       Player.first.should == @player
       Player.first.object_id.should_not == @player.object_id
 
-      # destroy
-      @player.destroy.should be_true
+      # delete
+      @player.delete.should be_true
       Player.count.should == 0
     end
   end

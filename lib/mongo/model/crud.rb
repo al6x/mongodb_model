@@ -9,14 +9,14 @@ module Mongo::Model::Crud
     save(*args) || raise(Mongo::Error, "can't save invalid model (#{self.errors})!")
   end
 
-  def destroy options = {}
+  def delete options = {}
     with_collection options do |collection, options|
-      collection.destroy self, options
+      collection.delete self, options
     end
   end
 
-  def destroy! *args
-    destroy(*args) || raise(Mongo::Error, "can't destroy invalid model #{self.errors}!")
+  def delete! *args
+    delete(*args) || raise(Mongo::Error, "can't delete invalid model #{self.errors}!")
   end
 
   def update doc, options = {}
@@ -43,14 +43,14 @@ module Mongo::Model::Crud
       model
     end
 
-    def destroy_all selector = {}, options = {}
+    def delete_all selector = {}, options = {}
       success = true
-      each(selector){|o| success = false unless o.destroy options}
+      each(selector){|o| success = false unless o.delete options}
       success
     end
 
-    def destroy_all! selector = {}, options = {}
-      destroy_all(selector, options) || raise(Mongo::Error, "can't destroy #{selector.inspect}!")
+    def delete_all! selector = {}, options = {}
+      delete_all(selector, options) || raise(Mongo::Error, "can't delete #{selector.inspect}!")
     end
 
     def update selector, doc, options = {}

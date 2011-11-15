@@ -47,9 +47,9 @@ module Mongo::Model::Assignment
         dsl = ::Mongo::Model::Assignment::Dsl.new self
         dsl.instance_eval &block
       else
-        args.size.must_be.in 2..3
+        args.size.must.be_in 2..3
         attr_name = args.shift
-        attr_name.must_be.a Symbol
+        attr_name.must.be_a Symbol
 
         if args.first.is_a? Class
           type, mass_assignment = args

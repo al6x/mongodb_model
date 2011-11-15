@@ -54,12 +54,12 @@ describe "Model Query" do
     u = SpecialUnit.query(name: 'Zeratul').build age: 500
     [u.name, u.age].should == ['Zeratul', 500]
 
-    SpecialUnit.destroy_all
+    SpecialUnit.delete_all
     SpecialUnit.query(name: 'Zeratul').create age: 500
     u = SpecialUnit.first
     [u.name, u.age].should == ['Zeratul', 500]
 
-    SpecialUnit.destroy_all
+    SpecialUnit.delete_all
     SpecialUnit.query(name: 'Zeratul').create! age: 500
     u = SpecialUnit.first
     [u.name, u.age].should == ['Zeratul', 500]
@@ -70,7 +70,7 @@ describe "Model Query" do
     u.exist?.should be_false
     u.save!
     u.exist?.should be_true
-    u.destroy!
+    u.delete!
     u.exist?.should be_false
   end
 

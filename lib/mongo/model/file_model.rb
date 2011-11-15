@@ -23,7 +23,7 @@ module Mongo::Model::FileModel
 
       after_save{|model| model.send(attr_name).save!}
 
-      after_destroy{|model| model.send(attr_name).destroy!}
+      after_delete{|model| model.send(attr_name).delete!}
     end
   end
 end
