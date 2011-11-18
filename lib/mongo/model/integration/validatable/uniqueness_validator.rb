@@ -1,4 +1,4 @@
-class Mongo::Model::UniquenessValidator < Validatable::ValidationBase
+class Validatable::UniquenessValidator < Validatable::ValidationBase
   attr_accessor :scope, :case_sensitive
 
   def initialize(klass, attribute, options={})
@@ -18,7 +18,7 @@ class Mongo::Model::UniquenessValidator < Validatable::ValidationBase
       conditions[attribute] = /^#{Regexp.escape(value.to_s)}$/i
     end
 
-    # Make sure we're not including the current document in the query
+    # Make sure we're not including the current document in the query.
     conditions[:_id] = {_ne: instance._id} if instance._id
 
     !klass.exists?(conditions)

@@ -1,3 +1,11 @@
+- make id strings by default
+- updated to latest MongoDB driver
+
+# Done
+
+- Handy scopes (limit, skip, paginate, ...)
+- Modifiers ($set, $get, $push, ...)
+
 # Article
   # Add article and sample about Fat Models vs. Composite
 
@@ -44,6 +52,3 @@
     all
 
   Security profiles
-
-- Handy scopes (limit, skip, paginate, ...)
-- Modifiers ($set, $get, $push, ...)

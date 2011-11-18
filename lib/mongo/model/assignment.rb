@@ -1,3 +1,5 @@
+require 'mongo/model/support/conversions'
+
 module Mongo::Model::Assignment
   class Dsl < BasicObject
     def initialize model

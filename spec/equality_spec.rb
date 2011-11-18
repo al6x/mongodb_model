@@ -3,31 +3,31 @@ require 'spec_helper'
 describe 'Model equality' do
   with_mongo_model
 
-  after{remove_constants :Player, :Tags}
+  after{remove_constants :Unit, :Tags}
 
-  it "integration smoke test" do
-    class Player
+  it "should check for equality based on model attributes" do
+    class Unit
       inherit Mongo::Model
 
-      attr_accessor :name, :mission
+      attr_accessor :name, :items
 
-      class Mission
+      class Item
         inherit Mongo::Model
 
         attr_accessor :name
       end
     end
 
-    player1 = Player.new name: 'Alex'
-    player1.mission = Player::Mission.new name: 'First Strike'
+    unit1 = Unit.new name: 'Zeratul'
+    unit1.items = [Unit::Item.new(name: 'Psionic blade')]
 
-    player2 = Player.new name: 'Alex'
-    player2.mission = Player::Mission.new name: 'First Strike'
+    unit2 = Unit.new name: 'Zeratul'
+    unit2.items = [Unit::Item.new(name: 'Psionic blade')]
 
-    player1.should == player2
+    unit1.should == unit2
 
-    player1.mission.name = 'Into the Flames'
-    player1.should_not == player2
+    unit1.items.first.name = 'Power suit'
+    unit1.should_not == unit2
   end
 
   it "should correct compare Array/Hash models (from error)" do

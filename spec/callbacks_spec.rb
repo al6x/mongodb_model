@@ -1,40 +1,42 @@
 require 'spec_helper'
 
-describe 'Model callbacks' do
+describe 'Callbacks' do
   with_mongo_model
 
-  after{remove_constants :Post, :Player}
+  after{remove_constants :Post, :Unit}
 
-  it "integration smoke test" do
-    class Player
+  it "should works in common use case" do
+    class Unit
       inherit Mongo::Model
 
-      before_validate :before_validate_check
-      after_save :after_save_check
+      before_validate :validate_unit
+      after_save :unit_saved
 
-      attr_accessor :missions
+      attr_accessor :items
+      embedded :items
 
-      class Mission
+      class Item
         inherit Mongo::Model
 
-        before_validate :before_validate_check
-        after_save :after_save_check
+        before_validate :validate_item
+        after_save :item_saved
       end
     end
 
-    mission = Player::Mission.new
-    player = Player.new
-    player.missions = [mission]
+    item = Unit::Item.new
+    unit = Unit.new
+    unit.items = [item]
 
-    player.should_receive(:before_validate_check).once.ordered.and_return(nil)
-    mission.should_receive(:before_validate_check).once.ordered.and_return(nil)
-    player.should_receive(:after_save_check).once.ordered.and_return(nil)
-    mission.should_receive(:after_save_check).once.ordered.and_return(nil)
+    unit.should_receive(:validate_unit).once.ordered.and_return(nil)
+    unit.should_receive(:unit_saved).once.ordered.and_return(nil)
+    item.should_receive(:validate_item).once.ordered.and_return(nil)
+    item.should_receive(:item_saved).once.ordered.and_return(nil)
 
-    db.units.save(player).should be_true
+    db.units.save(unit).should be_true
   end
 
-  it "should have :build callback" do
+  warn 'duplicated spec'
+  it "should fire special :build callback after building object" do
     class Post
       inherit Mongo::Model
       collection :posts

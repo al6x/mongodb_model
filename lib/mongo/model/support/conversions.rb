@@ -1,6 +1,7 @@
-#
-# Boolean
-#
+# Converting basic Ruby types to and from String, needed
+# in mass assignment.
+
+# Boolean.
 module Mongo::Model::BooleanType
   Mapping = {
     true    => true,
@@ -37,10 +38,7 @@ class Boolean; end unless defined?(Boolean)
 
 Boolean.extend Mongo::Model::BooleanType
 
-
-#
-# Date
-#
+# Date.
 require 'date'
 Date.class_eval do
   def self.cast value
@@ -55,20 +53,14 @@ Date.class_eval do
   end
 end
 
-
-#
-# Float
-#
+# Float.
 Float.class_eval do
   def self.cast value
     value.nil? ? nil : value.to_f
   end
 end
 
-
-#
-# Integer
-#
+# Integer.
 Integer.class_eval do
   def self.cast value
     value_to_i = value.to_i
@@ -80,20 +72,14 @@ Integer.class_eval do
   end
 end
 
-
-#
-# String
-#
+# String.
 String.class_eval do
   def self.cast value
     value.nil? ? nil : value.to_s
   end
 end
 
-
-#
-# Time
-#
+# Time.
 Time.class_eval do
   def self.cast value
     if value.nil? || value == ''

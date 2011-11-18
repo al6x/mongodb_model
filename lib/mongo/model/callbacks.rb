@@ -1,6 +1,31 @@
 module Mongo::Model::Callbacks
   inherit RubyExt::Callbacks
 
+  protected
+    def with_model_callbacks methods, options, models, &block
+      # Firing before callbacks.
+      unless options[:callbacks] == false
+        methods.each do |method|
+          models.each do |model|
+            return false unless model.run_before_callbacks method, method
+          end
+        end
+      end
+
+      result = block.call
+
+      # Firing after callbacks.
+      unless options[:callbacks] == false
+        methods.reverse.each do |method|
+          models.each do |model|
+            model.run_after_callbacks method, method
+          end
+        end
+      end
+
+      result
+    end
+
   module ClassMethods
     [:validate, :create, :update, :save, :delete].each do |method_name|
       define_method "before_#{method_name}" do |*args, &block|

@@ -13,18 +13,18 @@ describe "Model Query" do
   end
   after(:all){remove_constants :Unit, :SpecialUnit}
 
-  before{@zeratul = Unit.build name: 'Zeratul'}
+  before{@unit = Unit.build name: 'Zeratul'}
 
   it 'exist?' do
     Unit.should_not exist(name: 'Zeratul')
-    @zeratul.save!
+    @unit.save!
     Unit.should exist(name: 'Zeratul')
   end
 
   it 'first, first!' do
     Unit.first.should be_nil
     -> {Unit.first!}.should raise_error(Mongo::NotFound)
-    @zeratul.save
+    @unit.save
     Unit.first.should_not be_nil
     Unit.first!.should_not be_nil
   end
@@ -33,7 +33,7 @@ describe "Model Query" do
     list = []; Unit.each{|o| list << o}
     list.size.should == 0
 
-    @zeratul.save
+    @unit.save
     list = []; Unit.each{|o| list << o}
     list.size.should == 1
   end

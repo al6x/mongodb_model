@@ -1,12 +1,6 @@
 module Mongo::Model
   include Mongo::Object
 
-  attr_accessor :_id, :_class
-
-  def _id?; !!_id end
-  def new?; !_id end
-  alias_method :new_record?, :new?
-
   inherited do
     unless is?(Array) or is?(Hash)
       alias_method :eql?, :model_eql?
@@ -14,29 +8,66 @@ module Mongo::Model
     end
   end
 
-  def model_eql? o
-    return true if equal? o
-    self.class == o.class and self == o
+  protected
+    # Equality.
+
+    def model_eql? o
+      return true if equal? o
+      self.class == o.class and self == o
+    end
+
+    def model_eq? o
+      return true if equal? o
+
+      variables = {}.tap do |h|
+        persistent_instance_variable_names.each{|n| h[n] = instance_variable_get(n)}
+      end
+
+      o_variables = {}.tap do |h|
+        o.persistent_instance_variable_names.each{|n| h[n] = o.instance_variable_get(n)}
+      end
+
+      variables == o_variables
+    end
+
+    # Traversing models.
+
+    def embedded_models recursive = false
+      [].tap{|a| each_embedded(recursive){|m| a.add m}}
+    end
+
+    def each_embedded recursive = false, &block
+      self.class.embedded.each do |name|
+        if o = instance_variable_get(name)
+          _each_embedded o, recursive, &block
+        end
+      end
+    end
+
+    # Hash or Array also can be the Model by itsef, so we need to check
+    # for presence both `:each_embedded` and `:each_value` methods.
+    def _each_embedded o, recursive, &block
+      # If o is model adding it and its children.
+      if o.respond_to? :each_embedded
+        block.call o
+        o.each_embedded recursive, &block if recursive
+      end
+
+      # If o is Hash or Array, iterating and adding all models from there,
+      # recursivelly, hashes and arrays can be nested in any order.
+      if o.respond_to? :each_value
+        o.each_value do |o|
+          _each_embedded o, recursive, &block
+        end
+      end
+    end
+
+  module ClassMethods
+    inheritable_accessor :_embedded, []
+
+    def embedded *list
+      list.collect!{|n| :"@#{n}"}
+      if list.empty? then _embedded else _embedded.push(*list) end
+    end
   end
-
-  def model_eq? o
-    return true if equal? o
-
-    variables = {}; ::Mongo::Object.each_instance_variable(self){|n, v| variables[n] = v}
-    o_variables = {}; ::Mongo::Object.each_instance_variable(o){|n, v| o_variables[n] = v}
-
-    variables == o_variables
-  end
-
-  # class << self
-  #   attr_accessor :db, :connection
-  #   attr_required :db, :connection
-  #
-  #   # Override this method to provide custom alias to db name translation,
-  #   # for example db_name = my_config[alias_name]
-  #   def resolve_db_alias alias_name
-  #     db_name = alias_name.to_s
-  #     connection.db db_name
-  #   end
-  # end
 end

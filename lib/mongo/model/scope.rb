@@ -53,10 +53,8 @@ module Mongo::Model::Scope
       end
     end
 
+    # Finders.
 
-    #
-    # finders
-    #
     def count selector = {}, options = {}
       if current = current_scope
         super current.selector.merge(selector), current.options.merge(options)
@@ -81,10 +79,8 @@ module Mongo::Model::Scope
       end
     end
 
+    # Shortcuts for frequently used scopes.
 
-    #
-    # Handy scopes
-    #
     def limit n; query({}, limit: n) end
     def skip n; query({}, skip: n) end
     def sort *list

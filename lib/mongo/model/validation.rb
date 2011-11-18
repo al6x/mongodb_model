@@ -1,41 +1,21 @@
 module Mongo::Model::Validation
-  def errors
-    @_errors ||= Validatable::Errors.new
+  def valid? options = {}
+    errors.clear
+    run_validations options
   end
+  def invalid?(options = {}); !valid?(options) end
 
-  def run_model_validations
-    self.class.validations.each do |v|
-      if v.respond_to?(:validate)
-        v.validate self
-      elsif v.is_a? Proc
-        v.call self
-      else
-        send v
-      end
-    end
-    true
-  end
+  protected
+    def run_validations options = {}
+      with_model_callbacks [:validate], options, [self] do
+        # Validating main model.
+        self.run_validations_for_this_model_only
+        result = errors.empty?
 
-  module ClassMethods
-    include ::Validatable::Macros
-
-    inheritable_accessor :validations, []
-
-    def validates_uniqueness_of *args
-      add_validations(args, Mongo::Model::UniquenessValidator)
-    end
-
-    def validate validation = nil, &block
-      validations.push block || validation
-    end
-
-    protected
-      def add_validations(args, klass)
-        options = args.last.is_a?(Hash) ? args.pop : {}
-        args.each do |attribute|
-          new_validation = klass.new self, attribute, options
-          validate new_validation
+        # Validating embedded models.
+        embedded_models.reduce result do |result, model|
+          result &= model.valid?(options)
         end
       end
-  end
+    end
 end

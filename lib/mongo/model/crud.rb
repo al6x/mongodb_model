@@ -1,4 +1,29 @@
 module Mongo::Model::Crud
+  # Enhancing Mongo::Object CRUD.
+
+  def create_object collection, options
+    with_model_crud_callbacks [:save, :create], options do |mongo_options|
+      super collection, mongo_options
+      true
+    end
+  end
+
+  def update_object collection, options
+    with_model_crud_callbacks [:save, :update], options do |mongo_options|
+      super collection, mongo_options
+      true
+    end
+  end
+
+  def delete_object collection, options
+    with_model_crud_callbacks [:delete], options do |mongo_options|
+      super collection, mongo_options
+      true
+    end
+  end
+
+  # Model CRUD.
+
   def save options = {}
     with_collection options do |collection, options|
       collection.save self, options
@@ -20,8 +45,26 @@ module Mongo::Model::Crud
   end
 
   def update doc, options = {}
-    self.class.collection.update({_id: _id}, doc, options)
+    with_collection options do |collection, options|
+      collection.update({_id: _id}, doc, options)
+    end
   end
+
+  protected
+    def with_model_crud_callbacks methods, options, &block
+      models = [self] + embedded_models(true)
+
+      return false if (options[:validate] != false) and invalid?(options)
+
+      with_model_callbacks methods, options, models do
+        mongo_options = options.clone
+        mongo_options.delete :validate
+        mongo_options.delete :callbacks
+
+        block.call mongo_options
+      end
+    end
+
 
   module ClassMethods
     def build attributes = {}, options = {}, &block
