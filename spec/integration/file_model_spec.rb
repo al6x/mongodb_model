@@ -1,7 +1,7 @@
 require 'spec_helper'
 require 'file_model/spec/shared_crud'
 
-describe 'File Model' do
+describe 'Integration with File Model' do
   with_mongo_model
   it_should_behave_like "file model crud"
 

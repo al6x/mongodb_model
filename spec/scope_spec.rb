@@ -45,7 +45,7 @@ describe "Scope" do
       Unit.current_scope.should be_nil
     end
 
-    it "definition" do
+    it "should allow to define default scope" do
       Unit.default_scope status: 'alive'
 
       Unit.current_scope.should == Unit.query(status: 'alive')
@@ -56,7 +56,7 @@ describe "Scope" do
       Unit.current_scope.should == Unit.query(status: 'alive')
     end
 
-    it "should be inherited" do
+    it "should inherit default scope" do
       Unit.default_scope status: 'alive'
 
       class Protoss < Unit; end
@@ -69,7 +69,7 @@ describe "Scope" do
   end
 
   describe 'scope' do
-    it "definition" do
+    it "should allow to define scope" do
       Unit.scope :alive, status: 'alive'
       Unit.alive.current_scope.should == Unit.query(status: 'alive')
 
@@ -101,7 +101,7 @@ describe "Scope" do
     end
   end
 
-  describe 'with_scope' do
+  describe 'querying with scope' do
     it "shouldn't allow to nest exclusive scope" do
       -> {
         Unit.with_exclusive_scope do
@@ -116,7 +116,7 @@ describe "Scope" do
       }.should raise_error(/exclusive scope already applied/)
     end
 
-    it "with_exclusive_scope should clear other scopes" do
+    it "should clear other scopes when exclusive scope used" do
       Unit.default_scope status: 'alive'
 
       Unit.with_scope race: 'Protoss' do
@@ -132,13 +132,13 @@ describe "Scope" do
       end
     end
 
-    it "usage" do
+    it "should access current scope" do
       Unit.with_scope status: 'alive' do
         Unit.current_scope.should == Unit.query(status: 'alive')
       end
     end
 
-    it "should merge scope" do
+    it "should merge scopes" do
       Unit.default_scope status: 'alive'
       Unit.with_scope race: 'Protoss' do
         Unit.with_scope name: 'Zeratul' do
@@ -149,13 +149,13 @@ describe "Scope" do
   end
 
   describe 'handy scopes' do
-    it "limit, skip, sort" do
+    it "should provide limit, skip and sort scopes" do
       query = Unit.skip(30).limit(10).sort([:name, 1]).snapshot
       query.selector.should == {}
       query.options.should == {skip: 30, limit: 10, sort: [[:name, 1]], snapshot: true}
     end
 
-    it "sort should understand simplified form" do
+    it "should understand simplified form of sort scope" do
       query = Unit.sort(:name)
       query.options.should == {sort: [[:name, 1]]}
 
@@ -163,7 +163,7 @@ describe "Scope" do
       query.options.should == {sort: [[:race, 1], [:name, 1]]}
     end
 
-    it 'paginate' do
+    it 'should provide paginate' do
       query = Unit.paginate(4, 10)
       query.selector.should == {}
       query.options.should == {skip: 30, limit: 10}

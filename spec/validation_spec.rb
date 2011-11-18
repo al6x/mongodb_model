@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Validations" do
+describe "Validation" do
   with_mongo_model
 
   describe 'CRUD' do
@@ -25,7 +25,7 @@ describe "Validations" do
       @unit.items = [@item]
     end
 
-    it 'should not save/update/delete invalid objects' do
+    it 'should not save, update or delete invalid objects' do
       # create
       @unit.stub!(:valid?).and_return(false)
       db.units.save(@unit).should be_false
@@ -48,7 +48,7 @@ describe "Validations" do
       db.units.delete(@unit).should be_true
     end
 
-    it 'should not save/update/delete invalid embedded objects' do
+    it 'should not save, update or delete invalid embedded objects' do
       # create
       @item.stub!(:valid?).and_return(false)
       db.units.save(@unit).should be_false
@@ -81,7 +81,7 @@ describe "Validations" do
     end
   end
 
-  describe 'Basics' do
+  describe "basics" do
     before do
       class Unit
         inherit Mongo::Model
@@ -92,7 +92,7 @@ describe "Validations" do
     end
     after{remove_constants :Unit}
 
-    it "before validation callback" do
+    it "should provide validation callback" do
       class Unit
         before_validate :check_name
         def check_name
@@ -140,90 +140,6 @@ describe "Validations" do
       unit.should_not be_valid
       unit.name = 'Zeratul'
       unit.should be_valid
-    end
-  end
-
-  describe "validatable2" do
-    before do
-      class Unit
-        inherit Mongo::Model
-        collection :units
-
-        attr_accessor :name
-      end
-    end
-    after{remove_constants :Unit}
-
-    it "smoke test" do
-      class Unit
-        validates_presence_of :name
-      end
-
-      unit = Unit.new
-      unit.should_not be_valid
-      unit.errors.size.should == 1
-      unit.errors.first.first.should == :name
-      unit.save.should be_false
-
-      unit.errors.clear
-      unit.name = 'Zeratul'
-      unit.should be_valid
-      unit.errors.should be_empty
-      unit.save.should be_true
-    end
-
-    it "should validate before save" do
-      unit = Unit.new
-      unit.should_receive(:run_validations)
-      unit.save
-    end
-
-    it "should not save errors as instance variables" do
-      unit = Unit.new
-      unit.valid?
-      unit.instance_variables.select{|iv_name| iv_name !~ /^@_/}.should be_empty
-    end
-  end
-
-  describe "Special validators" do
-    before do
-      class Unit
-        inherit Mongo::Model
-        collection :units
-
-        attr_accessor :name
-      end
-    end
-    after{remove_constants :Unit}
-
-    it 'validates_uniqueness_of' do
-      class Unit
-        validates_uniqueness_of :name
-      end
-
-      unit = Unit.build name: 'Zeratul'
-      unit.save.should be_true
-
-      unit = Unit.build name: 'Zeratul'
-      unit.save.should be_false
-      unit.errors[:name].first.should =~ /unique/
-    end
-
-    it 'validates_uniqueness_of with scope' do
-      class Unit
-        attr_accessor :account_id
-
-        validates_uniqueness_of :name, scope: :account_id
-      end
-
-      unit = Unit.build name: 'Zeratul', account_id: '10'
-      unit.save.should be_true
-
-      unit = Unit.build name: 'Zeratul', account_id: '10'
-      unit.save.should be_false
-
-      unit = Unit.build name: 'Zeratul', account_id: '20'
-      unit.save.should be_true
     end
   end
 end

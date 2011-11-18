@@ -30,7 +30,17 @@ describe 'Model equality' do
     unit1.should_not == unit2
   end
 
-  it "should correct compare Array/Hash models (from error)" do
+  it "should compare with non models (from errors)" do
+    class Unit
+      inherit Mongo::Model
+    end
+
+    unit = Unit.new
+    unit.should_not == 1
+    unit.should_not == nil
+  end
+
+  it "should correctly compare Array/Hash models (from error)" do
     class Tags < Array
       inherit Mongo::Model
     end

@@ -8,28 +8,29 @@ module Mongo::Model
     end
   end
 
+  # Equality.
+
+  def model_eql? o
+    return true if equal? o
+    self.class == o.class and self == o
+  end
+
+  def model_eq? o
+    return true if equal? o
+    return false unless o.is_a? Mongo::Model
+
+    variables = {}.tap do |h|
+      persistent_instance_variable_names.each{|n| h[n] = instance_variable_get(n)}
+    end
+
+    o_variables = {}.tap do |h|
+      o.persistent_instance_variable_names.each{|n| h[n] = o.instance_variable_get(n)}
+    end
+
+    variables == o_variables
+  end
+
   protected
-    # Equality.
-
-    def model_eql? o
-      return true if equal? o
-      self.class == o.class and self == o
-    end
-
-    def model_eq? o
-      return true if equal? o
-
-      variables = {}.tap do |h|
-        persistent_instance_variable_names.each{|n| h[n] = instance_variable_get(n)}
-      end
-
-      o_variables = {}.tap do |h|
-        o.persistent_instance_variable_names.each{|n| h[n] = o.instance_variable_get(n)}
-      end
-
-      variables == o_variables
-    end
-
     # Traversing models.
 
     def embedded_models recursive = false

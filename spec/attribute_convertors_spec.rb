@@ -1,20 +1,20 @@
 require 'spec_helper'
 
-describe "Attribute Convertors" do
+describe "Attribute convertors" do
   with_mongo_model
 
   after(:all){remove_constants :TheSample}
 
   convertors = Mongo::Model::AttributeConvertors::CONVERTORS
 
-  it ":line convertor" do
+  it "should convert line of comma-separated tokens to array and backward" do
     v = ['a', 'b']
     str_v = 'a, b'
     convertors[:line][:from_string].call(str_v).should == v
     convertors[:line][:to_string].call(v).should == str_v
   end
 
-  it ":yaml convertor" do
+  it "should convert to YAML and backward" do
     v = {'a' => 'b'}
     str_v = v.to_yaml.strip
 
@@ -22,14 +22,14 @@ describe "Attribute Convertors" do
     convertors[:yaml][:to_string].call(v).should == str_v
   end
 
-  it ":json convertor" do
+  it "should convert to JSON and backward" do
     v = {'a' => 'b'}
     str_v = v.to_json.strip
     convertors[:json][:from_string].call(str_v).should == v
     convertors[:json][:to_string].call(v).should == str_v
   end
 
-  it ":field should generate helper methods if :as_string option provided" do
+  it "should generate helper methods if :as_string option provided" do
     class ::TheSample
       inherit Mongo::Model
 
@@ -48,24 +48,24 @@ describe "Attribute Convertors" do
 
     o = TheSample.new
 
-    # get
+    # Get.
     o.tags_as_string.should == ''
     o.tags = %w(Java Ruby)
     o._cache.clear
     o.tags_as_string.should == 'Java, Ruby'
 
-    # set
+    # Set.
     o.tags_as_string = ''
     o.tags.should == []
     o.tags_as_string = 'Java, Ruby'
     o.tags.should == %w(Java Ruby)
 
-    # mass assignment
+    # Mass assignment.
     o.tags = []
     o.set tags_as_string: 'Java, Ruby'
     o.tags.should == %w(Java Ruby)
 
-    # # protection
+    # Protection.
     o.protected_tags = []
     -> {o.set protected_tags_as_string: 'Java, Ruby'}.should raise_error(/not allowed/)
   end

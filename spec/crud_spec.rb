@@ -4,7 +4,7 @@ require 'mongo/object/spec/shared_object_crud'
 describe "Model CRUD" do
   with_mongo_model
 
-  describe 'simple' do
+  describe 'single model' do
     it_should_behave_like "single object CRUD"
 
     before do
@@ -20,7 +20,7 @@ describe "Model CRUD" do
     end
     after{remove_constants :Unit}
 
-    it 'model crud' do
+    it 'should perform CRUD' do
       # Read.
       Unit.count.should == 0
       Unit.all.should == []
@@ -47,7 +47,7 @@ describe "Model CRUD" do
       Unit.count.should == 0
     end
 
-    it 'should be able to save to another collection' do
+    it 'should be able to save model to another collection' do
       # Create.
       @unit.save(collection: db.heroes).should be_true
       @unit._id.should_not be_nil
@@ -70,12 +70,12 @@ describe "Model CRUD" do
       db.heroes.count.should == 0
     end
 
-    it 'build' do
+    it 'should build model' do
       u = Unit.build name: 'Zeratul'
       u.name.should == 'Zeratul'
     end
 
-    it 'create' do
+    it 'should create model' do
       u = Unit.create(name: 'Zeratul')
       u.new_record?.should be_false
 
@@ -83,7 +83,7 @@ describe "Model CRUD" do
       u.new_record?.should be_false
     end
 
-    it 'delete_all' do
+    it 'should delete all models' do
       Unit.create(name: 'Zeratul')
       Unit.count.should == 1
       Unit.delete_all
@@ -92,7 +92,7 @@ describe "Model CRUD" do
       Unit.delete_all!
     end
 
-    it 'modifiers' do
+    it 'should accept modifiers' do
       unit = Unit.create! name: 'Zeratul'
 
       Unit.update({_id: unit._id}, _set: {name: 'Tassadar'})
@@ -105,7 +105,7 @@ describe "Model CRUD" do
     end
   end
 
-  describe 'embedded' do
+  describe 'embedded model' do
     it_should_behave_like 'embedded object CRUD'
 
     before do
@@ -133,7 +133,7 @@ describe "Model CRUD" do
     end
     after{remove_constants :Unit}
 
-    it 'crud' do
+    it 'should perform CRUD' do
       # Create.
       @unit.save.should be_true
       @unit._id.should_not be_nil

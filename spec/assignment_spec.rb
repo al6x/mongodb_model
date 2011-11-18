@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Model callbacks' do
+describe 'Attribute assignment' do
   with_mongo_model
 
   after{remove_constants :User, :Writer}
@@ -70,7 +70,7 @@ describe 'Model callbacks' do
     [u.age, u.posts].should == [20, 12]
   end
 
-  it 'casting smoke test' do
+  it 'should cast string values' do
     [
       Boolean, '1',          true,
       Date,    '2011-08-23', Date.parse('2011-08-23'),

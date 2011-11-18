@@ -1,8 +1,9 @@
-- make id strings by default
-- updated to latest MongoDB driver
+
 
 # Done
 
+- updated to latest MongoDB driver
+- make id strings by default
 - Handy scopes (limit, skip, paginate, ...)
 - Modifiers ($set, $get, $push, ...)
 

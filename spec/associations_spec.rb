@@ -5,7 +5,7 @@ describe 'Associations' do
 
   after{remove_constants :Post, :Comment}
 
-  it "basic" do
+  it "should allow to model associations" do
     class Post
       inherit Mongo::Model
       collection :posts
@@ -13,7 +13,7 @@ describe 'Associations' do
       attr_accessor :text
 
       def comments
-        Comment.query({post_id: _id}, {sort: [[:created_at, -1]]})
+        Comment.query({post_id: _id}, {sort: [[:text, -1]]})
       end
     end
 
@@ -26,8 +26,6 @@ describe 'Associations' do
       def == o
         self.class == o.class and [text, post_id] == [o.text, o.post_id]
       end
-
-      timestamps!
     end
 
     post1 = Post.create! text: 'Post 1'

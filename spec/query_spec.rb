@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe "Model Query" do
+describe "Query" do
   with_mongo_model
 
   before :all do
@@ -15,13 +15,13 @@ describe "Model Query" do
 
   before{@unit = Unit.build name: 'Zeratul'}
 
-  it 'exist?' do
+  it 'should check existence' do
     Unit.should_not exist(name: 'Zeratul')
     @unit.save!
     Unit.should exist(name: 'Zeratul')
   end
 
-  it 'first, first!' do
+  it 'should return first model (also with bang version)' do
     Unit.first.should be_nil
     -> {Unit.first!}.should raise_error(Mongo::NotFound)
     @unit.save
@@ -29,7 +29,7 @@ describe "Model Query" do
     Unit.first!.should_not be_nil
   end
 
-  it 'all, each' do
+  it 'should return all and iterate over each models' do
     list = []; Unit.each{|o| list << o}
     list.size.should == 0
 
@@ -38,7 +38,7 @@ describe "Model Query" do
     list.size.should == 1
   end
 
-  it 'dynamic finders integration' do
+  it 'should have dynamic finders' do
     Unit.first_by_name('Zeratul').should be_nil
     u = Unit.build(name: 'Zeratul')
     u.save!
@@ -46,7 +46,7 @@ describe "Model Query" do
     Unit.by_id!(u._id).name.should == 'Zeratul'
   end
 
-  it 'build, create, create!' do
+  it 'should be integrated with build, create and create!' do
     class SpecialUnit < Unit
       attr_accessor :age
     end
@@ -65,16 +65,7 @@ describe "Model Query" do
     [u.name, u.age].should == ['Zeratul', 500]
   end
 
-  it 'exist?' do
-    u = Unit.new
-    u.exist?.should be_false
-    u.save!
-    u.exist?.should be_true
-    u.delete!
-    u.exist?.should be_false
-  end
-
-  it "build should assign protected attributes" do
+  it "should not allow to mass-assign protected attributes" do
     class SpecialUnit < Unit
       attr_accessor :age, :status
       assign do
@@ -88,9 +79,7 @@ describe "Model Query" do
     u.status.should == 'active'
   end
 
-  it "where" do
-    # Unit.where(name: 'Zeratul').should == Mongo::Model::Query.new(Unit, {name: 'Zeratul'}, {})
-
+  it "should support where clause" do
     query = Unit.where(name: 'Zeratul')
     query = query.where(race: 'Protoss')
     query.should == Mongo::Model::Query.new(Unit, {name: 'Zeratul', race: 'Protoss'}, {})

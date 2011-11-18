@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Model callbacks' do
+describe 'Conversion' do
   with_mongo_model
 
   before :all do
@@ -49,7 +49,7 @@ describe 'Model callbacks' do
     }
   end
 
-  it "only, except, methods" do
+  it "should accept :only, :except and :methods options" do
     post = build_post_with_comment
     post.to_hash(only: :text).should == {'text' => 'StarCraft releasing soon!'}
     post.to_hash(except: :token).should == {
@@ -61,7 +61,7 @@ describe 'Model callbacks' do
     post.to_hash(only: [], methods: :teaser).should == {'teaser' => 'StarCraft r'}
   end
 
-  it "profiles" do
+  it "should use conversion profiles" do
     Post.class_eval do
       profile :public, only: [:text, :comments], methods: :teaser
     end
@@ -101,7 +101,7 @@ describe 'Model callbacks' do
     }
   end
 
-  it "to_json" do
+  it "should convert to to_json" do
     post = build_post_with_comment
     rson = mock
     rson.should_receive(:to_json).and_return(:ok)
@@ -109,7 +109,7 @@ describe 'Model callbacks' do
     post.to_json(only: :text).should == :ok
   end
 
-  it "to_xml" do
+  it "should convert to to_xml" do
     post = build_post_with_comment
     rson = mock
     rson.should_receive(:to_xml).and_return(:ok)

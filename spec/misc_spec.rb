@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'Model Miscellaneous' do
+describe 'Miscellaneous' do
   with_mongo_model
 
   before do
@@ -13,7 +13,7 @@ describe 'Model Miscellaneous' do
   end
   after{remove_constants :Unit3, :User}
 
-  it "timestamps" do
+  it "should create timestamps" do
     class Unit3
       inherit Mongo::Model
       collection :units
@@ -36,7 +36,7 @@ describe 'Model Miscellaneous' do
     unit.updated_at.should >  updated_at
   end
 
-  it 'cache' do
+  it 'should have cache' do
     class Unit3
       inherit Mongo::Model
     end
@@ -44,21 +44,21 @@ describe 'Model Miscellaneous' do
     u._cache.should == {}
   end
 
-  it "to_param" do
+  it "should convert model to param" do
     u = User.new
     u.to_param.should be_nil
     u.save!
     u.to_param.should_not be_empty
   end
 
-  it "dom_id" do
+  it "should have dom_id" do
     u = User.new
     u.dom_id.should be_nil
     u.save!
     u.dom_id.should_not be_empty
   end
 
-  it 'reload' do
+  it 'should reload model' do
     u = User.create! name: 'Zeratul'
     u.name = 'Jim'
     u.reload
