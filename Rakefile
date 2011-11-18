@@ -2,7 +2,7 @@ require 'rake_ext'
 
 project \
   name: "mongodb_model",
-  # version: '0.2.1',
+  # version: '2.0.0',
   gem: true,
   summary: "Object Model for MongoDB",
 

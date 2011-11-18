@@ -22,6 +22,7 @@
           <a class="source" href="index.html">index.rb</a>
           <a class="source" href="modifiers.html">modifiers.rb</a>
           <a class="source" href="queries.html">queries.rb</a>
+          <a class="source" href="spec.html">spec.rb</a>
           <a class="source" href="validations.html">validations.rb</a>
       </div>
     </div>
@@ -57,8 +58,10 @@ after_create
 before_update
 after_update
 
-before_destroy
-after_destroy
+before_delete
+after_delete
+
+after_build
 </code></pre>
 
 <p>All these callbacks also available on embedded models.</p>
@@ -147,16 +150,16 @@ generate teasers on it using callbacks.</p>
         <h3>Embedded Models</h3>
 
 <p>Callbacks on children works the same way whith the only difference &ndash;
-when child removed from main object &ndash; child get <code>:destroy</code> and main object
+when child removed from main object &ndash; child get <code>:delete</code> and main object
 <code>:update</code> callbacks, details:</p>
 
 <ul>
-<li>when main object created/updated/destroyed &ndash; the same callbacks propagated to
+<li>when main object created/updated/deleted &ndash; the same callbacks propagated to
 its children.</li>
 <li>when child added to existing main object &ndash; the main object and all its existing
 children get <code>:update</code> callback, but all newly created children get <code>:create</code> callback.</li>
 <li>when child removed from existing main object &ndash; the main object and all its existing
-children get <code>:update</code> callback, but all removed children get <code>:destroy</code> callback.</li>
+children get <code>:update</code> callback, but all removed children get <code>:delete</code> callback.</li>
 </ul>
 
 <p>Let&rsquo;s add embedded comments to post and see how this works.</p>
