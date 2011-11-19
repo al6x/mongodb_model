@@ -8,4 +8,3 @@ Hash.class_eval do
     {}.tap{|h| self.each{|k, v| h[k] = block.call v}}
   end
 end
-

@@ -41,24 +41,24 @@ describe 'Conversion' do
   it "should work without arguments" do
     post = build_post_with_comment
     post.to_hash.should == {
-      'text' => 'StarCraft releasing soon!',
-      'token' => 'secret',
-      'comments' => [
-        {'text' => 'Cool!'}
+      text:     'StarCraft releasing soon!',
+      token:    'secret',
+      comments: [
+        {text: 'Cool!'}
       ]
     }
   end
 
   it "should accept :only, :except and :methods options" do
     post = build_post_with_comment
-    post.to_hash(only: :text).should == {'text' => 'StarCraft releasing soon!'}
+    post.to_hash(only: :text).should == {text: 'StarCraft releasing soon!'}
     post.to_hash(except: :token).should == {
-      'text' => 'StarCraft releasing soon!',
-      'comments' => [
-        {'text' => 'Cool!'}
+      text:     'StarCraft releasing soon!',
+      comments: [
+        {text: 'Cool!'}
       ]
     }
-    post.to_hash(only: [], methods: :teaser).should == {'teaser' => 'StarCraft r'}
+    post.to_hash(only: [], methods: :teaser).should == {teaser: 'StarCraft r'}
   end
 
   it "should use conversion profiles" do
@@ -75,10 +75,10 @@ describe 'Conversion' do
     end
 
     post.to_hash(profile: :public).should == {
-      'text' => 'StarCraft releasing soon!',
-      'teaser' => 'StarCraft r',
-      'comments' => [
-        {'text' => 'Cool!'}
+      text:     'StarCraft releasing soon!',
+      teaser:   'StarCraft r',
+      comments: [
+        {text: 'Cool!'}
       ]
     }
   end
@@ -92,12 +92,12 @@ describe 'Conversion' do
     post.valid?.should be_false
 
     post.to_hash.should == {
-      'text' => 'StarCraft releasing soon!',
-      'errors' => {"token" => ["can't be empty"]}
+      text:   'StarCraft releasing soon!',
+      errors: {token: ["can't be empty"]}
     }
 
     post.to_hash(errors: false).should == {
-      'text' => 'StarCraft releasing soon!'
+      text: 'StarCraft releasing soon!'
     }
   end
 

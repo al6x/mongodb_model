@@ -20,10 +20,6 @@ module Mongo::Model::Conversion
   end
 
   def to_hash options = {}
-    # return super if args.empty?
-    #
-    # options = args.first
-
     if profile = options[:profile]
       raise "no other optins are allowed when using :profile option!" if options.size > 1
       profile_options = self.class.profiles[profile] || raise("profile :#{profile} not defined for #{self.class}!")
@@ -44,21 +40,21 @@ module Mongo::Model::Conversion
       instance_variables.each do |iv_name|
         value = instance_variable_get iv_name
         value = convert_model value, :to_hash, child_options
-        result[iv_name[1.. -1]] = value
+        result[iv_name[1.. -1].to_sym] = value
       end
 
       methods = options[:methods] ? Array(options[:methods]) : []
       methods.each do |method|
         value = send method
         value = convert_model value, :to_hash, child_options
-        result[method.to_s] = value
+        result[method.to_sym] = value
       end
 
       with_errors = options.include?(:errors) ? options[:errors] : true
       if with_errors and !(errors = self.errors).empty?
-        stringified_errors = {}
-        errors.each{|k, v| stringified_errors[k.to_s] = v}
-        result['errors'] = stringified_errors
+        errors = {}
+        self.errors.each{|k, v| errors[k.to_sym] = v}
+        result[:errors] = errors
       end
 
       result
