@@ -39,14 +39,14 @@ module Mongo::Model::Conversion
       result = {}
       instance_variables.each do |iv_name|
         value = instance_variable_get iv_name
-        value = convert_model value, :to_hash, child_options
+        value = convert_object value, :to_hash, child_options
         result[iv_name[1.. -1].to_sym] = value
       end
 
       methods = options[:methods] ? Array(options[:methods]) : []
       methods.each do |method|
         value = send method
-        value = convert_model value, :to_hash, child_options
+        value = convert_object value, :to_hash, child_options
         result[method.to_sym] = value
       end
 
@@ -60,20 +60,6 @@ module Mongo::Model::Conversion
       result
     end
   end
-
-  protected
-    def convert_model obj, method, options
-      if obj.respond_to? :collect_with_value
-        # Array or Hash.
-        obj.collect_with_value{|v| convert_model v, method, options}
-      elsif obj.respond_to? method
-        # Model.
-        obj.send method, options
-      else
-        # Simple object.
-        obj
-      end
-    end
 
   module ClassMethods
     inheritable_accessor :profiles, {}

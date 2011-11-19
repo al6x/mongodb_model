@@ -70,5 +70,17 @@ module Mongo::Model
       list.collect!{|n| :"@#{n}"}
       if list.empty? then _embedded else _embedded.push(*list) end
     end
+
+    def from_mongo doc
+      model = ::Mongo::Object.from_mongo doc
+      model.run_after_callbacks :build, :build
+      model
+    end
+  end
+
+  class << self
+    def originals
+      @originals ||= {}
+    end
   end
 end

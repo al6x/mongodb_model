@@ -155,7 +155,7 @@ describe 'Callbacks' do
         instance.should_receive(:after_build)
       end
       EmbeddedObject.after_instantiate do |instance|
-        instance.should_receive(:after_build)
+        instance.should_not_receive(:after_build)
       end
       db.objects.first
     end

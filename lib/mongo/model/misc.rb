@@ -8,7 +8,6 @@ module Mongo::Model::Misc
     self.updated_at = now
   end
 
-
   def _cache
     @_cache ||= {}
   end
@@ -32,7 +31,11 @@ module Mongo::Model::Misc
   end
 
   def original
-    @_original ||= _id? ? self.class.by_id(self._id) : nil
+    unless _cache[:original_cached]
+      _cache[:original_cached] = true
+      _cache[:original] = _id && self.class.by_id(_id)
+    end
+    _cache[:original]
   end
 
   module ClassMethods

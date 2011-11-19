@@ -11,10 +11,10 @@ describe 'Miscellaneous' do
       attr_accessor :name
     end
   end
-  after{remove_constants :Unit3, :User}
+  after{remove_constants :Unit, :User}
 
   it "should create timestamps" do
-    class Unit3
+    class Unit
       inherit Mongo::Model
       collection :units
 
@@ -23,10 +23,10 @@ describe 'Miscellaneous' do
       timestamps!
     end
 
-    unit = Unit3.build name: 'Zeratul'
+    unit = Unit.build name: 'Zeratul'
     unit.save!
 
-    unit = Unit3.first
+    unit = Unit.first
     unit.created_at.should_not be_nil
     unit.updated_at.should_not be_nil
     created_at,updated_at = unit.created_at, unit.updated_at
@@ -37,10 +37,10 @@ describe 'Miscellaneous' do
   end
 
   it 'should have cache' do
-    class Unit3
+    class Unit
       inherit Mongo::Model
     end
-    u = Unit3.new
+    u = Unit.new
     u._cache.should == {}
   end
 
@@ -63,5 +63,46 @@ describe 'Miscellaneous' do
     u.name = 'Jim'
     u.reload
     u.name.should == 'Zeratul'
+  end
+
+  describe 'original' do
+    before do
+      class Unit
+        inherit Mongo::Model
+        collection :units
+
+        attr_accessor :name
+      end
+
+      @unit = Unit.new.tap{|u| u.name = "Zeratul"}
+    end
+    after{remove_constants :Unit}
+
+    it "should query original from database" do
+      @unit.original.should be_nil
+      @unit.save!
+
+      unit = Unit.first
+      unit.name = "Tassadar"
+
+      Unit.should_receive(:first).with(_id: unit._id).and_return{db.units.first(_id: unit._id)}
+      unit.original.name.should == "Zeratul"
+    end
+
+    it "should use identity map if provided" do
+      Unit.inherit Mongo::Model::IdentityMap
+
+      @unit.original.should be_nil
+      @unit.save!
+
+      Unit.identity_map.size.should == 0
+      unit = Unit.first
+      Unit.identity_map.size.should == 1
+
+      unit.name = "Tassadar"
+
+      Unit.should_not_receive :first
+      unit.original.name.should == "Zeratul"
+    end
   end
 end

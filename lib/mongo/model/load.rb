@@ -4,8 +4,6 @@ require 'ruby_ext'
 module Mongo::Model; end
 
 %w(
-  support
-
   db
   conversion
   assignment
@@ -20,9 +18,10 @@ module Mongo::Model; end
   model
 ).each{|f| require "mongo/model/#{f}"}
 
+# Assembling model.
 module Mongo
   module Model
-    autoload :FileModel, 'mongo/model/integration/file_model'
+    autoload :IdentityMap, 'mongo/model/identity_map'
 
     inherit \
       Db,
@@ -45,15 +44,19 @@ Mongo.defaults.merge! \
   safe:                         true,
   generate_id:                  true
 
-# Integration with Rails.
+# Integrations.
+
 unless $dont_use_rails
   require 'mongo/model/integration/rails' if defined? Rails
 end
 
-# Integration with Validatable2
 unless $dont_use_validatable
   require 'validatable'
   require 'mongo/model/integration/validatable'
   require 'mongo/model/integration/validatable/uniqueness_validator'
   Mongo::Model.inherit Validatable::Model
+end
+
+unless $dont_use_file_model
+  Mongo::Model.autoload :FileModel, 'mongo/model/integration/file_model'
 end
