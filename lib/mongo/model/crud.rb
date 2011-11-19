@@ -4,21 +4,18 @@ module Mongo::Model::Crud
   def create_object collection, options
     with_model_crud_callbacks [:save, :create], options do |mongo_options|
       super collection, mongo_options
-      true
     end
   end
 
   def update_object collection, options
     with_model_crud_callbacks [:save, :update], options do |mongo_options|
       super collection, mongo_options
-      true
     end
   end
 
   def delete_object collection, options
     with_model_crud_callbacks [:delete], options do |mongo_options|
       super collection, mongo_options
-      true
     end
   end
 

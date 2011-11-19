@@ -5,7 +5,38 @@ module Mongo::Model::Validation
   end
   def invalid?(options = {}); !valid?(options) end
 
+  # Catching erros during CRUD and adding it to errors, like unique index.
+
+  def create_object *args
+    with_exceptions_as_errors do
+      super
+    end
+  end
+
+  def update_object *args
+    with_exceptions_as_errors do
+      super
+    end
+  end
+
+  def delete_object *args
+    with_exceptions_as_errors do
+      super
+    end
+  end
+
   protected
+    def with_exceptions_as_errors &block
+      block.call
+    rescue Mongo::OperationFailure => e
+      if e.error_code == 11000
+        errors.add :base, "not unique value!"
+        false
+      else
+        raise e
+      end
+    end
+
     def run_validations options = {}
       with_model_callbacks [:validate], options, [self] do
         # Validating main model.

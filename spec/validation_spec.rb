@@ -141,5 +141,15 @@ describe "Validation" do
       unit.name = 'Zeratul'
       unit.should be_valid
     end
+
+    it "should convert unique index exception to errors" do
+      db.units.create_index [["name", 1]], unique: true
+
+      Unit.create name: 'Zeratul'
+
+      unit = Unit.new name: 'Zeratul'
+      unit.save.should be_false
+      unit.errors[:base].should == ["not unique value!"]
+    end
   end
 end

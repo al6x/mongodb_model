@@ -8,8 +8,8 @@ module Mongo::Model; end
   conversion
   assignment
   callbacks
-  validation
   crud
+  validation
   query
   query_mixin
   scope
