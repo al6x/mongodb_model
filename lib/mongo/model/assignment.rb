@@ -23,7 +23,8 @@ module Mongo::Model::Assignment
           v = type.cast(v) if type
           send "#{n}=", v
         else
-          raise "mass assignment for :#{n} attribute not allowed!"
+          # Do nothing, just silently skip it.
+          # raise "mass assignment for :#{n} attribute not allowed!"
         end
       end
     else

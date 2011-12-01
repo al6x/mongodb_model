@@ -67,6 +67,7 @@ describe "Attribute convertors" do
 
     # Protection.
     o.protected_tags = []
-    -> {o.set protected_tags_as_string: 'Java, Ruby'}.should raise_error(/not allowed/)
+    o.set protected_tags_as_string: 'Java, Ruby'
+    o.protected_tags = []
   end
 end

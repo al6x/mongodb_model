@@ -87,9 +87,21 @@ module Mongo::Model::Scope
       list = list.collect{|item| item.is_a?(Array) ? item : [item, 1]}
       query({}, sort: list)
     end
+    alias_method :sort_by, :sort
     def snapshot; query({}, snapshot: true) end
 
-    def paginate page, per_page
+    PER_PAGE, MAX_PER_PAGE = 25, 100    
+    def paginate *args
+      args.size.must.be_in 1..2
+      if args.size == 2
+        page, per_page = *args
+      else
+        options = args.first
+        page, per_page = options[:page], options[:per_page]
+      end
+      page ||= 1
+      per_page ||= PER_PAGE
+      per_page = MAX_PER_PAGE if per_page > MAX_PER_PAGE
       skip((page - 1) * per_page).limit(per_page)
     end
 

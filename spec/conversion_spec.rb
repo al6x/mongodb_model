@@ -40,7 +40,7 @@ describe 'Conversion' do
 
   it "should work without arguments" do
     post = build_post_with_comment
-    post.to_hash.should == {
+    post.to_rson.should == {
       text:     'StarCraft releasing soon!',
       token:    'secret',
       comments: [
@@ -51,14 +51,14 @@ describe 'Conversion' do
 
   it "should accept :only, :except and :methods options" do
     post = build_post_with_comment
-    post.to_hash(only: :text).should == {text: 'StarCraft releasing soon!'}
-    post.to_hash(except: :token).should == {
+    post.to_rson(only: :text).should == {text: 'StarCraft releasing soon!'}
+    post.to_rson(except: :token).should == {
       text:     'StarCraft releasing soon!',
       comments: [
         {text: 'Cool!'}
       ]
     }
-    post.to_hash(only: [], methods: :teaser).should == {teaser: 'StarCraft r'}
+    post.to_rson(only: [], methods: :teaser).should == {teaser: 'StarCraft r'}
   end
 
   it "should use conversion profiles" do
@@ -68,13 +68,21 @@ describe 'Conversion' do
 
     post = build_post_with_comment
 
-    -> {post.to_hash(profile: :public)}.should raise_error(/profile :public not defined for Comment/)
+    -> {post.to_rson(profile: :public)}.should raise_error(/profile :public not defined for Comment/)
 
     Comment.class_eval do
       profile :public
     end
 
-    post.to_hash(profile: :public).should == {
+    post.to_rson(profile: :public).should == {
+      text:     'StarCraft releasing soon!',
+      teaser:   'StarCraft r',
+      comments: [
+        {text: 'Cool!'}
+      ]
+    }
+    
+    post.to_rson(:public).should == {
       text:     'StarCraft releasing soon!',
       teaser:   'StarCraft r',
       comments: [
@@ -91,29 +99,29 @@ describe 'Conversion' do
     post = Post.new text: 'StarCraft releasing soon!'
     post.valid?.should be_false
 
-    post.to_hash.should == {
+    post.to_rson.should == {
       text:   'StarCraft releasing soon!',
       errors: {token: ["can't be empty"]}
     }
 
-    post.to_hash(errors: false).should == {
+    post.to_rson(errors: false).should == {
       text: 'StarCraft releasing soon!'
     }
   end
 
   it "should convert to to_json" do
     post = build_post_with_comment
-    rson = mock
-    rson.should_receive(:to_json).and_return(:ok)
-    post.should_receive(:to_hash).with(only: :text).and_return(rson)
+    hash = mock
+    hash.should_receive(:to_json).and_return(:ok)
+    post.should_receive(:to_rson).with(only: :text).and_return(hash)
     post.to_json(only: :text).should == :ok
   end
 
   it "should convert to to_xml" do
     post = build_post_with_comment
-    rson = mock
-    rson.should_receive(:to_xml).and_return(:ok)
-    post.should_receive(:to_hash).with(only: :text).and_return(rson)
+    hash = mock
+    hash.should_receive(:to_xml).and_return(:ok)
+    post.should_receive(:to_rson).with(only: :text).and_return(hash)
     post.to_xml(only: :text).should == :ok
   end
 end

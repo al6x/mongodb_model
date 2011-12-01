@@ -140,8 +140,20 @@ describe "Validation" do
       unit.should_not be_valid
       unit.name = 'Zeratul'
       unit.should be_valid
-    end
+    end    
+  end
+  
+  context "database exceptions" do
+    before do
+      class Unit
+        inherit Mongo::Model
+        collection :units
 
+        attr_accessor :name
+      end
+    end
+    after{remove_constants :Unit}
+    
     it "should convert unique index exception to errors" do
       db.units.create_index [["name", 1]], unique: true
 

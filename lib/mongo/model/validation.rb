@@ -29,7 +29,7 @@ module Mongo::Model::Validation
     def with_exceptions_as_errors &block
       block.call
     rescue Mongo::OperationFailure => e
-      if e.error_code == 11000
+      if [11000, 11001].include? e.error_code
         errors.add :base, "not unique value!"
         false
       else

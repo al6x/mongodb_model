@@ -74,7 +74,9 @@ describe "Query" do
       end
     end
 
-    -> {SpecialUnit.query(name: 'Zeratul').build age: 500, status: 'active'}.should raise_error(/not allowed/)
+    u = SpecialUnit.query(name: 'Zeratul').build status: 'active'
+    u.status.should be_nil
+    
     u = SpecialUnit.query(name: 'Zeratul', status: 'active').build age: 500
     u.status.should == 'active'
   end

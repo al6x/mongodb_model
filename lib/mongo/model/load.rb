@@ -1,4 +1,3 @@
-require 'mongo/object'
 require 'ruby_ext'
 
 module Mongo::Model; end
