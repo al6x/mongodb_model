@@ -37,9 +37,9 @@ describe 'Attribute assignment' do
     end
 
     u = User.new
-    u.set name: 'Alex', has_mail: '1', age: '31', position: [11, 34]    
+    u.set name: 'Alex', has_mail: '1', age: '31', position: [11, 34]
     [u.name, u.has_mail, u.age, u.position, u.banned].should == ['Alex', true, 31, [11, 34], nil]
-    
+
     # Should skip not allowed attributes.
     u.set banned: false
     u.banned.should be_nil

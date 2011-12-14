@@ -20,6 +20,25 @@ describe "Model CRUD" do
     end
     after{remove_constants :Unit}
 
+    it 'save should return true or false' do
+      # Successfull create and update.
+      unit = Unit.new
+      unit.save.class.should == TrueClass
+      unit.name = 'Another'
+      unit.save.class.should == TrueClass
+
+      # Invalid create.
+      unit = Unit.new
+      unit.stub!(:valid?).and_return false
+      unit.save.class.should == FalseClass
+
+      # Invalid update.
+      unit = Unit.new
+      unit.save.should be_true
+      unit.stub!(:valid?).and_return false
+      unit.save.class.should == FalseClass
+    end
+
     it 'should perform CRUD' do
       # Read.
       Unit.count.should == 0

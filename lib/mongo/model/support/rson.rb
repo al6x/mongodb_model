@@ -31,7 +31,7 @@ end
 #     def to_rson options = {}
 #       self.to_sym
 #     end
-# 
+#
 #     def rson?
 #       false
 #     end

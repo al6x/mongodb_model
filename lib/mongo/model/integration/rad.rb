@@ -1,4 +1,5 @@
 # Registering it as component.
+
 class Mongo::Model::Component
   attr_accessor :db
   attr_required :db
@@ -27,4 +28,14 @@ Mongo.metaclass_eval do
     Mongo::Connection.new host, port, options
   end
   cache_method_with_params :connection
+end
+
+# Localization
+
+Mongo::Model::Misc.class_eval do
+  def t *args; rad.locale.t *args end
+end
+
+Mongo::Model::Misc::ClassMethods.class_eval do
+  def t *args; rad.locale.t *args end
 end

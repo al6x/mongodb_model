@@ -23,7 +23,7 @@ module Mongo::Model::Conversion
 
   def to_rson options = {}
     options = {profile: options} if options.is_a? Symbol
-    
+
     if profile = options[:profile]
       raise "no other optins are allowed when using :profile option!" if options.size > 1
       profile_options = self.class.profiles[profile] || raise("profile :#{profile} not defined for #{self.class}!")
@@ -60,7 +60,7 @@ module Mongo::Model::Conversion
         self.errors.each{|k, v| errors[k.to_sym] = v}
         result[:errors] = errors
       end
-      
+
       result[:id] = _id if _id and (options[:id] != false)
 
       result

@@ -7,5 +7,10 @@ rspec do
       with_mongo
       before{Mongo::Model::IdentityMap.clear}
     end
+
+    def with_models *args
+      ::Models
+      with_mongo_model *args
+    end
   end
 end

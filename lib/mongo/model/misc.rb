@@ -44,7 +44,7 @@ module Mongo::Model::Misc
       before_create :update_created_at
       before_save :update_updated_at
     end
-    
+
     def create_index *args
       collection.create_index *args
     end

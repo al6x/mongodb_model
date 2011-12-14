@@ -90,7 +90,7 @@ module Mongo::Model::Scope
     alias_method :sort_by, :sort
     def snapshot; query({}, snapshot: true) end
 
-    PER_PAGE, MAX_PER_PAGE = 25, 100    
+    PER_PAGE, MAX_PER_PAGE = 25, 100
     def paginate *args
       args.size.must.be_in 1..2
       if args.size == 2

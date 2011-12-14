@@ -81,7 +81,7 @@ describe 'Conversion' do
         {text: 'Cool!'}
       ]
     }
-    
+
     post.to_rson(:public).should == {
       text:     'StarCraft releasing soon!',
       teaser:   'StarCraft r',
