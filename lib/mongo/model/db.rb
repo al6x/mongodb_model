@@ -28,7 +28,7 @@ module Mongo::Model::Db
           warn <<-TEXT
 WARN: It seems that there's no `String.pluralize` method, Mongo::Model needs it to automatically infer
 collection name from the model class name.
-Please specify collection name explicitly (like `collection :users`) or provide the `pluralize`
+Please specify collection name explicitly (like `collection :users`) or provide the `String.pluralize`
 method.
 TEXT
           raise "collection name for #{first_ancestor_class} not defined (add it, like `collection :users`)!"
