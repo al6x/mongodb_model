@@ -20,6 +20,8 @@ module Mongo::Model::Rails
     persisted? ? [_id] : nil
   end
 
+  def new_record?; new? end
+
   module ClassMethods
     def model_name
       @_model_name ||= begin

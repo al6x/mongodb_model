@@ -22,7 +22,19 @@ module Mongo::Model::Db
       def default_collection_name
         first_ancestor_class = ancestors.find{|a| a.is_a? Class} ||
           raise("can't evaluate default collection name for #{self}!")
-        first_ancestor_class.alias.pluralize.underscore.to_sym
+        als = first_ancestor_class.alias
+
+        unless als.respond_to? :pluralize
+          warn <<-TEXT
+WARN: It seems that there's no `String.pluralize` method, Mongo::Model needs it to automatically infer
+collection name from the model class name.
+Please specify collection name explicitly (like `collection :users`) or provide the `pluralize`
+method.
+TEXT
+          raise "collection name for #{first_ancestor_class} not defined (add it, like `collection :users`)!"
+        end
+
+        als.pluralize.underscore.to_sym
       end
   end
 end

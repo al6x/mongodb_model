@@ -96,10 +96,7 @@ describe "Model CRUD" do
 
     it 'should create model' do
       u = Unit.create(name: 'Zeratul')
-      u.new_record?.should be_false
-
-      u = Unit.create!(name: 'Zeratul')
-      u.new_record?.should be_false
+      u.new?.should be_false
     end
 
     it 'should delete all models' do
