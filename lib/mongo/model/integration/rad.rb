@@ -12,7 +12,33 @@ rad.register :models do
   Mongo::Model::Component.new
 end
 
-# Using DB connection setting defined in component's config file.
+# Connection settings defined in the `models.yml` config file for the :models component.
+#
+# Sample of `models.yml` config file, it cotains database names and connection settings.
+#
+#   db:
+#     default:
+#       host: localhost
+#       port: 4029
+#       name: my_web_app
+#     tmp:
+#       name: all_sorts_of_tmp_data
+#
+# Note that we use logical name of the database, the real name can be different. It gives You flexibility and
+# allows You to use the same logical name, but it can mean different databases with different real names in
+# let's say :development and :production evnironments:
+#
+# Usage - if not specified the :default alias will be used:
+#
+#   class Blog
+#   end
+#
+# You can also explicitly specify what alias should be used:
+#
+#   class Token
+#     db :tmp
+#   end
+#
 Mongo.metaclass_eval do
   def db name
     config = rad.models.db[name.to_s] || raise("no database config for #{name} alias!")
