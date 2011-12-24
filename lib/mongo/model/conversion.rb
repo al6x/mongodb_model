@@ -62,6 +62,8 @@ module Mongo::Model::Conversion
       end
 
       result[:id] = _id if _id and (options[:id] != false)
+      result[:_saved] = _saved if _saved and (options[:_saved] != false)
+      result[:param] = to_param if _saved and respond_to?(:to_param) and (options[:param] != false)
 
       result
     end
