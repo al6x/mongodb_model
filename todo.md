@@ -11,7 +11,7 @@
 
 
   def comments
-    Comment.query({item_id: _id}, {sort: [[created_at:, -1]]})
+    Comment.query({item_id: id}, {sort: [[created_at:, -1]]})
   end
   after_delete{comments.each(&:delete!)}
 
@@ -34,7 +34,7 @@
 
   # relations
   def spaces
-    Models::Space.query account_id: _id
+    Models::Space.query account_id: id
   end
   after_delete{|m| m.spaces.each &:delete!}
   has_many :spaces, dependent: :delete, foreign_key: :account_id, class_name: 'Models::Space'

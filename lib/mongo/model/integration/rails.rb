@@ -14,10 +14,10 @@ end
 module Mongo::Model::Rails
   def to_model; self end
 
-  def persisted?; !!_id end
+  def persisted?; _saved end
 
   def to_key
-    persisted? ? [_id] : nil
+    persisted? ? [id] : nil
   end
 
   def new_record?; new? end

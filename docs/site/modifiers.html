@@ -112,7 +112,7 @@ there&rsquo;s more efficient way &ndash; modifiers.</p>
         <p>There&rsquo;s also helper on the model class.</p>
       </td>
       <td class=code>
-        <div class='highlight'><pre><span class="no">Unit</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">_id</span><span class="p">:</span> <span class="n">tassadar</span><span class="o">.</span><span class="n">_id</span><span class="p">},</span> <span class="p">{</span><span class="n">_inc</span><span class="p">:</span> <span class="p">{</span><span class="n">life</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span><span class="p">}})</span>
+        <div class='highlight'><pre><span class="no">Unit</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">id</span><span class="p">:</span> <span class="n">tassadar</span><span class="o">.</span><span class="n">id</span><span class="p">},</span> <span class="p">{</span><span class="n">_inc</span><span class="p">:</span> <span class="p">{</span><span class="n">life</span><span class="p">:</span> <span class="o">-</span><span class="mi">20</span><span class="p">}})</span>
 <span class="n">tassadar</span><span class="o">.</span><span class="n">reload</span>
 <span class="nb">p</span> <span class="n">tassadar</span><span class="o">.</span><span class="n">life</span>                                  <span class="c1"># =&gt; 20</span></pre></div>
       </td>

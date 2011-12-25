@@ -18,11 +18,11 @@ module Mongo::Model::Misc
   end
 
   def to_param
-    _id.try :to_s
+    id.try :to_s
   end
 
   def reload
-    obj = self.class.by_id!(_id || raise("can't reload new document (#{self})!"))
+    obj = self.class.by_id!(id || raise("can't reload new document (#{self})!"))
     instance_variables.each{|n| remove_instance_variable n}
     obj.instance_variables.each do |n|
       instance_variable_set n, obj.instance_variable_get(n)
@@ -33,7 +33,7 @@ module Mongo::Model::Misc
   def original
     unless _cache[:original_cached]
       _cache[:original_cached] = true
-      _cache[:original] = _id && self.class.by_id(_id)
+      _cache[:original] = id && self.class.by_id(id)
     end
     _cache[:original]
   end

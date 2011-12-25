@@ -19,7 +19,7 @@ class Validatable::UniquenessValidator < Validatable::ValidationBase
     end
 
     # Make sure we're not including the current document in the query.
-    conditions[:_id] = {_ne: instance._id} if instance._id
+    conditions[:_id] = {_ne: instance.id} if instance.id
 
     !klass.exists?(conditions)
   end

@@ -47,7 +47,7 @@ describe "Model CRUD" do
 
       # Create.
       @unit.save.should be_true
-      @unit._id.should_not be_nil
+      @unit.id.should_not be_nil
 
       # Read.
       Unit.count.should == 1
@@ -69,7 +69,7 @@ describe "Model CRUD" do
     it 'should be able to save model to another collection' do
       # Create.
       @unit.save(collection: db.heroes).should be_true
-      @unit._id.should_not be_nil
+      @unit.id.should_not be_nil
 
       # Read.
       Unit.count.should == 0
@@ -111,7 +111,7 @@ describe "Model CRUD" do
     it 'should accept modifiers' do
       unit = Unit.create! name: 'Zeratul'
 
-      Unit.update({_id: unit._id}, _set: {name: 'Tassadar'})
+      Unit.update({id: unit.id}, _set: {name: 'Tassadar'})
       unit.reload
       unit.name.should == 'Tassadar'
 
@@ -152,7 +152,7 @@ describe "Model CRUD" do
     it 'should perform CRUD' do
       # Create.
       @unit.save.should be_true
-      @unit._id.should_not be_nil
+      @unit.id.should_not be_nil
 
       # Read.
       Unit.count.should == 1

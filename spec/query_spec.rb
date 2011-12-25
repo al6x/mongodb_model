@@ -43,7 +43,7 @@ describe "Query" do
     u = Unit.build(name: 'Zeratul')
     u.save!
     Unit.first_by_name('Zeratul').name.should == 'Zeratul'
-    Unit.by_id!(u._id).name.should == 'Zeratul'
+    Unit.by_id!(u.id).name.should == 'Zeratul'
   end
 
   it 'should be integrated with build, create and create!' do

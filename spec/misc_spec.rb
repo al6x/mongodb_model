@@ -85,7 +85,7 @@ describe 'Miscellaneous' do
       unit = Unit.first
       unit.name = "Tassadar"
 
-      Unit.should_receive(:first).with(_id: unit._id).and_return{db.units.first(_id: unit._id)}
+      Unit.should_receive(:first).with(_id: unit.id).and_return{db.units.first(id: unit.id)}
       unit.original.name.should == "Zeratul"
     end
 

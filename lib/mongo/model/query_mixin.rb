@@ -1,6 +1,6 @@
 module Mongo::Model::QueryMixin
   def exists? options = {}
-    self.class.count({_id: _id}, options) > 0
+    self.class.count({id: id}, options) > 0
   end
   alias_method :exist?, :exists?
 

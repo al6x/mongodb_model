@@ -28,7 +28,7 @@ tassadar.reload
 p tassadar.life                                  # => 40
 
 # There's also helper on the model class.
-Unit.update({_id: tassadar._id}, {_inc: {life: -20}})
+Unit.update({id: tassadar.id}, {_inc: {life: -20}})
 tassadar.reload
 p tassadar.life                                  # => 20
 

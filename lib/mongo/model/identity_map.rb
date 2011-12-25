@@ -6,7 +6,7 @@ module Mongo::Model::IdentityMap
   def original
     unless _cache[:original_cached]
       _cache[:original_cached] = true
-      _cache[:original] = _id && self.class.get_from_identity_map(_id)
+      _cache[:original] = id && self.class.get_from_identity_map(id)
     end
     _cache[:original]
   end
@@ -23,7 +23,7 @@ module Mongo::Model::IdentityMap
 
     def from_mongo doc
       model = super doc
-      model.class.identity_map[model._id] = doc if model._id
+      model.class.identity_map[model.id] = doc if model.id
       model
     end
   end

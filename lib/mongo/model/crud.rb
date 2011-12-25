@@ -46,7 +46,7 @@ module Mongo::Model::Crud
 
   def update doc, options = {}
     with_collection options do |collection, options|
-      collection.update({_id: _id}, doc, options)
+      collection.update({id: id}, doc, options)
     end
   end
 

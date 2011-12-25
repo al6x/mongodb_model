@@ -13,7 +13,7 @@ describe 'Associations' do
       attr_accessor :text
 
       def comments
-        Comment.query({post_id: _id}, {sort: [[:text, -1]]})
+        Comment.query({post_id: id}, {sort: [[:text, -1]]})
       end
     end
 

@@ -33,7 +33,7 @@ class Post
   # later to select comments belongign to this post (there's no
   # database call at this point).
   def comments
-    Comment.where post_id: _id
+    Comment.where post_id: id
   end
   # If the post will be deleted, all comments also should be deleted.
   after_delete{|post| post.comments.each(&:delete!)}
@@ -49,14 +49,14 @@ class Comment
 
   attr_accessor :text
 
-  # Every comment has `post_id` attribute with `_id` of corresponding post.
+  # Every comment has `post_id` attribute with `id` of corresponding post.
   attr_accessor :post_id
   # We need to ensure that comment always belongs to some post.
   validates_presence_of :post_id
 
   # Adding method allowing to assign post to comment.
   def post= post
-    self.post_id = post._id
+    self.post_id = post.id
     _cache[:post] = post
   end
   # Retrieving the post this comment belongs to.
@@ -110,10 +110,10 @@ end
 # do it in more efficient way using [modifiers][modifiers].
 class Comment
   after_create do |comment|
-    Post.update({_id: comment.post_id}, {_inc: {comments_count: 1}})
+    Post.update({id: comment.post_id}, {_inc: {comments_count: 1}})
   end
   after_delete do |comment|
-    Post.update({_id: comment.post_id}, {_inc: {comments_count: -1}})
+    Post.update({id: comment.post_id}, {_inc: {comments_count: -1}})
   end
 end
 

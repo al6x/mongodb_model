@@ -3,8 +3,8 @@
 # Models are just ordinary Ruby Objects, so You can combine and mix it as You wish.
 # The only differences are
 #
-# - main object has the `_id` attribute.
-# - child objects doesn't have `_id`, but have `_parent` - reference to the main object.
+# - main object has the `id` attribute.
+# - child objects doesn't have `id`, but have `_parent` - reference to the main object.
 #
 # [Callbacks][callbacks], [validations][validations] and [conversions][conversions]
 # works on embedded objects the same way as on the main.
