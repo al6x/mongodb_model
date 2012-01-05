@@ -104,7 +104,10 @@ module Mongo::Model::Crud
   protected
     def with_collection options, &block
       options = options.clone
-      collection = options.delete(:collection) || self.class.collection
+      if collection = options.delete(:collection)
+        collection = self.class.db.collection collection if collection.is_a?(Symbol)
+      end
+      collection ||= self.class.collection
       block.call collection, options
     end
 end

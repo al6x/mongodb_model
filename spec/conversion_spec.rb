@@ -49,11 +49,12 @@ describe 'Conversion' do
     }
   end
 
-  it "should accept :only, :except and :methods options" do
+  it "should accept :only, :except, :methods options and block" do
     post = build_post_with_comment
     post.to_rson(only: :text).should == {text: 'StarCraft releasing soon!'}
-    post.to_rson(except: :token).should == {
+    post.to_rson(except: :token){|data| data[:type] = 'Post'}.should == {
       text:     'StarCraft releasing soon!',
+      type:     'Post',
       comments: [
         {text: 'Cool!'}
       ]
@@ -71,14 +72,16 @@ describe 'Conversion' do
     -> {post.to_rson(profile: :public)}.should raise_error(/profile :public not defined for Comment/)
 
     Comment.class_eval do
-      profile :public
+      profile :public do |data|
+        data[:type] = 'Comment'
+      end
     end
 
     post.to_rson(profile: :public).should == {
       text:     'StarCraft releasing soon!',
       teaser:   'StarCraft r',
       comments: [
-        {text: 'Cool!'}
+        {text: 'Cool!', type: 'Comment'}
       ]
     }
 
@@ -86,7 +89,7 @@ describe 'Conversion' do
       text:     'StarCraft releasing soon!',
       teaser:   'StarCraft r',
       comments: [
-        {text: 'Cool!'}
+        {text: 'Cool!', type: 'Comment'}
       ]
     }
   end

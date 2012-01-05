@@ -21,13 +21,14 @@ module Mongo::Model::Conversion
     alias_method :as_xml, :model_to_xml
   end
 
-  def to_rson options = {}
+  def to_rson options = {}, &block
     options = {profile: options} if options.is_a? Symbol
 
     if profile = options[:profile]
       raise "no other optins are allowed when using :profile option!" if options.size > 1
-      profile_options = self.class.profiles[profile] || raise("profile :#{profile} not defined for #{self.class}!")
-      to_rson profile_options.merge(_profile: profile)
+      meta = self.class.profiles[profile] || raise("profile :#{profile} not defined for #{self.class}!")
+      profile_options, profile_block = meta
+      to_rson profile_options.merge(_profile: profile), &profile_block
     else
       options.validate_options! :only, :except, :methods, :errors, :id, :_profile
       child_options = options[:_profile] ? {profile: options[:_profile]} : {}
@@ -63,14 +64,16 @@ module Mongo::Model::Conversion
 
       result[:id] = id if id and (options[:id] != false)
 
+      instance_exec result, &block if block
+
       result
     end
   end
 
   module ClassMethods
     inheritable_accessor :profiles, {}
-    def profile name, options = {}
-      profiles[name] = options
+    def profile name, options = {}, &block
+      profiles[name] = [options, block]
     end
   end
 end

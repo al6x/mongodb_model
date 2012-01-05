@@ -89,6 +89,11 @@ describe "Model CRUD" do
       db.heroes.count.should == 0
     end
 
+    it 'should be able to save model to another collection (defined as symbol)' do
+      @unit.save(collection: :heroes).should be_true
+      db.heroes.first.should == @unit
+    end
+
     it 'should build model' do
       u = Unit.build name: 'Zeratul'
       u.name.should == 'Zeratul'
