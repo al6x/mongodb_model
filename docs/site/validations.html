@@ -1,49 +1,105 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
   <title>validations.rb</title>
-  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
 </head>
 <body>
-<div id='container'>
-  <div id="background"></div>
-  <div id="jump_to">
-    Jump To &hellip;
-    <div id="jump_wrapper">
-      <div id="jump_page">
-          <a class="source" href="assignment.html">assignment.rb</a>
-          <a class="source" href="associations.html">associations.rb</a>
-          <a class="source" href="basics.html">basics.rb</a>
-          <a class="source" href="callbacks.html">callbacks.rb</a>
-          <a class="source" href="composite.html">composite.rb</a>
-          <a class="source" href="conversions.html">conversions.rb</a>
-          <a class="source" href="database.html">database.rb</a>
-          <a class="source" href="index.html">index.rb</a>
-          <a class="source" href="modifiers.html">modifiers.rb</a>
-          <a class="source" href="queries.html">queries.rb</a>
-          <a class="source" href="spec.html">spec.rb</a>
-          <a class="source" href="validations.html">validations.rb</a>
-      </div>
-    </div>
-  </div>
-  <table cellspacing=0 cellpadding=0>
-  <thead>
-    <tr>
-      <th class=docs><h1>validations.rb</h1></th>
-      <th class=code></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr id='section-1'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-1">&#182;</a>
-        </div>
-        <p>Validations in <a href="index.html">Mongo Model</a>.</p>
-
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="assignment.html">
+                assignment.rb
+              </a>
+            
+              
+              <a class="source" href="associations.html">
+                associations.rb
+              </a>
+            
+              
+              <a class="source" href="basics.html">
+                basics.rb
+              </a>
+            
+              
+              <a class="source" href="callbacks.html">
+                callbacks.rb
+              </a>
+            
+              
+              <a class="source" href="composite.html">
+                composite.rb
+              </a>
+            
+              
+              <a class="source" href="conversions.html">
+                conversions.rb
+              </a>
+            
+              
+              <a class="source" href="database.html">
+                database.rb
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.rb
+              </a>
+            
+              
+              <a class="source" href="modifiers.html">
+                modifiers.rb
+              </a>
+            
+              
+              <a class="source" href="queries.html">
+                queries.rb
+              </a>
+            
+              
+              <a class="source" href="spec.html">
+                spec.rb
+              </a>
+            
+              
+              <a class="source" href="validations.html">
+                validations.rb
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>validations.rb</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>Validations in [Mongo Model][mongodb_model].</p>
 <p>There are following validation helpers available:</p>
-
 <pre><code>validates_format_of
 validates_length_of
 validates_numericality_of
@@ -53,304 +109,379 @@ validates_presence_of
 validates_true_for
 validates_exclusion_of
 validates_inclusion_of
-</code></pre>
+</code></pre><p>In this example we’ll create simple models for Blog application and
+use validations to ensure it’s correctness.</p>
 
-<p>In this example we&rsquo;ll create simple models for Blog application and
-use validations to ensure it&rsquo;s correctness.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;mongo/model&#39;</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-2'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-2">&#182;</a>
-        </div>
-        <p>Connecting to test database and cleaning it before starting.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database_name</span> <span class="o">=</span> <span class="ss">:default_test</span>
-<span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database</span><span class="o">.</span><span class="n">clear</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-Basics'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-Basics">&#182;</a>
-        </div>
-        <h3>Basics</h3>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">require</span> <span class="hljs-string">'mongo/model'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Connecting to test database and cleaning it before starting.</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-constant">Mongo::Model</span>.default_database_name = <span class="hljs-symbol">:default_test</span>
+<span class="hljs-constant">Mongo::Model</span>.default_database.clear</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <h3 id="basics">Basics</h3>
 <p>Defining Post and requiring presence of text using
 validation helpers.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
-  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
-  <span class="n">collection</span> <span class="ss">:posts</span>
 
-  <span class="kp">attr_accessor</span> <span class="ss">:text</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-4'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-4">&#182;</a>
-        </div>
-        <p>Requiring presence of text.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>  <span class="n">validates_presence_of</span> <span class="ss">:text</span>
-<span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-5'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-5">&#182;</a>
-        </div>
-        <p>Creating post, it can&rsquo;t be saved because its text is empty and it&rsquo;s invalid.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">valid?</span>                                     <span class="c1"># =&gt; false</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">size</span>                                <span class="c1"># =&gt; 1</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">errors</span>                                     <span class="c1"># =&gt; {text: [&quot;can&#39;t be empty&quot;]}</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">save</span>                                       <span class="c1"># =&gt; false</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-6'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-6">&#182;</a>
-        </div>
-        <p>Let&rsquo;s add text to it so it will be valid and we can save it.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Norad II crashed!&#39;</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">valid?</span>                                     <span class="c1"># =&gt; true</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">save</span>                                       <span class="c1"># =&gt; true</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-7'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-7">&#182;</a>
-        </div>
-        <p>Usually when model is invalid it can&rsquo;t be saved, but if You need You can skip
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Post</span></span>
+  inherit <span class="hljs-constant">Mongo::Model</span>
+  collection <span class="hljs-symbol">:posts</span>
+
+  <span class="hljs-keyword">attr_accessor</span> <span class="hljs-symbol">:text</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Requiring presence of text.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  validates_presence_of <span class="hljs-symbol">:text</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Creating post, it can’t be saved because its text is empty and it’s invalid.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post = <span class="hljs-constant">Post</span>.new
+p post.valid?                                     <span class="hljs-comment"># =&gt; false</span>
+p post.errors.size                                <span class="hljs-comment"># =&gt; 1</span>
+p post.errors                                     <span class="hljs-comment"># =&gt; {text: ["can't be empty"]}</span>
+p post.save                                       <span class="hljs-comment"># =&gt; false</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Let’s add text to it so it will be valid and we can save it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post.text = <span class="hljs-string">'Norad II crashed!'</span>
+p post.valid?                                     <span class="hljs-comment"># =&gt; true</span>
+p post.save                                       <span class="hljs-comment"># =&gt; true</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Usually when model is invalid it can’t be saved, but if You need You can skip
 validation and save invalid model.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">valid?</span>                                     <span class="c1"># =&gt; false</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">save</span><span class="p">(</span><span class="n">validate</span><span class="p">:</span> <span class="kp">false</span><span class="p">)</span>                      <span class="c1"># =&gt; true</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-Custom_validations'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-Custom_validations">&#182;</a>
-        </div>
-        <h3>Custom validations</h3>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
-      </td>
-    </tr>
-    <tr id='section-9'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-9">&#182;</a>
-        </div>
-        <p>In previous sample ve used <code>validates_presence_of</code> helper to
-require presence of post text, let&rsquo;s do the same by hand.</p>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post = <span class="hljs-constant">Post</span>.new
+p post.valid?                                     <span class="hljs-comment"># =&gt; false</span>
+p post.save(<span class="hljs-symbol">validate:</span> <span class="hljs-keyword">false</span>)                      <span class="hljs-comment"># =&gt; true</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <h3 id="custom-validations">Custom validations</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>In previous sample ve used <code>validates_presence_of</code> helper to
+require presence of post text, let’s do the same by hand.</p>
 <p>Removing and creating new Post class.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="no">Object</span><span class="o">.</span><span class="n">send</span> <span class="ss">:remove_const</span><span class="p">,</span> <span class="ss">:Post</span>
 
-<span class="k">class</span> <span class="nc">Post</span>
-  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
-  <span class="n">collection</span> <span class="ss">:posts</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-constant">Object</span>.send <span class="hljs-symbol">:remove_const</span>, <span class="hljs-symbol">:Post</span>
 
-  <span class="kp">attr_accessor</span> <span class="ss">:text</span>
+<span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Post</span></span>
+  inherit <span class="hljs-constant">Mongo::Model</span>
+  collection <span class="hljs-symbol">:posts</span>
 
-  <span class="kp">protected</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-10'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-10">&#182;</a>
-        </div>
-        <p>Creating method that valdiates text is not empty.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">validate_text</span>
-      <span class="n">errors</span><span class="o">.</span><span class="n">add</span> <span class="ss">:text</span><span class="p">,</span> <span class="s2">&quot;can&#39;t be empty&quot;</span> <span class="k">unless</span> <span class="n">text</span> <span class="ow">and</span> <span class="o">!</span><span class="n">text</span><span class="o">.</span><span class="n">empty?</span>
-    <span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-11'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-11">&#182;</a>
-        </div>
-        <p>Adding this method to validations (You can also use block instead of
+  <span class="hljs-keyword">attr_accessor</span> <span class="hljs-symbol">:text</span>
+
+  protected</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Creating method that valdiates text is not empty.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">def</span> </span>validate_text
+      errors.add <span class="hljs-symbol">:text</span>, <span class="hljs-string">"can't be empty"</span> <span class="hljs-keyword">unless</span> text <span class="hljs-keyword">and</span> !text.empty?
+    <span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Adding this method to validations (You can also use block instead of
 method).</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="n">validate</span> <span class="ss">:validate_text</span>
-<span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-12'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-12">&#182;</a>
-        </div>
-        <p>Creating and saving new post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">valid?</span>                                     <span class="c1"># =&gt; false</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">errors</span>                                     <span class="c1"># =&gt; {text: [&quot;can&#39;t be empty&quot;]}</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">save</span>                                       <span class="c1"># =&gt; false</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-13'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-13">&#182;</a>
-        </div>
-        <p>Let&rsquo;s text it so it will be valid and we can save it.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s1">&#39;Norad II crashed!&#39;</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">valid?</span>                                     <span class="c1"># =&gt; true</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">save</span>                                       <span class="c1"># =&gt; true</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-Embedded_Models'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-Embedded_Models">&#182;</a>
-        </div>
-        <h3>Embedded Models</h3>
 
-<p>MongoDB encourage to use Embedded Models a lot, so it&rsquo;s important
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    validate <span class="hljs-symbol">:validate_text</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Creating and saving new post.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post = <span class="hljs-constant">Post</span>.new
+p post.valid?                                     <span class="hljs-comment"># =&gt; false</span>
+p post.errors                                     <span class="hljs-comment"># =&gt; {text: ["can't be empty"]}</span>
+p post.save                                       <span class="hljs-comment"># =&gt; false</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Let’s text it so it will be valid and we can save it.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post.text = <span class="hljs-string">'Norad II crashed!'</span>
+p post.valid?                                     <span class="hljs-comment"># =&gt; true</span>
+p post.save                                       <span class="hljs-comment"># =&gt; true</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <h3 id="embedded-models">Embedded Models</h3>
+<p>MongoDB encourage to use Embedded Models a lot, so it’s important
 to provide validations for it.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
-      </td>
-    </tr>
-    <tr id='section-15'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-15">&#182;</a>
-        </div>
-        <p>Adding comments to Post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
-  <span class="k">def</span> <span class="nf">comments</span><span class="p">;</span> <span class="vi">@comments</span> <span class="o">||=</span> <span class="o">[]</span> <span class="k">end</span>
-<span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-16'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-16">&#182;</a>
-        </div>
-        <p>Defining Comment.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Comment</span>
-  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
 
-  <span class="kp">attr_accessor</span> <span class="ss">:text</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-17'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-17">&#182;</a>
-        </div>
-        <p>Validating presence of text in comment.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>  <span class="n">validates_presence_of</span> <span class="ss">:text</span>
-<span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-18'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-18">&#182;</a>
-        </div>
-        <p>Creating post, there&rsquo;s text and it&rsquo;s valid.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Norad II crashed!&#39;</span>
-<span class="n">post</span><span class="o">.</span><span class="n">valid?</span>                                       <span class="c1"># =&gt; true</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-19'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-19">&#182;</a>
-        </div>
-        <p>Creating invalid comment with empty text.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">comment</span> <span class="o">=</span> <span class="no">Comment</span><span class="o">.</span><span class="n">new</span>
-<span class="nb">p</span> <span class="n">comment</span><span class="o">.</span><span class="n">valid?</span>                                  <span class="c1"># =&gt; false</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-20'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-20">&#182;</a>
-        </div>
-        <p>Validation of Parent model also does validation on all it&rsquo;s
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Adding comments to Post.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Post</span></span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> </span>comments; <span class="hljs-variable">@comments</span> ||= [] <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>Defining Comment.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Comment</span></span>
+  inherit <span class="hljs-constant">Mongo::Model</span>
+
+  <span class="hljs-keyword">attr_accessor</span> <span class="hljs-symbol">:text</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Validating presence of text in comment.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  validates_presence_of <span class="hljs-symbol">:text</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>Creating post, there’s text and it’s valid.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post = <span class="hljs-constant">Post</span>.new <span class="hljs-symbol">text:</span> <span class="hljs-string">'Norad II crashed!'</span>
+post.valid?                                       <span class="hljs-comment"># =&gt; true</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <p>Creating invalid comment with empty text.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>comment = <span class="hljs-constant">Comment</span>.new
+p comment.valid?                                  <span class="hljs-comment"># =&gt; false</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Validation of Parent model also does validation on all it’s
 childs, so adding invalid comment to valid post will make
 post also invalid.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span><span class="o">.</span><span class="n">comments</span> <span class="o">&lt;&lt;</span> <span class="n">comment</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">valid?</span>                                     <span class="c1"># =&gt; false</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">save</span>                                       <span class="c1"># =&gt; false</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-21'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-21">&#182;</a>
-        </div>
-        <p>In order to save post we need to make the comment valid.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">comment</span><span class="o">.</span><span class="n">text</span> <span class="o">=</span> <span class="s2">&quot;Where?&quot;</span>
-<span class="nb">p</span> <span class="n">comment</span><span class="o">.</span><span class="n">valid?</span>                                  <span class="c1"># =&gt; true</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">valid?</span>                                     <span class="c1"># =&gt; true</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">save</span>                                       <span class="c1"># =&gt; true</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-22'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-22">&#182;</a>
-        </div>
-        <p>In this example we examined validation helpers, custom validation and
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post.comments &lt;&lt; comment
+p post.valid?                                     <span class="hljs-comment"># =&gt; false</span>
+p post.save                                       <span class="hljs-comment"># =&gt; false</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>In order to save post we need to make the comment valid.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>comment.text = <span class="hljs-string">"Where?"</span>
+p comment.valid?                                  <span class="hljs-comment"># =&gt; true</span>
+p post.valid?                                     <span class="hljs-comment"># =&gt; true</span>
+p post.save                                       <span class="hljs-comment"># =&gt; true</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>In this example we examined validation helpers, custom validation and
 validations for embedded models.</p>
 
-      </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
-      </td>
-    </tr>
-  </table>
-</div>
+            </div>
+            
+        </li>
+        
+    </ul>
+  </div>
 </body>
+</html>

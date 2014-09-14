@@ -1,86 +1,135 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
   <title>index.rb</title>
-  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
 </head>
 <body>
-<div id='container'>
-  <div id="background"></div>
-  <div id="jump_to">
-    Jump To &hellip;
-    <div id="jump_wrapper">
-      <div id="jump_page">
-          <a class="source" href="assignment.html">assignment.rb</a>
-          <a class="source" href="associations.html">associations.rb</a>
-          <a class="source" href="basics.html">basics.rb</a>
-          <a class="source" href="callbacks.html">callbacks.rb</a>
-          <a class="source" href="composite.html">composite.rb</a>
-          <a class="source" href="conversions.html">conversions.rb</a>
-          <a class="source" href="database.html">database.rb</a>
-          <a class="source" href="index.html">index.rb</a>
-          <a class="source" href="modifiers.html">modifiers.rb</a>
-          <a class="source" href="queries.html">queries.rb</a>
-          <a class="source" href="spec.html">spec.rb</a>
-          <a class="source" href="validations.html">validations.rb</a>
-      </div>
-    </div>
-  </div>
-  <table cellspacing=0 cellpadding=0>
-  <thead>
-    <tr>
-      <th class=docs><h1>index.rb</h1></th>
-      <th class=code></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr id='section-1'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-1">&#182;</a>
-        </div>
-        <p>Object Model for MongoDB.</p>
-
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="assignment.html">
+                assignment.rb
+              </a>
+            
+              
+              <a class="source" href="associations.html">
+                associations.rb
+              </a>
+            
+              
+              <a class="source" href="basics.html">
+                basics.rb
+              </a>
+            
+              
+              <a class="source" href="callbacks.html">
+                callbacks.rb
+              </a>
+            
+              
+              <a class="source" href="composite.html">
+                composite.rb
+              </a>
+            
+              
+              <a class="source" href="conversions.html">
+                conversions.rb
+              </a>
+            
+              
+              <a class="source" href="database.html">
+                database.rb
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.rb
+              </a>
+            
+              
+              <a class="source" href="modifiers.html">
+                modifiers.rb
+              </a>
+            
+              
+              <a class="source" href="queries.html">
+                queries.rb
+              </a>
+            
+              
+              <a class="source" href="spec.html">
+                spec.rb
+              </a>
+            
+              
+              <a class="source" href="validations.html">
+                validations.rb
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>index.rb</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>Object Model for MongoDB.</p>
 <p><a href="basics.html">basics</a>, <a href="composite.html">composite/embedded</a>, <a href="queries.html">queries/scopes</a>,
 <a href="validations.html">validations</a>, <a href="callbacks.html">callbacks</a>, <a href="associations.html">associations</a>,
 <a href="assignment.html">assignment</a>, <a href="conversions.html">conversions</a>, <a href="modifiers.html">modifiers</a>,
 <a href="database.html">database</a>, <a href="http://alexeypetrushin.github.com/mongodb/migration.html">migrations</a>.</p>
-
 <p>Features:</p>
-
 <ul>
 <li>Models are (almost) pure Ruby Objects.</li>
 <li>Minimum extra abstractions, trying to keep things as close to the MongoDB semantic as possible.</li>
 <li><a href="basics.html">Schema-less, dynamic</a> (with ability to specify types for <a href="assignment.html">mass-assignment</a>).</li>
 <li>Models can be saved to <a href="database.html">any collection</a>, dynamically.</li>
 <li>Full support for <a href="composite.html">composite / embedded objects</a> (with <a href="validations.html">validations</a>,
-<a href="callbacks.html">callbacks</a>, &hellip;).</li>
+<a href="callbacks.html">callbacks</a>, …).</li>
 <li><a href="queries.html">Scope</a>, default scope.</li>
-<li>Doesn&rsquo;t try to mimic ActiveRecord, MongoDB is differrent and the Object Model designed to get most of it.</li>
+<li>Doesn’t try to mimic ActiveRecord, MongoDB is differrent and the Object Model designed to get most of it.</li>
 <li>Works with <a href="database.html">multiple</a> connections and databases.</li>
 <li>Support for <a href="associations.html">associations</a>.</li>
 <li>Same API for <a href="http://alexeypetrushin.github.com/mongodb">Driver</a> and Object Model.</li>
 <li>Small codebase, see <a href="code_stats.html">code stats</a>.</li>
 </ul>
-
 <p>This tool <strong>exposes simplicity and power of MongoDB and leverages its differences</strong>.</p>
-
 <p>Install MongoDB Model with Rubygems:</p>
-
 <pre><code>gem install mongodb_model
-</code></pre>
-
-<p>The project is <a href="https://github.com/alexeypetrushin/mongodb_model">hosted on GitHub</a>. You can report bugs and discuss features
+</code></pre><p>The project is <a href="https://github.com/alexeypetrushin/mongodb_model">hosted on GitHub</a>. You can report bugs and discuss features
 on the <a href="https://github.com/alexeypetrushin/mongodb_model/issues">issues page</a>.</p>
+<p>Note: use <code>require &#39;mongo/model/integration/rails&#39;</code> for Rails integration.</p>
 
-<p>Note: use <code>require &lsquo;mongo/model/integration/rails&rsquo;</code> for Rails integration.</p>
-
-      </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
-      </td>
-    </tr>
-  </table>
-</div>
+            </div>
+            
+        </li>
+        
+    </ul>
+  </div>
 </body>
+</html>

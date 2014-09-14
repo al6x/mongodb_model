@@ -1,40 +1,134 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
   <title>spec.rb</title>
-  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
 </head>
 <body>
-<div id='container'>
-  <div id="background"></div>
-  <div id="jump_to">
-    Jump To &hellip;
-    <div id="jump_wrapper">
-      <div id="jump_page">
-          <a class="source" href="assignment.html">assignment.rb</a>
-          <a class="source" href="associations.html">associations.rb</a>
-          <a class="source" href="basics.html">basics.rb</a>
-          <a class="source" href="callbacks.html">callbacks.rb</a>
-          <a class="source" href="composite.html">composite.rb</a>
-          <a class="source" href="conversions.html">conversions.rb</a>
-          <a class="source" href="database.html">database.rb</a>
-          <a class="source" href="index.html">index.rb</a>
-          <a class="source" href="modifiers.html">modifiers.rb</a>
-          <a class="source" href="queries.html">queries.rb</a>
-          <a class="source" href="spec.html">spec.rb</a>
-          <a class="source" href="validations.html">validations.rb</a>
-      </div>
-    </div>
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="assignment.html">
+                assignment.rb
+              </a>
+            
+              
+              <a class="source" href="associations.html">
+                associations.rb
+              </a>
+            
+              
+              <a class="source" href="basics.html">
+                basics.rb
+              </a>
+            
+              
+              <a class="source" href="callbacks.html">
+                callbacks.rb
+              </a>
+            
+              
+              <a class="source" href="composite.html">
+                composite.rb
+              </a>
+            
+              
+              <a class="source" href="conversions.html">
+                conversions.rb
+              </a>
+            
+              
+              <a class="source" href="database.html">
+                database.rb
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.rb
+              </a>
+            
+              
+              <a class="source" href="modifiers.html">
+                modifiers.rb
+              </a>
+            
+              
+              <a class="source" href="queries.html">
+                queries.rb
+              </a>
+            
+              
+              <a class="source" href="spec.html">
+                spec.rb
+              </a>
+            
+              
+              <a class="source" href="validations.html">
+                validations.rb
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>spec.rb</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">require</span> <span class="hljs-string">'open3'</span>
+
+dir = <span class="hljs-constant">File</span>.expand_path <span class="hljs-string">"<span class="hljs-subst">#{__FILE_<span class="hljs-number">_</span>}</span>/../.."</span>
+
+describe <span class="hljs-string">"Documentation"</span> <span class="hljs-keyword">do</span>
+  <span class="hljs-string">%w(
+    associations
+    basics
+    callbacks
+    composite
+    conversions
+    database
+    index
+    modifiers
+    queries
+    validations
+    assignment
+  )</span>.each <span class="hljs-keyword">do</span> |name|
+    it <span class="hljs-string">"should execute '<span class="hljs-subst">#{name}</span>.rb' without errors"</span> <span class="hljs-keyword">do</span>
+      stdin, stdout, stderr = <span class="hljs-constant">Open3</span>.popen3 <span class="hljs-string">"ruby <span class="hljs-subst">#{dir}</span>/docs/<span class="hljs-subst">#{name}</span>.rb"</span>
+      stderr.read.should be_empty
+    <span class="hljs-keyword">end</span>
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+    </ul>
   </div>
-  <table cellspacing=0 cellpadding=0>
-  <thead>
-    <tr>
-      <th class=docs><h1>spec.rb</h1></th>
-      <th class=code></th>
-    </tr>
-  </thead>
-  <tbody>
-  </table>
-</div>
 </body>
+</html>

@@ -1,370 +1,506 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
   <title>associations.rb</title>
-  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
 </head>
 <body>
-<div id='container'>
-  <div id="background"></div>
-  <div id="jump_to">
-    Jump To &hellip;
-    <div id="jump_wrapper">
-      <div id="jump_page">
-          <a class="source" href="assignment.html">assignment.rb</a>
-          <a class="source" href="associations.html">associations.rb</a>
-          <a class="source" href="basics.html">basics.rb</a>
-          <a class="source" href="callbacks.html">callbacks.rb</a>
-          <a class="source" href="composite.html">composite.rb</a>
-          <a class="source" href="conversions.html">conversions.rb</a>
-          <a class="source" href="database.html">database.rb</a>
-          <a class="source" href="index.html">index.rb</a>
-          <a class="source" href="modifiers.html">modifiers.rb</a>
-          <a class="source" href="queries.html">queries.rb</a>
-          <a class="source" href="spec.html">spec.rb</a>
-          <a class="source" href="validations.html">validations.rb</a>
-      </div>
-    </div>
-  </div>
-  <table cellspacing=0 cellpadding=0>
-  <thead>
-    <tr>
-      <th class=docs><h1>associations.rb</h1></th>
-      <th class=code></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr id='section-1'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-1">&#182;</a>
-        </div>
-        <p>Example of Associations in <a href="index.html">Mongo Model</a>.</p>
-
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="assignment.html">
+                assignment.rb
+              </a>
+            
+              
+              <a class="source" href="associations.html">
+                associations.rb
+              </a>
+            
+              
+              <a class="source" href="basics.html">
+                basics.rb
+              </a>
+            
+              
+              <a class="source" href="callbacks.html">
+                callbacks.rb
+              </a>
+            
+              
+              <a class="source" href="composite.html">
+                composite.rb
+              </a>
+            
+              
+              <a class="source" href="conversions.html">
+                conversions.rb
+              </a>
+            
+              
+              <a class="source" href="database.html">
+                database.rb
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.rb
+              </a>
+            
+              
+              <a class="source" href="modifiers.html">
+                modifiers.rb
+              </a>
+            
+              
+              <a class="source" href="queries.html">
+                queries.rb
+              </a>
+            
+              
+              <a class="source" href="spec.html">
+                spec.rb
+              </a>
+            
+              
+              <a class="source" href="validations.html">
+                validations.rb
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>associations.rb</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>Example of Associations in [Mongo Model][mongodb_model].</p>
 <p>MongoDB is Document Database, and unlike the Relational Database its key
 feature is Composite Documents. It support Associations also but
 there are some limitations.</p>
-
 <p>So, with MongoDB You usually use Composite Documents
 a lot and Associations not so much.</p>
-
-<p>According to this Mongo Model provides You with advanced tools for <a href="composite.html">Composite Models</a>,
+<p>According to this Mongo Model provides You with advanced tools for [Composite Models][composite],
 and basic only for modelling Associations.</p>
-
-<p>In this example we&rsquo;ll create simple Blog Application and see how to associate
-Comments with the Post using one-to-many association (take a look at the <a href="composite.html">composite</a> example
+<p>In this example we’ll create simple Blog Application and see how to associate
+Comments with the Post using one-to-many association (take a look at the [composite][composite] example
 to see how to embed Comments into Post).</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;mongo/model&#39;</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-2'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-2">&#182;</a>
-        </div>
-        <p>Connecting to test database and cleaning it before starting.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database_name</span> <span class="o">=</span> <span class="ss">:default_test</span>
-<span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database</span><span class="o">.</span><span class="n">clear</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-Basics'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-Basics">&#182;</a>
-        </div>
-        <h3>Basics</h3>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
-      </td>
-    </tr>
-    <tr id='section-4'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-4">&#182;</a>
-        </div>
-        <p>Defining Post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
-  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-5'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-5">&#182;</a>
-        </div>
-        <p>Storing post in <code>posts</code> collection.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>  <span class="n">collection</span> <span class="ss">:posts</span>
 
-  <span class="kp">attr_accessor</span> <span class="ss">:text</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-6'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-6">&#182;</a>
-        </div>
-        <p>Creating and returning <a href="aueries.html">Query Object</a> that can be used
-later to select comments belongign to this post (there&rsquo;s no
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">require</span> <span class="hljs-string">'mongo/model'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Connecting to test database and cleaning it before starting.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-constant">Mongo::Model</span>.default_database_name = <span class="hljs-symbol">:default_test</span>
+<span class="hljs-constant">Mongo::Model</span>.default_database.clear</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <h3 id="basics">Basics</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Defining Post.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Post</span></span>
+  inherit <span class="hljs-constant">Mongo::Model</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Storing post in <code>posts</code> collection.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  collection <span class="hljs-symbol">:posts</span>
+
+  <span class="hljs-keyword">attr_accessor</span> <span class="hljs-symbol">:text</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Creating and returning [Query Object][queries] that can be used
+later to select comments belongign to this post (there’s no
 database call at this point).</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">comments</span>
-    <span class="no">Comment</span><span class="o">.</span><span class="n">where</span> <span class="n">post_id</span><span class="p">:</span> <span class="n">id</span>
-  <span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-7'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-7">&#182;</a>
-        </div>
-        <p>If the post will be deleted, all comments also should be deleted.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>  <span class="n">after_delete</span><span class="p">{</span><span class="o">|</span><span class="n">post</span><span class="o">|</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">each</span><span class="p">(</span><span class="o">&amp;</span><span class="ss">:delete!</span><span class="p">)}</span>
 
-  <span class="k">def</span> <span class="nf">inspect</span><span class="p">;</span> <span class="n">text</span><span class="o">.</span><span class="n">to_s</span> <span class="k">end</span>
-<span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-8'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-8">&#182;</a>
-        </div>
-        <p>Defining Comment.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Comment</span>
-  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-9'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-9">&#182;</a>
-        </div>
-        <p>Storing comment in <code>comments</code> collection.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>  <span class="n">collection</span> <span class="ss">:comments</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">def</span> </span>comments
+    <span class="hljs-constant">Comment</span>.where <span class="hljs-symbol">post_id:</span> id
+  <span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>If the post will be deleted, all comments also should be deleted.</p>
 
-  <span class="kp">attr_accessor</span> <span class="ss">:text</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-10'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-10">&#182;</a>
-        </div>
-        <p>Every comment has <code>post_id</code> attribute with <code>id</code> of corresponding post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>  <span class="kp">attr_accessor</span> <span class="ss">:post_id</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-11'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-11">&#182;</a>
-        </div>
-        <p>We need to ensure that comment always belongs to some post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>  <span class="n">validates_presence_of</span> <span class="ss">:post_id</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-12'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-12">&#182;</a>
-        </div>
-        <p>Adding method allowing to assign post to comment.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">post</span><span class="o">=</span> <span class="n">post</span>
-    <span class="nb">self</span><span class="o">.</span><span class="n">post_id</span> <span class="o">=</span> <span class="n">post</span><span class="o">.</span><span class="n">id</span>
-    <span class="n">_cache</span><span class="o">[</span><span class="ss">:post</span><span class="o">]</span> <span class="o">=</span> <span class="n">post</span>
-  <span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-13'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-13">&#182;</a>
-        </div>
-        <p>Retrieving the post this comment belongs to.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">post</span>
-    <span class="n">_cache</span><span class="o">[</span><span class="ss">:item</span><span class="o">]</span> <span class="o">||=</span> <span class="no">Post</span><span class="o">.</span><span class="n">by_id</span> <span class="n">post_id</span>
-  <span class="k">end</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  after_delete{|post| post.comments.each(&amp;<span class="hljs-symbol">:delete!</span>)}
 
-  <span class="k">def</span> <span class="nf">inspect</span><span class="p">;</span> <span class="n">text</span><span class="o">.</span><span class="n">to_s</span> <span class="k">end</span>
-<span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-14'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-14">&#182;</a>
-        </div>
-        <p>Creating Post with Comments and saving it to database.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">create</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Zerg infestation found on Tarsonis!&#39;</span>
-<span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">create</span> <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;I can&#39;t believe it.&quot;</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-15'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-15">&#182;</a>
-        </div>
-        <p>Retrieving post and comments.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">first</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">text</span>                                      <span class="c1"># =&gt; &quot;Zerg infestation found on Tarsonis!&quot;</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">count</span>                            <span class="c1"># =&gt; 1</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">text</span>                       <span class="c1"># =&gt; &quot;I can&#39;t believe it.&quot;</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">post</span> <span class="o">==</span> <span class="n">post</span>               <span class="c1"># =&gt; true</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-16'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-16">&#182;</a>
-        </div>
-        <p>You can also add comments directly, without any syntaxis sugar.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">comment</span> <span class="o">=</span> <span class="no">Comment</span><span class="o">.</span><span class="n">new</span> <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Me too, but it&#39;s true.&quot;</span>
-<span class="n">comment</span><span class="o">.</span><span class="n">post</span> <span class="o">=</span> <span class="n">post</span>
-<span class="n">comment</span><span class="o">.</span><span class="n">save</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">count</span>                             <span class="c1"># =&gt; 2</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-17'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-17">&#182;</a>
-        </div>
-        <p>Comments belonging to post are returned as <a href="aueries.html">Query Object</a>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> </span>inspect; text.to_s <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Defining Comment.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Comment</span></span>
+  inherit <span class="hljs-constant">Mongo::Model</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Storing comment in <code>comments</code> collection.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  collection <span class="hljs-symbol">:comments</span>
+
+  <span class="hljs-keyword">attr_accessor</span> <span class="hljs-symbol">:text</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Every comment has <code>post_id</code> attribute with <code>id</code> of corresponding post.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-keyword">attr_accessor</span> <span class="hljs-symbol">:post_id</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>We need to ensure that comment always belongs to some post.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  validates_presence_of <span class="hljs-symbol">:post_id</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Adding method allowing to assign post to comment.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">def</span> </span>post= post
+    <span class="hljs-keyword">self</span>.post_id = post.id
+    _cache[<span class="hljs-symbol">:post</span>] = post
+  <span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>Retrieving the post this comment belongs to.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">def</span> </span>post
+    _cache[<span class="hljs-symbol">:item</span>] ||= <span class="hljs-constant">Post</span>.by_id post_id
+  <span class="hljs-keyword">end</span>
+
+  <span class="hljs-function"><span class="hljs-keyword">def</span> </span>inspect; text.to_s <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-14">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-14">&#182;</a>
+              </div>
+              <p>Creating Post with Comments and saving it to database.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post = <span class="hljs-constant">Post</span>.create <span class="hljs-symbol">text:</span> <span class="hljs-string">'Zerg infestation found on Tarsonis!'</span>
+post.comments.create <span class="hljs-symbol">text:</span> <span class="hljs-string">"I can't believe it."</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-15">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-15">&#182;</a>
+              </div>
+              <p>Retrieving post and comments.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post = <span class="hljs-constant">Post</span>.first
+p post.text                                      <span class="hljs-comment"># =&gt; "Zerg infestation found on Tarsonis!"</span>
+p post.comments.count                            <span class="hljs-comment"># =&gt; 1</span>
+p post.comments.first.text                       <span class="hljs-comment"># =&gt; "I can't believe it."</span>
+p post.comments.first.post == post               <span class="hljs-comment"># =&gt; true</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-16">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-16">&#182;</a>
+              </div>
+              <p>You can also add comments directly, without any syntaxis sugar.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>comment = <span class="hljs-constant">Comment</span>.new <span class="hljs-symbol">text:</span> <span class="hljs-string">"Me too, but it's true."</span>
+comment.post = post
+comment.save
+p post.comments.count                             <span class="hljs-comment"># =&gt; 2</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-17">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-17">&#182;</a>
+              </div>
+              <p>Comments belonging to post are returned as [Query Object][queries]
 thus giving You access to all kind of operations.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">per_page</span> <span class="o">=</span> <span class="mi">2</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">paginate</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="n">per_page</span><span class="p">)</span><span class="o">.</span><span class="n">all</span>         <span class="c1"># =&gt; first page of comments</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-18'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-18">&#182;</a>
-        </div>
-        <p>After deleting the post all dependent comments also should be deleted.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span><span class="o">.</span><span class="n">delete</span>
-<span class="nb">p</span> <span class="no">Comment</span><span class="o">.</span><span class="n">count</span>                                   <span class="c1"># =&gt; 0</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-Caching_comments_count.'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-Caching_comments_count.">&#182;</a>
-        </div>
-        <h3>Caching comments count.</h3>
 
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>per_page = <span class="hljs-number">2</span>
+p post.comments.paginate(<span class="hljs-number">1</span>, per_page).all         <span class="hljs-comment"># =&gt; first page of comments</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-18">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-18">&#182;</a>
+              </div>
+              <p>After deleting the post all dependent comments also should be deleted.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post.delete
+p <span class="hljs-constant">Comment</span>.count                                   <span class="hljs-comment"># =&gt; 0</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-19">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-19">&#182;</a>
+              </div>
+              <h3 id="caching-comments-count-">Caching comments count.</h3>
 <p>It would be nice to know how many comments does the post have withoug
-executing additional query to count it, let&rsquo;s do this by caching it in
+executing additional query to count it, let’s do this by caching it in
 the <code>comments_count</code> attribute of the post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
-      </td>
-    </tr>
-    <tr id='section-20'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-20">&#182;</a>
-        </div>
-        <p>Adding <code>comments_count</code> attribute to Post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
-  <span class="kp">attr_writer</span> <span class="ss">:comments_count</span>
-  <span class="k">def</span> <span class="nf">comments_count</span><span class="p">;</span> <span class="vi">@comments_count</span> <span class="o">||=</span> <span class="mi">0</span> <span class="k">end</span>
-<span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-21'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-21">&#182;</a>
-        </div>
-        <p>Updating <code>comments_count</code> every time comment created and deleted. Actually
-we can do this by retrieving, updating and then saving the post, but let&rsquo;s
-do it in more efficient way using <a href="modifiers.html">modifiers</a>.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Comment</span>
-  <span class="n">after_create</span> <span class="k">do</span> <span class="o">|</span><span class="n">comment</span><span class="o">|</span>
-    <span class="no">Post</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">id</span><span class="p">:</span> <span class="n">comment</span><span class="o">.</span><span class="n">post_id</span><span class="p">},</span> <span class="p">{</span><span class="n">_inc</span><span class="p">:</span> <span class="p">{</span><span class="n">comments_count</span><span class="p">:</span> <span class="mi">1</span><span class="p">}})</span>
-  <span class="k">end</span>
-  <span class="n">after_delete</span> <span class="k">do</span> <span class="o">|</span><span class="n">comment</span><span class="o">|</span>
-    <span class="no">Post</span><span class="o">.</span><span class="n">update</span><span class="p">({</span><span class="n">id</span><span class="p">:</span> <span class="n">comment</span><span class="o">.</span><span class="n">post_id</span><span class="p">},</span> <span class="p">{</span><span class="n">_inc</span><span class="p">:</span> <span class="p">{</span><span class="n">comments_count</span><span class="p">:</span> <span class="o">-</span><span class="mi">1</span><span class="p">}})</span>
-  <span class="k">end</span>
-<span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-22'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-22">&#182;</a>
-        </div>
-        <p>Now, every time comment will be created and deleted, post <code>comments_count</code>
-attribute will be updated.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">create</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Zerg infestation found on Tarsonis!&#39;</span>
-<span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">create</span> <span class="n">text</span><span class="p">:</span> <span class="s2">&quot;I can&#39;t believe it.&quot;</span>
-<span class="n">post</span><span class="o">.</span><span class="n">reload</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments_count</span>                            <span class="c1"># =&gt; 1</span>
-<span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">delete_all</span>
-<span class="n">post</span><span class="o">.</span><span class="n">reload</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments_count</span>                            <span class="c1"># =&gt; 0</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-23'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-23">&#182;</a>
-        </div>
-        <p>In this example we covered 1-to-N association, but You can implement all
-other types using similar technics (the only complex case is
-M-to-N &ndash; use array of ids to do it).</p>
 
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-20">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-20">&#182;</a>
+              </div>
+              <p>Adding <code>comments_count</code> attribute to Post.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Post</span></span>
+  <span class="hljs-keyword">attr_writer</span> <span class="hljs-symbol">:comments_count</span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> </span>comments_count; <span class="hljs-variable">@comments_count</span> ||= <span class="hljs-number">0</span> <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-21">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-21">&#182;</a>
+              </div>
+              <p>Updating <code>comments_count</code> every time comment created and deleted. Actually
+we can do this by retrieving, updating and then saving the post, but let’s
+do it in more efficient way using [modifiers][modifiers].</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Comment</span></span>
+  after_create <span class="hljs-keyword">do</span> |comment|
+    <span class="hljs-constant">Post</span>.update({<span class="hljs-symbol">id:</span> comment.post_id}, {<span class="hljs-symbol">_inc:</span> {<span class="hljs-symbol">comments_count:</span> <span class="hljs-number">1</span>}})
+  <span class="hljs-keyword">end</span>
+  after_delete <span class="hljs-keyword">do</span> |comment|
+    <span class="hljs-constant">Post</span>.update({<span class="hljs-symbol">id:</span> comment.post_id}, {<span class="hljs-symbol">_inc:</span> {<span class="hljs-symbol">comments_count:</span> -<span class="hljs-number">1</span>}})
+  <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-22">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-22">&#182;</a>
+              </div>
+              <p>Now, every time comment will be created and deleted, post <code>comments_count</code>
+attribute will be updated.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post = <span class="hljs-constant">Post</span>.create <span class="hljs-symbol">text:</span> <span class="hljs-string">'Zerg infestation found on Tarsonis!'</span>
+post.comments.create <span class="hljs-symbol">text:</span> <span class="hljs-string">"I can't believe it."</span>
+post.reload
+p post.comments_count                            <span class="hljs-comment"># =&gt; 1</span>
+post.comments.delete_all
+post.reload
+p post.comments_count                            <span class="hljs-comment"># =&gt; 0</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-23">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-23">&#182;</a>
+              </div>
+              <p>In this example we covered 1-to-N association, but You can implement all
+other types using similar technics (the only complex case is
+M-to-N - use array of ids to do it).</p>
 <p>Also, remember that MongoDB is Document Database, not Relational.
 If You want to get most of it – use Composite Documents whenever possible,
 avoid Associations and use it only if You really need it.</p>
 
-      </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
-      </td>
-    </tr>
-  </table>
-</div>
+            </div>
+            
+        </li>
+        
+    </ul>
+  </div>
 </body>
+</html>

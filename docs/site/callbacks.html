@@ -1,51 +1,107 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
   <title>callbacks.rb</title>
-  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
 </head>
 <body>
-<div id='container'>
-  <div id="background"></div>
-  <div id="jump_to">
-    Jump To &hellip;
-    <div id="jump_wrapper">
-      <div id="jump_page">
-          <a class="source" href="assignment.html">assignment.rb</a>
-          <a class="source" href="associations.html">associations.rb</a>
-          <a class="source" href="basics.html">basics.rb</a>
-          <a class="source" href="callbacks.html">callbacks.rb</a>
-          <a class="source" href="composite.html">composite.rb</a>
-          <a class="source" href="conversions.html">conversions.rb</a>
-          <a class="source" href="database.html">database.rb</a>
-          <a class="source" href="index.html">index.rb</a>
-          <a class="source" href="modifiers.html">modifiers.rb</a>
-          <a class="source" href="queries.html">queries.rb</a>
-          <a class="source" href="spec.html">spec.rb</a>
-          <a class="source" href="validations.html">validations.rb</a>
-      </div>
-    </div>
-  </div>
-  <table cellspacing=0 cellpadding=0>
-  <thead>
-    <tr>
-      <th class=docs><h1>callbacks.rb</h1></th>
-      <th class=code></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr id='section-1'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-1">&#182;</a>
-        </div>
-        <p>Callbacks in <a href="index.html">Mongo Model</a>.</p>
-
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="assignment.html">
+                assignment.rb
+              </a>
+            
+              
+              <a class="source" href="associations.html">
+                associations.rb
+              </a>
+            
+              
+              <a class="source" href="basics.html">
+                basics.rb
+              </a>
+            
+              
+              <a class="source" href="callbacks.html">
+                callbacks.rb
+              </a>
+            
+              
+              <a class="source" href="composite.html">
+                composite.rb
+              </a>
+            
+              
+              <a class="source" href="conversions.html">
+                conversions.rb
+              </a>
+            
+              
+              <a class="source" href="database.html">
+                database.rb
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.rb
+              </a>
+            
+              
+              <a class="source" href="modifiers.html">
+                modifiers.rb
+              </a>
+            
+              
+              <a class="source" href="queries.html">
+                queries.rb
+              </a>
+            
+              
+              <a class="source" href="spec.html">
+                spec.rb
+              </a>
+            
+              
+              <a class="source" href="validations.html">
+                validations.rb
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>callbacks.rb</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>Callbacks in [Mongo Model][mongodb_model].</p>
 <p>Callbacks are handy way to execute custom logic at special
 moments of the lifecycle of the model. There are following
 callbacks available:</p>
-
 <pre><code>before_validate
 after_validate
 
@@ -62,194 +118,232 @@ before_delete
 after_delete
 
 after_build
-</code></pre>
-
-<p>All these callbacks also available on embedded models.</p>
-
+</code></pre><p>All these callbacks also available on embedded models.</p>
 <p>In this example we create post with embedded comments and
 generate teasers on it using callbacks.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;mongo/model&#39;</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-2'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-2">&#182;</a>
-        </div>
-        <p>Connecting to test database and cleaning it before starting.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database_name</span> <span class="o">=</span> <span class="ss">:default_test</span>
-<span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database</span><span class="o">.</span><span class="n">clear</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-Basics'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-Basics">&#182;</a>
-        </div>
-        <h3>Basics</h3>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
-      </td>
-    </tr>
-    <tr id='section-4'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-4">&#182;</a>
-        </div>
-        <p>Defining post, its teaser will be generated before saving.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
-  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
-  <span class="n">collection</span> <span class="ss">:posts</span>
 
-  <span class="kp">attr_accessor</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">:teaser</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">require</span> <span class="hljs-string">'mongo/model'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Connecting to test database and cleaning it before starting.</p>
 
-  <span class="kp">protected</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-5'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-5">&#182;</a>
-        </div>
-        <p>Using <code>before_save</code> callback to generate teaser before saving the post
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-constant">Mongo::Model</span>.default_database_name = <span class="hljs-symbol">:default_test</span>
+<span class="hljs-constant">Mongo::Model</span>.default_database.clear</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <h3 id="basics">Basics</h3>
+
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>Defining post, its teaser will be generated before saving.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Post</span></span>
+  inherit <span class="hljs-constant">Mongo::Model</span>
+  collection <span class="hljs-symbol">:posts</span>
+
+  <span class="hljs-keyword">attr_accessor</span> <span class="hljs-symbol">:text</span>, <span class="hljs-symbol">:teaser</span>
+
+  protected</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Using <code>before_save</code> callback to generate teaser before saving the post
 (You can also use block version instead of method).</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>    <span class="k">def</span> <span class="nf">generate_teaser</span>
-      <span class="vi">@teaser</span> <span class="o">=</span> <span class="n">text</span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">4</span><span class="o">]</span> <span class="k">if</span> <span class="n">text</span>
-    <span class="k">end</span>
-    <span class="n">before_save</span> <span class="ss">:generate_teaser</span>
-<span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-6'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-6">&#182;</a>
-        </div>
-        <p>Creating post, teaser will be generated when we save the post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Norad II crashed!&#39;</span>
-<span class="n">post</span><span class="o">.</span><span class="n">save!</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">teaser</span>                                     <span class="c1"># =&gt; Norad</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-Embedded_Models'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-Embedded_Models">&#182;</a>
-        </div>
-        <h3>Embedded Models</h3>
 
-<p>Callbacks on children works the same way whith the only difference &ndash;
-when child removed from main object &ndash; child get <code>:delete</code> and main object
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>    <span class="hljs-function"><span class="hljs-keyword">def</span> </span>generate_teaser
+      <span class="hljs-variable">@teaser</span> = text[<span class="hljs-number">0</span>..<span class="hljs-number">4</span>] <span class="hljs-keyword">if</span> text
+    <span class="hljs-keyword">end</span>
+    before_save <span class="hljs-symbol">:generate_teaser</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>Creating post, teaser will be generated when we save the post.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post = <span class="hljs-constant">Post</span>.new <span class="hljs-symbol">text:</span> <span class="hljs-string">'Norad II crashed!'</span>
+post.save!
+p post.teaser                                     <span class="hljs-comment"># =&gt; Norad</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <h3 id="embedded-models">Embedded Models</h3>
+<p>Callbacks on children works the same way whith the only difference -
+when child removed from main object - child get <code>:delete</code> and main object
 <code>:update</code> callbacks, details:</p>
-
 <ul>
-<li>when main object created/updated/deleted &ndash; the same callbacks propagated to
+<li>when main object created/updated/deleted - the same callbacks propagated to
 its children.</li>
-<li>when child added to existing main object &ndash; the main object and all its existing
+<li>when child added to existing main object - the main object and all its existing
 children get <code>:update</code> callback, but all newly created children get <code>:create</code> callback.</li>
-<li>when child removed from existing main object &ndash; the main object and all its existing
+<li>when child removed from existing main object - the main object and all its existing
 children get <code>:update</code> callback, but all removed children get <code>:delete</code> callback.</li>
 </ul>
+<p>Let’s add embedded comments to post and see how this works.</p>
 
-<p>Let&rsquo;s add embedded comments to post and see how this works.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
-      </td>
-    </tr>
-    <tr id='section-8'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-8">&#182;</a>
-        </div>
-        <p>Adding comments to post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
-  <span class="k">def</span> <span class="nf">comments</span><span class="p">;</span> <span class="vi">@comments</span> <span class="o">||=</span> <span class="o">[]</span> <span class="k">end</span>
-<span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-9'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-9">&#182;</a>
-        </div>
-        <p>Defining comment, his teaser also generated with <code>before_save</code> callback.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Comment</span>
-  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
+            </div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Adding comments to post.</p>
 
-  <span class="kp">attr_accessor</span> <span class="ss">:text</span><span class="p">,</span> <span class="ss">:teaser</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Post</span></span>
+  <span class="hljs-function"><span class="hljs-keyword">def</span> </span>comments; <span class="hljs-variable">@comments</span> ||= [] <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Defining comment, his teaser also generated with <code>before_save</code> callback.</p>
 
-  <span class="kp">protected</span>
-    <span class="k">def</span> <span class="nf">generate_teaser</span>
-      <span class="vi">@teaser</span> <span class="o">=</span> <span class="n">text</span><span class="o">[</span><span class="mi">0</span><span class="o">.</span><span class="n">.</span><span class="mi">4</span><span class="o">]</span> <span class="k">if</span> <span class="n">text</span>
-    <span class="k">end</span>
-    <span class="n">before_save</span> <span class="ss">:generate_teaser</span>
-<span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-10'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-10">&#182;</a>
-        </div>
-        <p>Creating post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Norad II crashed!&#39;</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-11'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-11">&#182;</a>
-        </div>
-        <p>Adding comment to post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">comment</span> <span class="o">=</span> <span class="no">Comment</span><span class="o">.</span><span class="n">new</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Where?&#39;</span>
-<span class="n">post</span><span class="o">.</span><span class="n">comments</span> <span class="o">&lt;&lt;</span> <span class="n">comment</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-12'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-12">&#182;</a>
-        </div>
-        <p>Saving post, embedded comment also generates its teaser.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span><span class="o">.</span><span class="n">save!</span>
-<span class="nb">p</span> <span class="n">comment</span><span class="o">.</span><span class="n">teaser</span>                                  <span class="c1"># =&gt; &#39;Where&#39;</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-13'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-13">&#182;</a>
-        </div>
-        <p>In this example we examined callbacks, it&rsquo;s types and how they works on
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Comment</span></span>
+  inherit <span class="hljs-constant">Mongo::Model</span>
+
+  <span class="hljs-keyword">attr_accessor</span> <span class="hljs-symbol">:text</span>, <span class="hljs-symbol">:teaser</span>
+
+  protected
+    <span class="hljs-function"><span class="hljs-keyword">def</span> </span>generate_teaser
+      <span class="hljs-variable">@teaser</span> = text[<span class="hljs-number">0</span>..<span class="hljs-number">4</span>] <span class="hljs-keyword">if</span> text
+    <span class="hljs-keyword">end</span>
+    before_save <span class="hljs-symbol">:generate_teaser</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Creating post.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post = <span class="hljs-constant">Post</span>.new <span class="hljs-symbol">text:</span> <span class="hljs-string">'Norad II crashed!'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>Adding comment to post.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>comment = <span class="hljs-constant">Comment</span>.new <span class="hljs-symbol">text:</span> <span class="hljs-string">'Where?'</span>
+post.comments &lt;&lt; comment</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-12">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-12">&#182;</a>
+              </div>
+              <p>Saving post, embedded comment also generates its teaser.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post.save!
+p comment.teaser                                  <span class="hljs-comment"># =&gt; 'Where'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-13">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-13">&#182;</a>
+              </div>
+              <p>In this example we examined callbacks, it’s types and how they works on
 main and embedded models.</p>
 
-      </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
-      </td>
-    </tr>
-  </table>
-</div>
+            </div>
+            
+        </li>
+        
+    </ul>
+  </div>
 </body>
+</html>

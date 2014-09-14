@@ -1,196 +1,290 @@
 <!DOCTYPE html>
+
 <html>
 <head>
-  <meta http-equiv="content-type" content="text/html;charset=utf-8">
   <title>composite.rb</title>
-  <link rel="stylesheet" href="http://jashkenas.github.com/docco/resources/docco.css">
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <meta name="viewport" content="width=device-width, target-densitydpi=160dpi, initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
+  <link rel="stylesheet" media="all" href="docco.css" />
 </head>
 <body>
-<div id='container'>
-  <div id="background"></div>
-  <div id="jump_to">
-    Jump To &hellip;
-    <div id="jump_wrapper">
-      <div id="jump_page">
-          <a class="source" href="assignment.html">assignment.rb</a>
-          <a class="source" href="associations.html">associations.rb</a>
-          <a class="source" href="basics.html">basics.rb</a>
-          <a class="source" href="callbacks.html">callbacks.rb</a>
-          <a class="source" href="composite.html">composite.rb</a>
-          <a class="source" href="conversions.html">conversions.rb</a>
-          <a class="source" href="database.html">database.rb</a>
-          <a class="source" href="index.html">index.rb</a>
-          <a class="source" href="modifiers.html">modifiers.rb</a>
-          <a class="source" href="queries.html">queries.rb</a>
-          <a class="source" href="spec.html">spec.rb</a>
-          <a class="source" href="validations.html">validations.rb</a>
-      </div>
-    </div>
-  </div>
-  <table cellspacing=0 cellpadding=0>
-  <thead>
-    <tr>
-      <th class=docs><h1>composite.rb</h1></th>
-      <th class=code></th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr id='section-1'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-1">&#182;</a>
-        </div>
-        <p>Example of Composite Objects using <a href="index.html">Mongo Model</a>.</p>
-
+  <div id="container">
+    <div id="background"></div>
+    
+      <ul id="jump_to">
+        <li>
+          <a class="large" href="javascript:void(0);">Jump To &hellip;</a>
+          <a class="small" href="javascript:void(0);">+</a>
+          <div id="jump_wrapper">
+          <div id="jump_page">
+            
+              
+              <a class="source" href="assignment.html">
+                assignment.rb
+              </a>
+            
+              
+              <a class="source" href="associations.html">
+                associations.rb
+              </a>
+            
+              
+              <a class="source" href="basics.html">
+                basics.rb
+              </a>
+            
+              
+              <a class="source" href="callbacks.html">
+                callbacks.rb
+              </a>
+            
+              
+              <a class="source" href="composite.html">
+                composite.rb
+              </a>
+            
+              
+              <a class="source" href="conversions.html">
+                conversions.rb
+              </a>
+            
+              
+              <a class="source" href="database.html">
+                database.rb
+              </a>
+            
+              
+              <a class="source" href="index.html">
+                index.rb
+              </a>
+            
+              
+              <a class="source" href="modifiers.html">
+                modifiers.rb
+              </a>
+            
+              
+              <a class="source" href="queries.html">
+                queries.rb
+              </a>
+            
+              
+              <a class="source" href="spec.html">
+                spec.rb
+              </a>
+            
+              
+              <a class="source" href="validations.html">
+                validations.rb
+              </a>
+            
+          </div>
+        </li>
+      </ul>
+    
+    <ul class="sections">
+        
+          <li id="title">
+              <div class="annotation">
+                  <h1>composite.rb</h1>
+              </div>
+          </li>
+        
+        
+        
+        <li id="section-1">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-1">&#182;</a>
+              </div>
+              <p>Example of Composite Objects using [Mongo Model][mongodb_model].</p>
 <p>Models are just ordinary Ruby Objects, so You can combine and mix it as You wish.
 The only differences are</p>
-
 <ul>
 <li>main object has the <code>id</code> attribute.</li>
-<li>child objects doesn&rsquo;t have <code>id</code>, but have <code>_parent</code> &ndash; reference to the main object.</li>
+<li>child objects doesn’t have <code>id</code>, but have <code>_parent</code> - reference to the main object.</li>
 </ul>
-
-<p><a href="callbacks.html">Callbacks</a>, <a href="validations.html">validations</a> and <a href="conversions.html">conversions</a>
+<p>[Callbacks][callbacks], [validations][validations] and [conversions][conversions]
 works on embedded objects the same way as on the main.</p>
-
-<p>In this example we&rsquo;ll create simple Blog Application and see how to embed
+<p>In this example we’ll create simple Blog Application and see how to embed
 Comments into the Post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="nb">require</span> <span class="s1">&#39;mongo/model&#39;</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-2'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-2">&#182;</a>
-        </div>
-        <p>Connecting to test database and cleaning it before starting.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database_name</span> <span class="o">=</span> <span class="ss">:default_test</span>
-<span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span><span class="o">.</span><span class="n">default_database</span><span class="o">.</span><span class="n">clear</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-3'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-3">&#182;</a>
-        </div>
-        <p>Defining Post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Post</span>
-  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
-  <span class="n">collection</span> <span class="ss">:posts</span>
 
-  <span class="kp">attr_accessor</span> <span class="ss">:text</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-4'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-4">&#182;</a>
-        </div>
-        <p>We using plain Ruby Array as container for Comments.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>  <span class="k">def</span> <span class="nf">comments</span><span class="p">;</span> <span class="vi">@comments</span> <span class="o">||=</span> <span class="o">[]</span> <span class="k">end</span>
-<span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-5'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-5">&#182;</a>
-        </div>
-        <p>Defining Comment.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="k">class</span> <span class="nc">Comment</span>
-  <span class="n">inherit</span> <span class="no">Mongo</span><span class="o">::</span><span class="no">Model</span>
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-keyword">require</span> <span class="hljs-string">'mongo/model'</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-2">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-2">&#182;</a>
+              </div>
+              <p>Connecting to test database and cleaning it before starting.</p>
 
-  <span class="kp">attr_accessor</span> <span class="ss">:text</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-6'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-6">&#182;</a>
-        </div>
-        <p>We need a way to access Post from Comment, every child object has <code>_parent</code> reference, let&rsquo;s
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-constant">Mongo::Model</span>.default_database_name = <span class="hljs-symbol">:default_test</span>
+<span class="hljs-constant">Mongo::Model</span>.default_database.clear</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-3">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-3">&#182;</a>
+              </div>
+              <p>Defining Post.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Post</span></span>
+  inherit <span class="hljs-constant">Mongo::Model</span>
+  collection <span class="hljs-symbol">:posts</span>
+
+  <span class="hljs-keyword">attr_accessor</span> <span class="hljs-symbol">:text</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-4">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-4">&#182;</a>
+              </div>
+              <p>We using plain Ruby Array as container for Comments.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  <span class="hljs-function"><span class="hljs-keyword">def</span> </span>comments; <span class="hljs-variable">@comments</span> ||= [] <span class="hljs-keyword">end</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-5">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-5">&#182;</a>
+              </div>
+              <p>Defining Comment.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Comment</span></span>
+  inherit <span class="hljs-constant">Mongo::Model</span>
+
+  <span class="hljs-keyword">attr_accessor</span> <span class="hljs-symbol">:text</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-6">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-6">&#182;</a>
+              </div>
+              <p>We need a way to access Post from Comment, every child object has <code>_parent</code> reference, let’s
 use it.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre>  <span class="n">alias_method</span> <span class="ss">:post</span><span class="p">,</span> <span class="ss">:_parent</span>
-<span class="k">end</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-7'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-7">&#182;</a>
-        </div>
-        <p>Creating Post with Comments and saving it to database.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">new</span> <span class="n">text</span><span class="p">:</span> <span class="s1">&#39;Zerg infestation found on Tarsonis!&#39;</span>
-<span class="n">post</span><span class="o">.</span><span class="n">comments</span> <span class="o">&lt;&lt;</span> <span class="no">Comment</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="s2">&quot;I can&#39;t believe it.&quot;</span><span class="p">)</span>
-<span class="n">post</span><span class="o">.</span><span class="n">save</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-8'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-8">&#182;</a>
-        </div>
-        <p>Retrieving from database.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">first</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">class</span>                         <span class="c1"># =&gt; Array</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">size</span>                          <span class="c1"># =&gt; 1</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">text</span>                    <span class="c1"># =&gt; &quot;I can&#39;t believe it&quot;</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">first</span><span class="o">.</span><span class="n">post</span> <span class="o">==</span> <span class="n">post</span>            <span class="c1"># =&gt; true</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-9'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-9">&#182;</a>
-        </div>
-        <p>Adding another comment.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span><span class="o">.</span><span class="n">comments</span> <span class="o">&lt;&lt;</span> <span class="no">Comment</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">text</span><span class="p">:</span> <span class="s2">&quot;Me too, but it&#39;s true.&quot;</span><span class="p">)</span>
-<span class="n">post</span><span class="o">.</span><span class="n">save</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-10'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-10">&#182;</a>
-        </div>
-        <p>Reading updated post.</p>
-      </td>
-      <td class=code>
-        <div class='highlight'><pre><span class="n">post</span> <span class="o">=</span> <span class="no">Post</span><span class="o">.</span><span class="n">first</span>
-<span class="nb">p</span> <span class="n">post</span><span class="o">.</span><span class="n">comments</span><span class="o">.</span><span class="n">size</span>                           <span class="c1"># =&gt; 2</span></pre></div>
-      </td>
-    </tr>
-    <tr id='section-11'>
-      <td class=docs>
-        <div class="pilwrap">
-          <a class="pilcrow" href="#section-11">&#182;</a>
-        </div>
-        <p>In this example we covered how to create and use composite objects (embedded objects) &ndash;
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>  alias_method <span class="hljs-symbol">:post</span>, <span class="hljs-symbol">:_parent</span>
+<span class="hljs-keyword">end</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-7">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-7">&#182;</a>
+              </div>
+              <p>Creating Post with Comments and saving it to database.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post = <span class="hljs-constant">Post</span>.new <span class="hljs-symbol">text:</span> <span class="hljs-string">'Zerg infestation found on Tarsonis!'</span>
+post.comments &lt;&lt; <span class="hljs-constant">Comment</span>.new(<span class="hljs-symbol">text:</span> <span class="hljs-string">"I can't believe it."</span>)
+post.save</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-8">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-8">&#182;</a>
+              </div>
+              <p>Retrieving from database.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post = <span class="hljs-constant">Post</span>.first
+p post.comments.<span class="hljs-keyword">class</span>                         <span class="hljs-comment"># =&gt; Array</span>
+p post.comments.size                          <span class="hljs-comment"># =&gt; 1</span>
+p post.comments.first.text                    <span class="hljs-comment"># =&gt; "I can't believe it"</span>
+p post.comments.first.post == post            <span class="hljs-comment"># =&gt; true</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-9">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-9">&#182;</a>
+              </div>
+              <p>Adding another comment.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post.comments &lt;&lt; <span class="hljs-constant">Comment</span>.new(<span class="hljs-symbol">text:</span> <span class="hljs-string">"Me too, but it's true."</span>)
+post.save</pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-10">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-10">&#182;</a>
+              </div>
+              <p>Reading updated post.</p>
+
+            </div>
+            
+            <div class="content"><div class='highlight'><pre>post = <span class="hljs-constant">Post</span>.first
+p post.comments.size                           <span class="hljs-comment"># =&gt; 2</span></pre></div></div>
+            
+        </li>
+        
+        
+        <li id="section-11">
+            <div class="annotation">
+              
+              <div class="pilwrap ">
+                <a class="pilcrow" href="#section-11">&#182;</a>
+              </div>
+              <p>In this example we covered how to create and use composite objects (embedded objects) -
 use plain Ruby Objects and the Driver will figure out how to save and restore it.</p>
 
-      </td>
-      <td class=code>
-        <div class='highlight'><pre></pre></div>
-      </td>
-    </tr>
-  </table>
-</div>
+            </div>
+            
+        </li>
+        
+    </ul>
+  </div>
 </body>
+</html>
